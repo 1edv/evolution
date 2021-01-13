@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/1edv/evolution">
+  <a href="https://github.com/1edv/evolution/overview.png">
     <img src="overview.png" alt="Logo">
   </a>
  </p>
