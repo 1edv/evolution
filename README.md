@@ -2,7 +2,7 @@ Dear User,
 
 This repository contains the code for our manuscript : 
 
-<center>### A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic <i>cis</i>-regulatory DNA sequences</center>
+ <h3 align="center">A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic <i>cis</i>-regulatory DNA sequences</h3>
 
 All data and saved models used in the manuscript can be downloaded from Zenodo : [Zenodo DOI]
 
