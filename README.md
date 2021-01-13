@@ -2,7 +2,7 @@ Dear User,
 
 This repository contains the code for our manuscript : 
 
-### A complete fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic cis-regulatory DNA sequences
+### A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic <i>cis</i>-regulatory DNA sequences
 
 All data and code used in the manuscript can be downloaded from : https://console.cloud.google.com/storage/browser/evolution_bucket
 
@@ -17,6 +17,8 @@ The directory is organized into the following folders :
 <li> trajectories : contains the notebooks for computing the sequence trajectories under different evolutionary regimes
     
 <li> ecc_mr_fr : contains the notebooks for computing the Expression Conservation Coefficient (ECC), Mutational Robustness and Fitness Responsivity.
+    
+<li> ga : contains the notebooks for sequence design using a genetic algorithm.
     
 <li> evolvability : contains the notebooks for computing the evolvability vectors and their two-dimensional representations. Also has examples for generating the landscape visualizations shown in the manuscript that the user may use for their own new sequences.
     
