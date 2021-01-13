@@ -28,7 +28,7 @@ The directory is organized into the following folders :
 <li> <code>trajectories</code> : contains the notebooks for computing the sequence trajectories under different evolutionary regimes
 
 </ul>
-
+<br>
 
 <p align="center">
   <a href="overview.png">
