@@ -14,16 +14,16 @@ The directory is organized into the following folders :
 <ul>
 
     
-<li> ecc_mr_fr : contains the notebooks for computing the Expression Conservation Coefficient (ECC), Mutational Robustness and Fitness Responsivity.
+<li> <code>ecc_mr_fr</code>: contains the notebooks for computing the Expression Conservation Coefficient (ECC), Mutational Robustness and Fitness Responsivity.
     
-<li> evolvability : contains the notebooks for computing the evolvability vectors and their two-dimensional representations. Also has examples for generating the landscape visualizations shown in the manuscript that the user may use for their own new sequences.
+<li> <code>evolvability</code> : contains the notebooks for computing the evolvability vectors and their two-dimensional representations. Also has examples for generating the landscape visualizations shown in the manuscript that the user may use for their own new sequences.
     
-<li> ga : contains the notebooks for sequence design using a genetic algorithm.
+<li> <code>ga</code> : contains the notebooks for sequence design using a genetic algorithm.
 
-<li> model : contains the notebooks for preprocessing the data, training the model and using the model. This model can run on TPUs and GPUs. A subfolder called 'gpu_only_model' contains the same for the version of the model that runs on GPUs only (and not TPUs) described in the manuscript.
+<li> <code>model</code> : contains the notebooks for preprocessing the data, training the model and using the model. This model can run on TPUs and GPUs. A subfolder called 'gpu_only_model' contains the same for the version of the model that runs on GPUs only (and not TPUs) described in the manuscript.
     
-<li> rna_seq : contains all the code used for processing the in-house cross-species RNA-seq data as an html file (please download and view in your browser for maximum readability).
+<li> <code>rna_seq</code> : contains all the code used for processing the in-house cross-species RNA-seq data as an html file (please download and view in your browser for maximum readability).
 
-<li> trajectories : contains the notebooks for computing the sequence trajectories under different evolutionary regimes
+<li> <code>trajectories</code> : contains the notebooks for computing the sequence trajectories under different evolutionary regimes
 
 </ul>
