@@ -5,7 +5,7 @@ This repository contains the code for our manuscript :
 
  <h3 align="center">A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic <i>cis</i>-regulatory DNA sequences</h3>
 
-All data and trained models used in the manuscript can be downloaded <a href='https://zenodo.org/record/4436477#.X_8V-hNKgUF'>here</a>
+All data and trained models used in the manuscript can be downloaded <a href='https://zenodo.org/record/4436477#.X_8V-hNKgUF'>here</a>.
 
 The conda environment required for running this notebook can be installed and activated by running the following on the command line from within this folder: \
 <code>conda env create -f evolution_env.yml </code>  \
