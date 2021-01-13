@@ -23,7 +23,7 @@ The directory is organized into the following folders :
 
 <li> <code>model</code> : contains the notebooks for preprocessing the data, training the model and using the model. This model can run on TPUs and GPUs. A subfolder called 'gpu_only_model' contains the same for the version of the model that runs on GPUs only (and not TPUs) described in the manuscript.
     
-<li> <code>rna_seq</code> : contains all the code used for processing the in-house cross-species RNA-seq data as an html file (please download and view in your browser for maximum readability).
+<li> <code>rna_seq</code> : contains all the code used for processing the in-house cross-species RNA-seq data.
 
 <li> <code>trajectories</code> : contains the notebooks for computing the sequence trajectories under different evolutionary regimes
 
