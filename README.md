@@ -10,8 +10,9 @@ The conda environment required for running this notebook can be installed and ac
 <code>conda env create -f evolution_env.yml </code>  \
 <code>conda activate me</code>
 
-
 The directory is organized into the following folders :
+<ul>
+
 <li> model : contains the notebooks for preprocessing the data, training the model and using the model. This model can run on TPUs and GPUs. A subfolder called 'gpu_only_model' contains the same for the version of the model that runs on GPUs only (and not TPUs) described in the manuscript.
     
 <li> trajectories : contains the notebooks for computing the sequence trajectories under different evolutionary regimes
@@ -24,3 +25,4 @@ The directory is organized into the following folders :
 
 <li> evolvability : contains the notebooks for computing the evolvability vectors and their two-dimensional representations. Also has examples for generating the landscape visualizations shown in the manuscript that the user may use for their own new sequences.
     
+</ul>
