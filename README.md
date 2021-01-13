@@ -1,8 +1,3 @@
-<p align="center">
-  <a href="overview.png">
-    <img src="overview.png" alt="Logo">
-  </a>
- </p>
 
 Dear User,
 
@@ -33,3 +28,10 @@ The directory is organized into the following folders :
 <li> <code>trajectories</code> : contains the notebooks for computing the sequence trajectories under different evolutionary regimes
 
 </ul>
+
+
+<p align="center">
+  <a href="overview.png">
+    <img src="overview.png" alt="Logo">
+  </a>
+ </p>
