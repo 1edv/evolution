@@ -6,7 +6,7 @@ This repository contains the code for our manuscript :
 
 All data and saved models used in the manuscript can be downloaded from Zenodo : [Zenodo DOI]
 
-The conda environment required for running this notebook can be installed and activated by running the following on the command line from within this folder: 
+The conda environment required for running this notebook can be installed and activated by running the following on the command line from within this folder: \
 <code>conda env create -f evolution_env.yml </code>  \
 <code>conda activate me</code>
 
