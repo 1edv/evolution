@@ -1,0 +1,1406 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head profile='http://gmpg.org/xfn/11'>
+	<title>CompBio@HUJI :: MultiYeastRNAseq / README </title>
+	<meta http-equiv='Content-Style-Type' content='text/css' />
+	<link rel='stylesheet' title='Barthelme' href='http://wikis.cs.huji.ac.il/compbio/pub/skins/barthelme/barthelme.css' type='text/css' media='all' />
+	<link rel='start' href='http://wikis.cs.huji.ac.il/compbio/index.php' title='CompBio@HUJI' />
+	<style type='text/css' media='all'>
+		body { font-size: 75%; }
+
+		body { font-family: arial, helvetica, sans-serif; }
+
+		div#content h1, div#content h2 { font-family: georgia, times, serif; }
+
+		div#content p { text-align: left; }
+
+		div#wrapper { width: 90%; }
+
+	</style>
+	<!--HTMLHeader--><style type='text/css'><!--
+  ul, ol, pre, dl, p { margin-top:0px; margin-bottom:0px; }
+  code.escaped { white-space: nowrap; }
+  .vspace { margin-top:1.33em; }
+  .indent { margin-left:40px; }
+  .outdent { margin-left:40px; text-indent:-40px; }
+  a.createlinktext { text-decoration:none; border-bottom:1px dotted gray; }
+  a.createlink { text-decoration:none; position:relative; top:-0.5em;
+    font-weight:bold; font-size:smaller; border-bottom:none; }
+  img { border:0px; }
+  
+  .indent1 {margin-left:1.25em;}
+  .indent2 {margin-left:2.5em;}
+  .indent3 {margin-left:3.75em;}
+  .indent4 {margin-left:5em;}  
+
+  .toc1 {margin-left:1em;}
+  .toc2 {margin-left:2em;}
+  .toc3 {margin-left:3em;}
+  .toc4 {margin-left:4em;}  
+
+div.tabledit {text-align:right;font-size:smaller;}
+.todo-form { border: none; }
+.todo-form tr td { border: none; font-weight: plain; text-align: left; padding: 4px; }
+.todo-form tr td.heading { text-align: right; width: 140px; padding-right: 6px; }
+table.todo-list { border: 2px solid #ccc; }
+table.todo-list tr.row1 { background-color: #eee; color: #555; }
+table.todo-list tr.row1 td { border-bottom: 2px solid #ccc; }
+table.todo-list tr:last-child.row1 td { border-bottom: none; }
+table.todo-list th { background-color: #ddd; padding: 3px; font-weight: normal; border: 1px solid #ccc; color: #444; }
+table.todo-list tr td { color: #666; }
+table.todo-simple-list { margin-left: 0px; }
+table.todo-simple-list tr td { border: none; padding: 4px; }
+.todo-category-text { color: #666; border-bottom: 1px solid #ccc; }
+.todo-description-text { color: #444; }
+.todo-overdue-text { color: #f66; border-bottom: 1px solid #ccc; }
+.todo-completed-text { color: #446600; border-bottom: 1px solid #ccc; }
+.todo-legend { text-align: center; color: #555; font-size: smaller; }.editconflict { color:green; 
+  font-style:italic; margin-top:1.33em; margin-bottom:1.33em; }
+
+  table.markup { border:2px dotted #ccf; width:90%; }
+  td.markup1, td.markup2 { padding-left:10px; padding-right:10px; }
+  table.vert td.markup1 { border-bottom:1px solid #ccf; }
+  table.horiz td.markup1 { width:23em; border-right:1px solid #ccf; }
+  table.markup caption { text-align:left; }
+  div.faq p, div.faq pre { margin-left:2em; }
+  div.faq p.question { margin:1em 0 0.75em 0; font-weight:bold; }
+   
+    .frame 
+      { border:1px solid #cccccc; padding:4px; background-color:#f9f9f9; }
+    .lfloat { float:left; margin-right:0.5em; }
+    .rfloat { float:right; margin-left:0.5em; }
+a.varlink { text-decoration:none; }
+
+--></style>
+  <script> jsMath = {Controls: {cookie: {scale: 120}}} </script>
+  <script src="http://wikis.cs.huji.ac.il/compbio/pub/jsMath/plugins/autoload.js"></script>
+
+  <link href='http://wikis.cs.huji.ac.il/compbio/pub}/commentboxplus/commentboxplus.css' rel='stylesheet' type='text/css' />  <meta name='robots' content='index,follow' />
+
+</head>
+<body>
+<div id='wrapper'>
+<!--PageHeaderFmt-->
+	<div id='header' onclick='location.href="http://wikis.cs.huji.ac.il/compbio/index.php";' style='cursor:pointer;'>
+		<h1 id='title'><a href='http://wikis.cs.huji.ac.il/compbio/index.php' title='CompBio@HUJI'>CompBio@HUJI</a></h1>
+		<p id='description'><a href='http://wikis.cs.huji.ac.il/compbio/index.php?n=MultiYeastRNAseq'>MultiYeastRNAseq</a> / <a href='http://wikis.cs.huji.ac.il/compbio/index.php?n=MultiYeastRNAseq.README'>README</a></p>
+	</div>
+<!--/PageHeaderFmt-->
+
+<div id='container'>
+	<div id='content' class='widecolumn'>
+	<!--PageText-->
+<div id='wikitext'>
+<p><h1>
+README file for the project</h1><p>
+<p><strong> Table of Contents</strong>
+</p>
+<p class='vspace'><div class='tocstyle'>
+<span class='toc2'>
+      - <a href='#ntoc1'>set Trinity root dir</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc2'>get fastq files</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc3'>run Trinity per species</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc4'>clean Trinity</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc5'>prepare files for merging and clipping</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc6'>map assemblies to genome</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc7'>map reads (all)  to genome</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc8'>calculate jaccard stats for merging</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc9'>decide what to merge</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc10'>merge assemblies</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc11'>clip merged assemblies</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc12'>prepare files for RSEM on Trinity output</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc13'>run RSEM on the Trinity output</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc14'>divide assemblies into groups according to the decision tree</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc15'>re-open the new MatchAssemblies2Transcripts_final - NEW NEW NEW</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc16'>extract the filtered assemblies </a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc17'>match assemblies to transcripts - find best reciprocal hit</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc18'>generate psl files of best matched assemblies to the genome</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc19'>find best AS assemblies</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc20'>prepare files for AS and transcripts RSEM</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc21'>run RSEM on the transcripts + AS</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc22'>compare fpkm of transcript and AS</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc23'>generate wiki page</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc24'>QC measures - % of reads mapped to assemblies</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc25'>QC measures - % of annotated genes covered by a single best reciprocal hit</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc26'>combine all .fpkm files per species</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc27'>prepare files for ORF finding on Trinity output</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc28'>run ORF finding on the Trinity output</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc29'>prepare directories for mapping reads to genome</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc30'>Match reads to genome</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc31'>prepare files for generating igv tracks of mapped reads</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc32'>generate igv tracks for each condition in each species (of mapped reads)</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc33'>prepare files for RSEM on konwn transcripts</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc34'>RSEM on konwn transcripts</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc35'>prepare files for matching assemblies to known transcripts</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc36'>Map assemblies to genome (for matching assemblies to known transcripts)</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc37'>Find best reciprocal hit between assemblies and known transcripts</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc38'>generate bed files with as and sense colored differently</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc39'>create OG files</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc40'>generate AS files</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc41'>OG antisense enrichment analysis</a></span><br />
+<span class='toc3'>
+      - <a href='#ntoc42'>not used</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc43'>generate igv tracks</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc44'>generate the igv sessions</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc45'>KS plots of transcripts we found and not, in rpkm from RSEM </a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc46'>Find a classifier to distinguish good and bad assemblies</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc47'>compare AS from GB paper to those found here</a></span><br />
+<span class='toc1'>
+      - <a href='#ntoc48'>Website</a></span><br />
+<span class='toc2'>
+      - <a href='#ntoc49'>Generate tree files</a></span><br /></div>
+</p><hr />
+<p><h2>
+<a name='ntoc1' id='ntoc1'></a>set Trinity root dir</h2><p>
+<p>This can be changed to a specific version, or just the latest
+</p>
+<div class='vspace'></div><pre> set TRINITY_RNASEQ_ROOT = /seq/annotation/bio_tools/trinityrnaseq/current/
+</pre><p>or 
+</p><pre> set TRINITY_RNASEQ_ROOT = /seq/annotation/bio_tools/trinityrnaseq/trinityrnaseq_r2012-04-27/
+</pre><p class='vspace'><h2>
+<a name='ntoc2' id='ntoc2'></a>get fastq files</h2><p>
+<pre class='escaped'>
+foreach s (`cat speciesNScer`)
+   cd $s/Raw/
+   foreach c (log plat hs)
+      cd $c
+      foreach f (*duplicates_marked.bam)
+         set file = $f:r
+	 set out = $file:r
+	 bsub -q hour -P multi -J rev.$s.$c.$l -oo tmp.$s.$c.$l.out ~moran/bin/revert_bam.sh ${file}.bam
+      end
+      cd ../
+   end
+   cd ../../ 
+end
+
+foreach s (`cat speciesNScer`)
+   cd $s/Raw/
+   foreach c (log plat hs)
+      cd $c
+      foreach f (*duplicates_marked.bam)
+         set file = $f:r 
+	 set out = $file:r:r
+	 bsub -q hour -P multi -J rev.$s.$c -oo tmp.$s.$c.out \
+	 /seq/annotation/bio_tools/OBA/rnaSeq/perl/run_SortedBamToPairedFastq.sh ${file}.reverted.bam ${out}.left.fq ${out}.right.fq
+      end
+      cd ../
+   end
+   cd ../../
+end
+
+
+foreach s (`cat speciesNScer`)
+   cd $s/Raw/
+   foreach c (log plat hs)
+      cd $c
+      cat 6*.left.fq &gt; ! $s.$c.left.fq &amp;
+      cat 6*.right.fq &gt; ! $s.$c.right.fq &amp; 
+      rm -f *.reverted.bam &amp;
+      cd ../
+   end
+   cd ../../
+end
+
+foreach s (`cat speciesNScer`)
+   cd $s/Raw/
+   cat */*left.fq &gt; ! $s.all.left.fq &amp;
+   cat */*right.fq &gt; ! $s.all.right.fq &amp;
+   cd ../../
+end
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc3' id='ntoc3'></a>run Trinity per species</h2><p>
+<pre class='escaped'>
+set c = all
+foreach s (`cat species`)
+cd $s
+mkdir TrinityAll
+bsub -q regevlab -R "rusage[mem=50]" -P Multi -g /regev/moran/MultiYeast/runTrinity -J Trinity.$s -oo TrinityAll/tmp.$s.Trinity.out\
+$TRINITY_RNASEQ_ROOT/Trinity.pl \
+--seqType fq --left Raw/$s.$c.left.fq --right Raw/$s.$c.right.fq \
+--kmer_method jellyfish --max_memory 50G \
+--SS_lib_type RF  \
+--CPU=6 \
+--output TrinityAll 
+cd ../
+end
+</pre>
+<p class='vspace'><h2>
+<a name='ntoc4' id='ntoc4'></a>clean Trinity</h2><p>
+<pre class='escaped'>
+rm -f */TrinityAll/both.fa
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc5' id='ntoc5'></a>prepare files for merging and clipping</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s/TrinityAll/
+mkdir JaccardMergeAndClip
+cd JaccardMergeAndClip
+mkdir $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/JaccardMerging
+mkdir $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/JaccardClipping
+
+ln -s $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/JaccardMerging Merging
+ln -s $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/JaccardClipping Clipping
+ln -s ../Trinity.fasta $s.all.Trinity.fasta
+pushd Merging
+ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/TrinityAll/Trinity.fasta $s.all.Trinity.fasta
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/GenomicSeqsAndAnnotations/$s/$s-genome.fasta .
+ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/Raw/*all.*.fq .
+popd
+cd ../../../
+end
+
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc6' id='ntoc6'></a>map assemblies to genome</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+foreach s ( Scer Sbay Cgla Klac Kpol Calb Kwal )
+pushd $s/TrinityAll/JaccardMergeAndClip/Merging
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g /regev/moran/MultiYeast/map2GenAssemb -J map2GenAssemblies.$s -oo tmp.map2GenAssemblies.$s.out\
+~/Work/MultiSpeciesRNAseq/Scripts/GMAPwrapper.pl $s-genome.fasta \
+$s.all.Trinity.fasta $s.all.Trinity.mappedToGenome.psl 2000 1 10
+popd
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc7' id='ntoc7'></a>map reads (all)  to genome</h2><p>
+<pre class='escaped'>
+
+foreach s (`cat species`)
+foreach s ( Scer Sbay Cgla Klac Kpol Calb Kwal )
+pushd $s/TrinityAll/JaccardMergeAndClip/Merging
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g /regev/moran/MultiYeast/GenomicMapReads -J map2GenReads.$s -oo tmp.map2Genome.$s.out \
+$TRINITY_RNASEQ_ROOT/util/alignReads.pl --target $s-genome.fasta --aligner BLAT --SS_lib_type RF \
+--o mappingReads --seqType fq --right $s.all.right.fq --left $s.all.left.fq --retain_SAM_files
+popd
+end
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc8' id='ntoc8'></a>calculate jaccard stats for merging</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+foreach s ( Scer Sbay Cgla Klac Kpol Calb Kwal )
+foreach s (Scas Ylip Spom Soct)
+pushd $s/TrinityAll/JaccardMergeAndClip/Merging
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g /regev/moran/MultiYeast/jaccardStats -J jacc.$s -oo tmp.jacStats.$s.out \
+~/Work/MultiYeastSpeciesRNAseq/Scripts/jaccardStats.pl --coord_sorted_sam mappingReads/mappingReads.coordSorted.sam
+popd
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc9' id='ntoc9'></a>decide what to merge</h2><p>
+<pre class='escaped'>
+
+foreach s (`cat species`)
+pushd $s/TrinityAll/JaccardMergeAndClip/Merging
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g /regev/moran/MultiYeast/jaccard -J jacc.$s -oo tmp.jaccMergeList.$s.out \
+~/Work/MultiYeastSpeciesRNAseq/Scripts/jaccardGenerateMergeList.pl --coord_sorted_sam mappingReads.coordSorted.sam \
+--mappedToGenome_psl_file $s.all.Trinity.mappedToGenome.psl --output_file combinedSeqs.tab 
+popd
+end
+
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc10' id='ntoc10'></a>merge assemblies</h2><p>
+<pre class='escaped'>
+foreach s ( `cat species`)
+pushd $s/TrinityAll/JaccardMergeAndClip/Merging
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g \
+/regev/moran/MultiYeast/jaccard -J jacc.$s -oo  tmp.mergeAssemblies.$s.out -eo tmp.mergeAssemblies.$s.err \
+~/Work/MultiYeastSpeciesRNAseq/Scripts/combineAssemblies_noTails.pl \
+--TrinityAssembliesFasta $s.all.Trinity.fasta --combinedSeq_file combinedSeqs.tab \
+--mappedToGenome_psl_file $s.all.Trinity.mappedToGenome.psl --genome_fasta_file $s-genome.fasta --output_fasta_file $s.all.Trinity.merged.fasta
+popd 
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc11' id='ntoc11'></a>clip merged assemblies</h2><p>
+<p>prepare files
+</p><pre class='escaped'>
+foreach s ( `cat species`)
+mkdir $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/JaccardClipping
+ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/Raw/*all.*fq $s/TrinityAll/JaccardMergeAndClip/Clipping/
+ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/TrinityAll/JaccardMergeAndClip/Merging/$s.all.Trinity.merged.fasta $s/TrinityAll/JaccardMergeAndClip/Clipping/
+mkdir $s/TrinityAll/JaccardMergeAndClip/Clipping/work_dir
+end
+
+</pre>
+<div class='vspace'></div><pre class='escaped'>
+foreach s (`cat species`)
+pushd $s/TrinityAll/JaccardMergeAndClip/Clipping
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g \
+/regev/moran/MultiYeast/jaccard -J jacc.$s -oo  tmp.clipAssemblies.$s.out -eo tmp.clipAssemblies.$s.err \
+~/Work/MultiYeastSpeciesRNAseq/Scripts/inchworm_transcript_splitter.pl --iworm $s.all.Trinity.merged.fasta \
+--left $s.all.left.fq --right $s.all.right.fq --seqType fq --SS_lib_type RF --work_dir work_dir 
+popd
+end
+
+
+foreach s (`cat species`)
+pushd $s/TrinityAll/JaccardMergeAndClip/Clipping
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g \
+/regev/moran/MultiYeast/jaccard -J jacc.$s -oo  tmp.clipAssemblies.$s.out -eo tmp.clipAssemblies.$s.err \
+~/Work/MultiSpeciesRNAseq/Scripts/inchworm_transcript_splitter.pl --iworm $s.all.Trinity.merged.fasta \
+--left $s.all.left.fq --right $s.all.right.fq --seqType fq --SS_lib_type RF --work_dir work_dir 
+popd
+end
+
+
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc12' id='ntoc12'></a>prepare files for RSEM on Trinity output</h2><p>
+<pre class='escaped'>
+foreach s (`cat speciesNScer`)
+   cd $s
+   rm -rf TrinityExpression
+   mkdir TrinityExpression
+   cd TrinityExpression
+   ln -s  ~/Work/MultiYeastSpeciesRNAseq/$s/TrinityAll/JaccardMergeAndClip/Clipping/$s.all.Trinity.merged.fasta.clipped.fa $s.all.Trinity.fasta
+   foreach c (plat log hs)
+      mkdir $c
+      cd $c
+      rm -rf $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/$c
+      mkdir $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/$c
+      mkdir $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/$c/TrinityExpression_bowtie
+      ln -s $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/$c/TrinityExpression_bowtie bowtie_out
+      ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/Raw/$c/$s.$c.*.fq .
+      cd ../
+   end
+   cd ../../
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc13' id='ntoc13'></a>run RSEM on the Trinity output</h2><p>
+<p>This is done to start the filtering of the multiple assemblies output
+</p>
+<p class='vspace'>clean prev files
+</p><pre class='escaped'>
+rm -f */TrinityExpression/*/*.fpkm
+rm -rf */TrinityExpression/*/RSEM*
+rm -rf */TrinityExpression/*/TRANS*
+rm -rf */TrinityExpression/*/tmp*
+rm -rf */TrinityExpression/*/bowtie_out
+rm -rf */TrinityExpression/*/*.seqLens
+</pre>
+<pre class='escaped'> 
+foreach s (`cat speciesNScer`)
+foreach s (Sbay Cgla Scas Klac Kwal Calb)
+foreach s (Kpol Ylip Spom Soct Sjap)
+cd $s/TrinityExpression/
+foreach c (hs plat log)
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/TrinityRSEM -J TrinityRSEM.$s.$c -oo $c/tmp.$s.$c.TrinityRSEM.out \
+~/Work/MultiYeastSpeciesRNAseq/Scripts/RSEMwrapper.sh $s $c $s.all.Trinity.fasta $TRINITY_RNASEQ_ROOT
+end
+cd ../../
+end
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc14' id='ntoc14'></a>divide assemblies into groups according to the decision tree</h2><p>
+<p>prepare files of length, min/media/max fpkm
+</p><pre class='escaped'>
+foreach s (`cat species`)
+cd $s/TrinityExpression/
+bsub -q regevlab -P Multi -g /regev/moran/MultiYeast/filter -J divideGroups.$s -oo tmp.divide2groups.$s.out\
+matlab -nodisplay -r "addpath('../../Scripts'); generateFileForGroupDivision('$s')" &lt; /dev/null
+cd ../../
+end
+</pre>
+<p class='vspace'>divide the assemblies into groups
+</p><pre class='escaped'>
+foreach s (`cat species`)
+cd $s/TrinityExpression/
+../../Scripts/divideAssembliesToGroups.pl --tab_file allAssembliesStats.txt --output decision.tab
+cd ../../
+end
+</pre>
+<p class='vspace'><h2>
+<a name='ntoc15' id='ntoc15'></a>re-open the new <span class='wikiword'>MatchAssemblies2Transcripts</span>_final - NEW NEW NEW</h2><p>
+<p>prepare files:
+</p><pre class='escaped'> 
+foreach s (`cat species`)
+mkdir $s/MatchAssemblies2Transcripts_final/
+cd $s/MatchAssemblies2Transcripts_final/
+ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/TrinityAll/JaccardMergeAndClip/Clipping/$s.all.Trinity.merged.fasta.clipped.fa .
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/GenomicSeqsAndAnnotations/$s/$s-transcripts.fasta .
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/GenomicSeqsAndAnnotations/$s/$s-genome.fasta* .
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/Locations/$s-locations.alias.txt .
+cd ../../
+end
+
+generate bed files according to groups
+[@
+foreach s (`cat species`)
+cd $s/TrinityExpression/
+../../Scripts/psl2groupsColor.pl --psl ../MatchAssemblies2Transcripts_final/$s.all.Trinity.merged.fasta.clipped.mappedToGenome.wCounts.psl \
+--groups decision.tab --out $s.all.Trinity.mappedToGenome &amp;
+cd ../../
+end
+</pre>
+<p class='vspace'>find the non redundant set of assemblies, according to their group, and maxFPKM
+</p><pre class='escaped'>
+foreach s (`cat species`)
+cd $s/TrinityExpression/
+bsub -q regevlab -P Multi -g /regev/moran/MultiYeast/filter -J nonRedun.$s -oo tmp.nonRedun.$s.out\
+matlab -nodisplay -r "addpath('../../Scripts'); findNonRedundantAssemblies('$s',1)" &lt; /dev/null
+cd ../../
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc16' id='ntoc16'></a>extract the filtered assemblies </h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s/TrinityExpression/
+../../Scripts/filterAssembliesAccordingToFinalBed.pl --final_bed $s.all.Trinity.mappedToGenome.final.bed \
+--all ../MatchAssemblies2Transcripts_final/$s.all.Trinity.merged.fasta.clipped.fa \
+--out ../MatchAssemblies2Transcripts_final/$s.all.Trinity.final.fasta &amp;
+cd ../../
+end
+</pre>
+<p class='vspace'><h2>
+<a name='ntoc17' id='ntoc17'></a>match assemblies to transcripts - find best reciprocal hit</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s/MatchAssemblies2Transcripts_final/
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/matchToKnown -J bestRecip.$s -oo tmp.bestRecip.$s.out\
+~/Work/MultiSpeciesRNAseq/Scripts/FindBestReciprocalHit.pl --target $s-transcripts.fasta \
+--query $s.all.Trinity.final.fasta --forward_orient
+cd ../../
+end
+</pre>
+<hr />
+<p class='vspace'><h2>
+<a name='ntoc18' id='ntoc18'></a>generate psl files of best matched assemblies to the genome</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s/MatchAssemblies2Transcripts_final/
+echo $s bestMatchInPSLfile
+~/Work/MultiSpeciesRNAseq/Scripts/findBestMatchInPSL.pl --psl_file $s.all.Trinity.merged.fasta.clipped.mappedToGenome.wCounts.psl \
+--location_file $s-locations.alias.txt --bestMatches_file bestMatches.out \
+--output $s.bestMatches.mappedToGenome.psl
+
+cd ../../
+end
+</pre>
+<p class='vspace'><h2>
+<a name='ntoc19' id='ntoc19'></a>find best AS assemblies</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+bsub -q regevlab -P Multi -g /regev/moran/MultiYeast/matchToKnown -J findAS.$s -oo $s/MatchAssemblies2Transcripts_final/tmp.as.$s.out\
+matlab -nodisplay -r "addpath('Scripts'); findBestASassembly_onORF('$s')" &lt; /dev/null
+end
+</pre>
+<p class='vspace'>map as seqs to the genome, for varification
+</p><pre class='escaped'>
+set s = 'Scer'
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g /regev/moran/MultiYeast/map2GenAssemb -J map2GenASAssemblies.$s -oo tmp.map2GenASAssemblies.$s.out\
+~/Work/MultiSpeciesRNAseq/Scripts/GMAPwrapper.pl $s-genome.fasta \
+$s.asSeqs.fa $s.asSeqs.fa.psl 2000 1 10
+end
+</pre>
+<p class='vspace'><h2>
+<a name='ntoc20' id='ntoc20'></a>prepare files for AS and transcripts RSEM</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+   mkdir $s/Antisense/
+   cd $s/Antisense/
+   foreach c (plat log hs)
+      mkdir $c
+      cd $c
+      rm -rf $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/$c/Antisense_bowtie
+      mkdir $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/$c/Antisense_bowtie
+      ln -s $TMP_BROAD/MultiYeastSpeciesRNAseq/$s/$c/Antisense_bowtie bowtie_out
+      ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/Raw/$c/$s.$c.*.fq .
+      cd ../
+   end
+   cd ../../
+end
+</pre>
+<p class='vspace'><h2>
+<a name='ntoc21' id='ntoc21'></a>run RSEM on the transcripts + AS</h2><p>
+<pre class='escaped'>
+rm -f */Antisense/*/*.fpkm
+rm -rf */Antisense/*/RSEM*
+rm -rf */Antisense/*/TRANS*
+rm -rf */Antisense/*/tmp*
+rm -rf */Antisense/*/bowtie_out/*
+rm -rf */Antisense/*/*.seqLens
+
+set s = 'Kwal'
+foreach s (Sbay Cgla Scas Klac Calb)
+foreach s (Ylip Spom Soct Sjap)
+foreach s (`cat species`)
+cd $s/Antisense/
+cat ../../$s/MatchAssemblies2Transcripts_final/$s.asSeqs.fa ../../$s/MatchAssemblies2Transcripts_final/$s-transcripts.fasta \
+&gt;! tmp.fasta
+/home/unix/bhaas/utilities/fasta_file_reformatter.pl tmp.fasta &gt;! $s-transcriptsAndAS.fasta 
+foreach c (hs plat log)
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/AntisenseRSEM -J AntisenseRSEM.$s.$c -oo $c/tmp.$s.$c.AntisenseRSEM.out \
+~/Work/MultiYeastSpeciesRNAseq/Scripts/RSEMwrapper.sh $s $c $s-transcriptsAndAS.fasta /seq/annotation/bio_tools/trinityrnaseq/trinityrnaseq_r2012-06-08/
+end
+cd ../../
+end
+
+
+</pre>
+<p class='vspace'><h2>
+<a name='ntoc22' id='ntoc22'></a>compare fpkm of transcript and AS</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+bsub -q regevlab -P Multi -g /regev/moran/MultiYeast/Antisense -J findAS.$s -oo $s/Antisense/tmp.as.$s.out\
+matlab -nodisplay -r "addpath('Scripts'); compareFPKMas('$s')" &lt; /dev/null
+end
+
+foreach s (`cat species`)
+bsub -q regevlab -P Multi -g /regev/moran/MultiYeast/Antisense -J figs.$s -oo $s/Antisense/tmp.asFigs.$s.out\
+matlab -nodisplay -r "addpath('Scripts'); generateFigsFPKM('$s')" &lt; /dev/null
+end
+</pre>
+<p class='vspace'><h2>
+<a name='ntoc23' id='ntoc23'></a>generate wiki page</h2><p>
+<pre class='escaped'>
+rm -f tmp.txt
+touch tmp.txt
+echo "(:table border=1:)" &gt;&gt; tmp.txt
+foreach s ( `cat species` )
+echo "(:cellnr:)" $s &gt;&gt; tmp.txt
+foreach f ( `ls -1 $s/Antisense/*.png` )
+echo "(:cell:) %width=300px% [[Attach:”$f:at” || Attach:” $f:at "]]" | sed 's/Attach: /Attach:/g' &gt;&gt; tmp.txt
+end
+end
+echo "(:tableend:)" &gt;&gt; tmp.txt
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc24' id='ntoc24'></a>QC measures - % of reads mapped to assemblies</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s/TrinityExpression/
+foreach c (hs plat log)
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/QC -J readsQC.$s.$c -oo $c/tmp.$s.$c.QCperReads.out \
+~/Work/MultiYeastSpeciesRNAseq/Scripts/QC_numReadsMatchedToAssebmlies.pl \
+--name_sorted_paired_reads_sam $c/bowtie_out/bowtie_out.nameSorted.sam.+.sam \
+--assemblyFasta $s.all.Trinity.fasta --output $c/QC_stats.out
+end
+cd ../../
+end
+
+!! QC measures - % of reads mapped to filtered assemblies
+[@
+foreach s (`cat species`)
+cd $s/TrinityExpression/
+foreach c (hs plat log)
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/QC -J readsQC.$s.$c -oo $c/tmp.$s.$c.QCperReads.merged.out \
+~/Work/MultiYeastSpeciesRNAseq/Scripts/QC_numReadsMatchedToAssebmlies.pl \
+--name_sorted_paired_reads_sam $c/bowtie_out/bowtie_out.nameSorted.sam.+.sam \
+--assemblyFasta ../TrinityAll/Trinity.filtered.fasta --output $c/QC_stats.filtered.out
+end
+cd ../../
+end
+
+!! QC measures - % of reads mapped to merged assemblies
+[@
+foreach s (`cat species`)
+cd $s/TrinityExpression/
+ln -s ../TrinityAll/JaccardMergeAndClip/Merging/$s.all.Trinity.merged.fasta
+foreach c (hs plat log)
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/QC -J readsQC.$s.$c -oo $c/tmp.$s.$c.QCperReadsMerged.out \
+~/Work/MultiYeastSpeciesRNAseq/Scripts/QC_numReadsMatchedToAssebmlies.pl \
+--name_sorted_paired_reads_sam $c/bowtie_out/bowtie_out.nameSorted.sam.+.sam \
+--assemblyFasta $s.all.Trinity.merged.fasta --output $c/QC_stats.merged.out
+end
+cd ../../
+end
+
+
+foreach s (`cat species`)
+( echo -n  $s"\t" &amp;&amp; head -1 $s/TrinityExpression/hs/QC_stats.out) &gt;! $s/QC.out
+foreach c ( hs plat log )
+echo -n $s.$c"\t" &gt;&gt; $s/QC.out
+awk '(FNR==2)' $s/TrinityExpression/$c/QC_stats.out &gt;&gt; $s/QC.out
+end
+end
+
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc25' id='ntoc25'></a>QC measures - % of annotated genes covered by a single best reciprocal hit</h2><p>
+<p>prepare files:
+</p><pre class='escaped'> 
+foreach s (`cat species`)
+mkdir $s/MatchAssemblies2Transcripts_JaccMerged/
+cd $s/MatchAssemblies2Transcripts_JaccMerged/
+ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/TrinityAll/JaccardMergeAndClip/Merging/$s.all.Trinity.merged.fasta .
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/GenomicSeqsAndAnnotations/$s/$s-transcripts.fasta .
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/GenomicSeqsAndAnnotations/$s/$s-genome.fasta* .
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/Locations/$s-locations.alias.txt .
+cd ../../
+end
+</pre>
+<p>map merged transcripts to genome
+</p><pre class='escaped'>
+foreach s (`cat species`)
+cd $s/MatchAssemblies2Transcripts_JaccMerged/
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/matchToKnown -J map2Gen.$s -oo tmp.map2Genome.$s.out\
+~/Work/MultiSpeciesRNAseq/Scripts/GMAPwrapper.pl $s-genome.fasta \
+$s.all.Trinity.merged.fasta $s.all.Trinity.merged.mappedToGenome.psl 2000 1 10
+cd ../../
+end
+</pre>
+<p class='vspace'>find best reciprocal hit
+</p><pre class='escaped'>
+foreach s (`cat species`)
+cd $s/MatchAssemblies2Transcripts_JaccMerged/
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/matchToKnown -J bestRecip.$s -oo tmp.bestRecip.$s.out\
+~/Work/MultiSpeciesRNAseq/Scripts/FindBestReciprocalHit.pl --target $s-transcripts.fasta --query $s.all.Trinity.merged.fasta --forward_orient
+cd ../../
+end
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc26' id='ntoc26'></a>combine all .fpkm files per species</h2><p>
+<p>Then, we can filter for the assemblies that have at least one condition where per_comp&gt;0
+</p><pre class='escaped'>
+foreach s (`cat species`)
+paste 
+
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc27' id='ntoc27'></a>prepare files for ORF finding on Trinity output</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+   cd $s
+   mkdir TrinityORFs
+   cd TrinityORFs
+   ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/TrinityAll/Trinity.fasta $s.all.Trinity.fasta
+   cd ../../
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc28' id='ntoc28'></a>run ORF finding on the Trinity output</h2><p>
+<p>This is done to start the filtering of the multiple assemblies output
+</p><pre class='escaped'>
+foreach s (`cat species`)
+cd $s/TrinityORFs/
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/TrinityORF -J TrinityORF.$s -oo tmp.$s.all.TrinityORF.out \
+$TRINITY_RNASEQ_ROOT/Analysis/Coding/transcripts_to_best_scoring_ORFs.pl \
+-t $s.all.Trinity.fasta -m 30
+cd ../../
+end
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc29' id='ntoc29'></a>prepare directories for mapping reads to genome</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s
+mkdir GenomeMappedReads
+cd GenomeMappedReads
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/GenomicSeqsAndAnnotations/$s/$s-genome.fasta .
+foreach c (log plat hs)
+mkdir $c
+cd $c
+ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/Raw/$c/$s.$c.*.fq .
+ln -s /broad/shptmp/moran/MultiYeastSpeciesRNAseq/$s/$c/GenomeMappedReadsBLAT BLAT_out
+cd ../
+end
+cd ../../
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc30' id='ntoc30'></a>Match reads to genome</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s/GenomeMappedReads/
+foreach c (log plat hs)
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g /regev/moran/MultiYeast/GenomicMap -J map2Gen.$c.$s -oo tmp.map2Genome.$s.$c.out \
+$TRINITY_RNASEQ_ROOT/util/alignReads.pl \
+--left $c/$s.$c.left.fq --right $c/$s.$c.right.fq --seqType fq \
+--target $s-genome.fasta --aligner BLAT --SS_lib_type RF --o $c/BLAT_out
+end
+cd ../../
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc31' id='ntoc31'></a>prepare files for generating igv tracks of mapped reads</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s/GenomeMappedReads/
+foreach c (log plat hs)
+cd $c/
+cp BLAT_out/BLAT_out.coordSorted.sam.?.bam . &amp;
+cd ../
+end
+cd ../../
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc32' id='ntoc32'></a>generate igv tracks for each condition in each species (of mapped reads)</h2><p>
+<pre class='escaped'>
+use Samtools
+foreach s (`cat species`)
+cd $s/GenomeMappedReads/
+foreach c (log plat hs)
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g /regev/moran/MultiYeast/GenomicMap -J index.$c.$s -oo tmp.index.$s.$c.out \
+samtools index $c/BLAT_out.coordSorted.sam.+.bam $c/BLAT_out.coordSorted.sam.+.bam.bai
+bsub -q regevlab -R "rusage[mem=15]" -P MultiYeast -g /regev/moran/MultiYeast/GenomicMap -J index.$c.$s -oo tmp.index.$s.$c.out \
+samtools index $c/BLAT_out.coordSorted.sam.-.bam $c/BLAT_out.coordSorted.sam.-.bam.bai
+end
+cd ../../
+end
+
+pushd ~/www/MultiSpeciesRNAseq
+foreach s (`cat species`)
+cd $s
+foreach c (log plat hs)
+foreach w (+ -)
+ln -s ~/Work/MultiSpeciesRNAseq/$s/GenomeMappedReads/$c/BLAT_out.coordSorted.sam.$w.bam $s.$c.BLAT.$w.bam
+ln -s ~/Work/MultiSpeciesRNAseq/$s/GenomeMappedReads/$c/BLAT_out.coordSorted.sam.$w.bam.bai $s.$c.BLAT.$w.bam.bai
+end
+end
+cd ../
+end
+popd
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc33' id='ntoc33'></a>prepare files for RSEM on konwn transcripts</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+   cd $s
+   mkdir KnownTranscriptsExpression
+   cd KnownTranscriptsExpression
+   foreach c (all plat log hs)
+      mkdir $c
+      ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/GenomicSeqsAndAnnotations/$s/$s-transcripts.fasta .
+      cd $c
+      mkdir /broad/shptmp/moran/MultiYeastSpeciesRNAseq/$s/$c/KnownTranscriptsExpression_bowtie
+      ln -s /broad/shptmp/moran/MultiYeastSpeciesRNAseq/$s/$c/KnownTranscriptsExpression_bowtie bowtie_out
+      ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/Raw/$c/$s.$c.*.fq .
+      cd ../
+   end
+   cd ../../
+end
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc34' id='ntoc34'></a>RSEM on konwn transcripts</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s/KnownTranscriptsExpression/
+foreach c (hs plat log)
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/KnownTranRSEM -J KnownRSEM.$s.$c -oo $c/tmp.$s.$c.KnownRSEM.out\
+~/Work/MultiYeastSpeciesRNAseq/Scripts/RSEMwrapper.sh $s $c $s-transcripts.fasta
+end
+cd ../../
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc35' id='ntoc35'></a>prepare files for matching assemblies to known transcripts</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s
+mkdir MatchAssemblies2Transcripts_JaccMergedAndClipped
+cd MatchAssemblies2Transcripts_JaccMergedAndClipped
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/GenomicSeqsAndAnnotations/$s/$s-transcripts.fasta .
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/GenomicSeqsAndAnnotations/$s/$s-genome.fasta* .
+ln -s ~/Work/MultiYeastSpeciesRNAseq/Orthogroups/Locations/$s-locations.alias.txt .
+ln -s ~/Work/MultiYeastSpeciesRNAseq/$s/TrinityAll/JaccardMergeAndClip/Clipping/$s.all.Trinity.merged.fasta.clipped.fa .
+cd ../../
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc36' id='ntoc36'></a>Map assemblies to genome (for matching assemblies to known transcripts)</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s/MatchAssemblies2Transcripts_JaccMergedAndClipped/
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/matchToKnown -J map2Gen.$s -oo tmp.map2Genome.$s.out\
+~/Work/MultiSpeciesRNAseq/Scripts/GMAPwrapper.pl $s-genome.fasta \
+$s.all.Trinity.merged.fasta.clipped.fa $s.all.Trinity.merged.fasta.clipped.mappedToGenome.psl 2000 1 10
+cd ../../
+end
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc37' id='ntoc37'></a>Find best reciprocal hit between assemblies and known transcripts</h2><p>
+<pre class='escaped'>
+foreach s (`cat species`)
+cd $s/MatchAssemblies2Transcripts_JaccMergedAndClipped/
+bsub -q regevlab -R "rusage[mem=15]" -P Multi -g /regev/moran/MultiYeast/matchToKnown -J bestRecip.$s -oo tmp.bestRecip.$s.out\
+~/Work/MultiSpeciesRNAseq/Scripts/FindBestReciprocalHit.pl --target $s-transcripts.fasta \
+--query $s.all.Trinity.final.fasta --forward_orient
+cd ../../
+end
+</pre>
+<hr />
+<p class='vspace'>foreach s (`cat species`)
+</p>
+<p class='vspace'>echo $s addingCounts
+~/<span class='wikiword'>Work/MultiSpeciesRNAseq</span>/Scripts/addCountsToPsl.pl --psl_file $s.all.Trinity.merged.fasta.clipped.mappedToGenome.psl--output $s.all.Trinity.merged.fasta.clipped.mappedToGenome.wCounts.psl
+end
+</p>
+<div class='vspace'></div><pre class='escaped'>
+echo "SPECIES\tSENSE\tAS\tTOTAL\tSENSE_PER\tAS_PER" &gt;! all.senseAndASstats.txt
+foreach s (`cat species`)
+set t = `grep "&gt;" Orthogroups/GenomicSeqsAndAnnotations/$s/$s-transcripts.fasta | wc -l `
+set as = `awk '(FNR&gt;1 &amp;&amp; $3 != "NONE")' $s/MatchAssemblies2Transcripts_JaccMergedAndClipped/bestMatches.withAS.out | wc -l `
+set sn = `awk '(FNR&gt;1 &amp;&amp; $2 != "NONE")' $s/MatchAssemblies2Transcripts_JaccMergedAndClipped/bestMatches.withAS.out | wc -l `
+awk -v s=$s -v t=$t -v as=$as  -v sn=$sn '(FNR==1){OFS="\t"; print s,sn,as,t,sn/t*100,as/t*100}' all.senseAndASstats.txt &gt;&gt; all.senseAndASstats.txt
+end
+</pre>
+<hr />
+<p class='vspace'>CONT HERE!
+</p><p><h2>
+<a name='ntoc38' id='ntoc38'></a>generate bed files with as and sense colored differently</h2><p>
+<pre class='escaped'>
+
+foreach s (`cat species`)
+   echo $s
+   cd $s/MatchAssemblies2Transcripts_JaccMergedAndClipped/
+
+   ~/Work/MultiSpeciesRNAseq/Scripts/findBestMatchInPSL_withAS.pl --psl_file $s.all.Trinity.merged.fasta.clipped.mappedToGenome.wCounts.psl --location_file $s-locations.alias.txt --bestMatches_file bestMatches.withAS.out --output $s.bestMatches.mappedToGenome.withAS.psl
+
+   ~/Work/MultiSpeciesRNAseq/Scripts/psl2bed.pl --psl $s.bestMatches.mappedToGenome.withAS.psl --bed $s.bestMatches.mappedToGenome.withAS.bed
+
+   cd ../../
+end
+
+foreach s (`cat species`)
+pushd ~/www/MultiSpeciesRNAseq/$s
+rm -f *mappedTo*
+ln -s =1/$s/MatchAssemblies2Transcripts_JaccMergedAndClipped/$s.all.Trinity.merged.fasta.clipped.mappedToGenome.wCounts.psl $s.all.Trinity.mappedToGenome.wCounts.psl
+ln -s =1/$s/MatchAssemblies2Transcripts_JaccMergedAndClipped/$s.bestMatches.mappedToGenome.withAS.bed \
+$s.bestMatches.mappedToGenome.withAS.bed
+popd 
+end
+
+
+
+foreach s ( `cat species` )
+set t = `grep "AS" $s/MatchAssemblies2Transcripts/$s.bestMatches.mappedToGenome.withAS.bed | wc -l `
+set f = `grep "(AS" $s/MatchAssemblies2Transcripts/$s.bestMatches.mappedToGenome.withAS.bed | wc -l `
+set p = `grep ",AS" $s/MatchAssemblies2Transcripts/$s.bestMatches.mappedToGenome.withAS.bed | wc -l`
+echo "||" $s "||" $f "||" $p "||"  $t "||"
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc39' id='ntoc39'></a>create OG files</h2><p>
+<pre class='escaped'>
+cd Orthogroups/Orthogroups/
+awk '(FNR%10==2) {print "OG"$0}' all-output.txt | sed 's/sbay/sbay_/g' &gt; ! OG.full.txt
+foreach s ( `cat ../../species` )
+../../Scripts/extractOGperSpecies.pl --OG_file OG.full.txt --species $s
+end
+cd ../../
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc40' id='ntoc40'></a>generate AS files</h2><p>
+<pre class='escaped'>
+mkdir Antisense/
+cd Antisense/
+ln -s ../Orthogroups/Orthogroups/*.OG.out .
+cd ../
+
+foreach s ( `cat species` )
+awk -v s=$s '(FNR&gt;1 &amp;&amp; NF&gt;=3 &amp;&amp; $3!="NONE") {print $1"\t"s}' \
+$s/MatchAssemblies2Transcripts_JaccMergedAndClipped/bestMatches.withAS.out \
+&gt;! Antisense/$s.AS.tab
+end
+
+cd Antisense/
+../Scripts/summarizeASperOG.pl --sp_file ../species --out_file OG.AS.tab
+
+foreach s ( `cat species` )
+Scripts/changeGenesToOG.pl --dat_file $s/Antisense/$s.AS.tab --OG_file Orthogroups/Orthogroups/$s.OG.out --out_file $s/Antisense/$s.AS.OG.tab &gt;! $s/Antisense/$s.genesNotFoundInOG.txt
+end
+
+matlab generateAS_ogMat_withNaN.m
+</pre>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc41' id='ntoc41'></a>OG antisense enrichment analysis</h2><p>
+<pre class='escaped'>
+awk '{if (FNR==1){print $0}else{print "OG"$0}}' cerevisiae.cerevisiae-new_go.og-sets.tab.txt &gt; ! cerevisiae.newGO.withOG.txt
+awk '($2&gt;1){print $1}' ../Orthogroups/OG.full.txt &gt; ! nonSingletonOG.txt
+awk '{if (FNR==1){print $0}else{print "OG"$0}}' cerevisiae.cerevisiae-new_go.og-sets.tab.txt | sed 's/cerevisiae.cerevisiae.new_go.//g' | sed 's/-promoters//g' &gt; ! cerevisiae.newGO.withOG.txt
+awk '{if (FNR==1){print $0}else{print "OG"$0}}' pombe.pombe-biological_process.og-sets.tab.txt | sed 's/pombe.pombe.biological_process.//g' | sed 's/-promoters//g' &gt; ! pombe.withOG.txt
+
+perl ../Scripts/tabHyperGeo_withCorrectGroupSizes.pl all.AS.matrix.noKpol.withNaN.tab cerevisiae.newGO.withOG.txt nonSingletonOG.txt &gt; ! cerevisiae.withNaN.out
+
+awk '(FNR==3 || $2=="meiosis")' cerevisiae.withNaN.out | grep -v "#" | column -t
+
+awk '(FNR==3 || $2=="ribosome")' cerevisiae.withNaN.out | grep -v "#" | column -t
+awk '(FNR==3 || $2=="ribosome.biogenesis.and.assembly")' cerevisiae.withNaN.out | grep -v "#" | column -t
+
+</pre>
+<p class='vspace'><h3>
+<a name='ntoc42' id='ntoc42'></a>not used</h3><p>
+<p>cat */Antisense/*.OG.tab &gt; ! <span class='wikiword'>AntisenseOG</span>/all.AS.tab
+Scripts/list2ZeroOneMat_yeastSpecies.pl --list_file <span class='wikiword'>AntisenseOG</span>/all.AS.tab &gt; ! <span class='wikiword'>AntisenseOG</span>/all.AS.matrix.tab
+</p><hr />
+<p><h2>
+<a name='ntoc43' id='ntoc43'></a>generate igv tracks</h2><p>
+<pre class='escaped'>
+pushd ~/www/MultiSpeciesRNAseq
+foreach s ( `cat species` )
+cd $s/
+ln -s =1/$s/MatchAssemblies2Transcripts/*.bed .
+cd ../
+end
+popd
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc44' id='ntoc44'></a>generate the igv sessions</h2><p>
+<p>after fixing the Ylip session
+</p><pre class='escaped'>
+foreach s ( `cat speciesNScer` )
+cat Ylip/Ylip.igv.xml | sed 's/Ylip/'$s'/g' &gt;! tmp.xml
+mv tmp.xml $s/$s.igv.xml
+end
+</pre>
+<hr />
+<p><h2>
+<a name='ntoc45' id='ntoc45'></a>KS plots of transcripts we found and not, in rpkm from RSEM </h2><p>
+<div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc46' id='ntoc46'></a>Find a classifier to distinguish good and bad assemblies</h2><p>
+<p>prepare files:
+</p><pre class='escaped'>
+cd Scer/TrinityExpression
+paste *.fpkm | awk '(FNR&gt;1){OFS="\t"; print $1,$2,$6,$7,$13,$14,$20,$21}' &gt;! \
+allAssembliesExp.txt
+
+bsub -q regevlab -P Multi -g /regev/moran/MultiYeast/expStats -oo tmp.expStats.out\
+matlab -nodisplay -r "addpath('../../Scripts'); allAssemblies_fpkmStats" &lt; /dev/null
+
+bsub -q regevlab -P Multi -g /regev/moran/MultiYeast/expStats -oo tmp.expStatsMatch.out\
+matlab -nodisplay -r "addpath('../../Scripts'); allAssemblies_match2GenesStats" &lt; /dev/null
+
+bsub -q regevlab -P Multi -g /regev/moran/MultiYeast/expStats -oo tmp.expStats.out\
+matlab -nodisplay -r "addpath('../../Scripts'); allAssemblies_filters" &lt; /dev/null
+</pre>
+<p>not using now:
+</p><pre> Scripts/allAssemblies_ORFsStats.m
+</pre><div class='vspace'></div><hr />
+<p><h2>
+<a name='ntoc47' id='ntoc47'></a>compare AS from GB paper to those found here</h2><p>
+<pre class='escaped'>
+cd /seq/regevlab/MultiYeastSpeciesRNAseq/Scer/AScomparison2GB
+../../Scripts/moveToYNames.pl --input_file GB_genesWithAS.txt --genes_file ../Raw/Scer.names.tab | sed 's/TFP3/YPL234C/' | sed 's/CUP5/YEL027W/' | sed 's/MRS5/YBR091C/' | sort  &gt;! GB_genesWithAS.Ynames.txt
+
+cat Scer.bestMatches.mappedToGenome.withAS.bed | tr '();' '\t' | tr '\t' '\n' | grep AS | sed 's/AS://g' | sort &gt;! foundAS.txt
+../../Scripts/compareFileAtoB.pl --fileA GB_genesWithAS.Ynames.txt --fileB foundAS.txt &gt;! GB_genesWithAS.Ynames.res.out
+</pre>
+<div class='vspace'></div><hr />
+<p><h1>
+<a name='ntoc48' id='ntoc48'></a>Website</h1><p>
+<p><h2>
+<a name='ntoc49' id='ntoc49'></a>Generate tree files</h2><p>
+<pre class='escaped'>
+foreach c ( `seq 0 9` )
+mkdir $c
+foreach d ( `seq 0 9` )
+mkdir $c/$d
+end
+end
+
+
+foreach c (`seq 0 9`)
+ mkdir $c
+ foreach d (`seq 0 9`)
+ mkdir $c/$d
+ cd $c/$d
+ ln -s /ahg/regev/projects/synergy/website/site_prod/tre/$c/$d/OG*-og.tre .	
+ cd ../../
+ end
+end
+
+
+foreach d (`seq 0 9`)
+cd $d
+foreach f (*-og.tre)
+bsub -q hour -P MultiYeast -g /regev/moran/MultiYeast/trees -oo $f:r.out python -W ignore::DeprecationWarning ../../Scripts/reduceTree.py $f:r
+end
+cd ../
+end
+
+
+</pre>
+<div class='vspace'></div><hr />
+<p class='vspace'><h2>
+old stuff</h2><p>
+<div class='vspace'></div><ol><li>run Trinity
+<div class='vspace'></div></li><li>if needed to generate fa file from bam
+</li></ol><p>cd Raw/log/
+../../../bam2pairFasta.sh 61JWRAAXX.1.aligned.duplicates_marked.bam &amp;
+</p>
+<p class='vspace'>set t = `pwd`
+set s = $t:t
+</p>
+<p class='vspace'>rm -f btfl_cmds.txt
+cd Raw
+rm -f $s.allConds.fa
+foreach c (log hs plat)
+cd $c
+cat *AAXX*.left.rev.fa &gt;! $s.$c.left.rev.fa &amp;
+cat *AAXX*.right.fa    &gt;! $s.$c.right.fa &amp;
+cd ../
+end
+</p>
+<p class='vspace'>find . -wholename "*AAXX*.fa" | xargs gzip &amp;
+</p>
+<p class='vspace'>cat */$s*rev.fa   &gt; ! $s.all.left.rev.fa &amp;
+cat */$s*right.fa &gt; ! $s.all.right.fa &amp;
+</p>
+<p class='vspace'>cd ../
+mkdir Trinity_run
+cd Trinity_run
+ln -s ../Raw/$s.all.right.fa .
+ln -s ../Raw/$s.all.left.rev.fa .
+</p>
+<p class='vspace'>mkdir Trinity
+cd Trinity
+ln -s ../$s.all.right.fa right.fa
+ln -s ../$s.all.left.rev.fa left.fa
+cd ../
+</p>
+<p class='vspace'>unlimit
+use GCC-4.3
+set c = all
+/seq/annotation/bio_tools/trinityrnaseq/current/Trinity.pl --seqType fa --left $s.$c.left.rev.fa --right $s.$c.right.fa --SS_lib_type RF  --bflyHeapSpace=10G --CPU=6 --output Trinity 
+</p>
+<p class='vspace'>rm -f Trinity/both.fa
+</p>
+<p class='vspace'>set t = `pwd`
+set s = `echo $t | | cut -f 5 -d '/'`
+foreach s (`cat species`)
+cd $s/Trinity_run/
+ln -s Trinity/Trinity.fasta $s.all.Trinity.fasta
+cd ../../
+end
+</p>
+<div class='vspace'></div><ol><li>match transcripts to assemblies
+</li></ol><p>foreach s (`cat species`)
+cd $s
+mkdir <span class='wikiword'>MatchAssemblies2Transcripts</span>
+cd <span class='wikiword'>MatchAssemblies2Transcripts</span>
+ln -s ../../<span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-transcripts.fasta .
+ln -s ../Trinity_run/$s.all.Trinity.fasta .
+ln -s ../../<span class='wikiword'>Scripts/FindBestReciprocalHit</span>.pl .
+cd ../../
+end
+</p>
+<p class='vspace'>foreach s (`cat species`)
+cd $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/
+./<span class='wikiword'>FindBestReciprocalHit</span>.pl --target $s-transcripts.fasta --query $s.all.Trinity.fasta --forward_orient &amp;
+cd ../../
+end
+</p>
+<p class='vspace'>foreach s (`cat species`)
+echo $s &gt;! $s.tmp
+awk -v e=20 'BEGIN{for (i=0; i&lt;=e; i++){a[i]=0}}{ a[NF-1]++} END{for (i=0; i&lt;=e; i++){print a[i]}}' $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/$s-transcripts.fasta.pslx.maps &gt;&gt; $s.tmp
+end
+</p>
+<p class='vspace'>set files = `cat species | awk '{print $1".tmp"}' | tr '\n' ' '` 
+paste $files &gt;! tran2assem.mapping.stats
+rm -f $files
+</p>
+<p class='vspace'>foreach s (`cat species`)
+echo $s &gt;! $s.tmp
+awk -v e=20 'BEGIN{for (i=0; i&lt;=e; i++){a[i]=0}}{ a[NF-1]++} END{for (i=0; i&lt;=e; i++){print a[i]}}' $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/$s.all.Trinity.fasta.pslx.maps &gt;&gt; $s.tmp
+end
+</p>
+<p class='vspace'>set files = `cat species | awk '{print $1".tmp"}' | tr '\n' ' '`
+paste $files &gt;! assem2tran.mapping.stats
+rm -f $files
+</p>
+<p class='vspace'>touch bestHit.stats.txt
+</p>
+<p class='vspace'>foreach s ( `cat species` )
+set t = `grep "&gt;" $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/$s-transcripts.fasta | wc -l`
+set f = `wc -l $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/bestMatches.out | cut -f 1 -d ' '`
+echo $s $f $t | tr ' ' '\t' &gt;&gt; bestHit.stats.txt
+end
+</p>
+<p class='vspace'>set s = Scer
+cd $s/Raw/
+cat */*left.fq &gt; ! $s.all.left.fq &amp;
+cat */*right.fq &gt; ! $s.all.right.fq &amp;
+</p>
+<p class='vspace'>/seq/annotation/bio_tools/trinityrnaseq/current/util/alignReads.pl --left $s.all.left.fq --right $s.all.right.fq --seqType fq --target $s.all.Trinity.fasta --aligner bowtie --SS_lib_type RF
+</p>
+<p class='vspace'>/seq/annotation/bio_tools/trinityrnaseq/current/util/RSEM_util/run_RSEM.pl --transcripts $s.all.Trinity.fasta --name_sorted_bam bowtie_out/bowtie_out.nameSorted.sam.+.sam.<span class='wikiword'>PropMapPairsForRSEM</span>.bam --paired --group_by_component
+</p>
+<p class='vspace'>/seq/annotation/bio_tools/trinityrnaseq/current/util/RSEM_util/summarize_RSEM_fpkm.pl --transcripts $s.all.Trinity.fasta --RSEM RSEM.isoforms.results --fragment_length 300 --group_by_component &gt;! $s.Trinity.RSEM.fpkm
+</p>
+<div class='vspace'></div><dl><dd><ol><li>find pslx file for best Matches
+</li></ol></dd></dl><p class='vspace'>cd tmp/
+../../../<span class='wikiword'>Scripts/GMAPwrapper</span>.pl Scer-genome.fasta Scer.all.Trinity.truncated.fasta Scer.all.Trinity.truncated.fasta.psl 2000 1 10
+</p>
+<p class='vspace'>cd ../
+rm -f bestMatches.againstGenome.all.psl
+touch bestMatches.againstGenome.all.psl
+foreach a ( `cut -f 2 bestMatches.out ` )
+set t = `grep $a tmp/Scer.all.Trinity.truncated.fasta.psl | wc -l`
+grep $a tmp/Scer.all.Trinity.truncated.fasta.psl | awk -v t=$t '{OFS="\t";print $1,$2,$3,$4,$5,$6,$7,$8,$9,$10"("t")",$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23}' &gt;&gt; bestMatches.againstGenome.all.psl
+end
+</p>
+<p class='vspace'>grep "(1)" bestMatches.againstGenome.all.psl &gt;! bestMatches.againstGenome.singleMatch.psl
+</p>
+<div class='vspace'></div><ol><li>mapping reads to genome
+</li></ol><p class='vspace'>use Samtools
+</p>
+<p class='vspace'>/seq/annotation/bio_tools/trinityrnaseq/current/util/alignReads.pl  --left $s.all.left.fq --right $s.all.right.fq --seqType fq  --target $s-genome.fasta --aligner blat --SS_lib_type RF 
+</p>
+<p class='vspace'>touch inchworm.againstGenome.withNum.psl
+</p>
+<p class='vspace'>foreach a ( `cut -f 10 inchworm.againstGenome.psl | sort | uniq` )
+set t = `grep $a inchworm.againstGenome.psl  | wc -l`
+grep $a inchworm.againstGenome.psl | awk -v t=$t '{OFS="\t";print $1,$2,$3,$4,$5,$6,$7,$8,$9,$10"("t")",$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23}' &gt;&gt; inchworm.againstGenome.withNum.psl
+end
+</p>
+<p class='vspace'>rm -f bestMatches.againstGenome.psl
+touch bestMatches.againstGenome.psl
+foreach c ( `cut -f 2 -d ' ' bestMatches.out ` )
+set chr = `awk -v c=$c '($2==c){print substr($1,2,1)}' bestMatches.out`
+set refC = `awk -v c=$chr '($1==c){print $2}' chrNames`
+awk -v c=$c -v r=$refC '($10~c &amp;&amp; $14==r)' bestMatches.againstGenome.all.psl &gt;&gt; bestMatches.againstGenome.psl
+end
+</p>
+<p class='vspace'>rm -f tmp.txt
+touch tmp.txt
+foreach l ( `cat bestMatches.out | tr '\t' '@' ` )
+set g = `echo $l | cut -f 1 -d '@'`
+set c = `echo $l | cut -f 2 -d '@'`
+echo -n $c,$g"\t" &gt;&gt; tmp.txt
+awk -v c=$c -v g=$g '($10==c &amp;&amp; $14==g)' Scer.all.Trinity.fasta.pslx | wc -l &gt;&gt; tmp.txt
+end
+</p>
+<div class='vspace'></div><dl><dd><ol><li>concat fq read files
+</li></ol></dd></dl><p class='vspace'>foreach s (`cat speciesNScer`)
+cat $s/Raw/*/*left.fq &gt; ! $s/Raw/$s.all.left.fq &amp;
+cat $s/Raw/*/*right.fq &gt; ! $s/Raw/$s.all.right.fq &amp;
+end
+</p>
+<div class='vspace'></div><dl><dd><ol><li>map all Trinity output to the genomes
+</li></ol></dd></dl><p class='vspace'>foreach s (`cat species`)
+cd $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/
+ln -s ../../<span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-genome.fasta_gmapDB .
+ln -s ../../<span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-genome.fasta .
+bsub -q regevlab -R "rusage[mem=15]" -P /regev/moran/<span class='wikiword'>MultiYeast</span> -J map2Gen.$s -oo tmp.map2Genome.$s.out../../<span class='wikiword'>Scripts/GMAPwrapper</span>.pl $s-genome.fasta $s.all.Trinity.fasta $s.all.Trinity.mappedToGenome.psl 2000 1 10
+cd ../../
+end
+</p>
+<p class='vspace'>foreach s (`cat species`)
+wc -l $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/$s.all.Trinity.mappedToGenome.psl
+Scripts/addCountsToPsl.pl --psl_file $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/$s.all.Trinity.mappedToGenome.psl--output $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/$s.all.Trinity.mappedToGenome.wCounts.psl
+end
+</p>
+<div class='vspace'></div><ol><li>fix location files
+</li></ol><p class='vspace'>rm -f Orthogroups/Locations/*.chrAlias.tab
+rm -f Orthogroups/Locations/*.alias.txt
+set s = Sbay
+grep "&gt;" <span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-genome.fasta | awk -F"[" '{print $0"\t"substr($1,3)}' | tr -d '&gt;' &gt;! Orthogroups/Locations/$s.chrAlias.tab
+set s = Cgla
+grep "&gt;" <span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/Cgla/Cgla-genome.fasta | tr -d '&gt;' | awk '{print $1"\t"$5}' &gt;! Orthogroups/Locations/Cgla.chrAlias.tab
+set s = Klac
+grep "&gt;" <span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-genome.fasta | awk '{print $1"\t"$5}' | tr -d '&gt;' &gt;! Orthogroups/Locations/$s.chrAlias.tab
+set s = Kwal
+grep "&gt;" <span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-genome.fasta | awk -F"_" '{print $0"\t"$NF}' | tr -d '&gt;' &gt;! Orthogroups/Locations/$s.chrAlias.tab
+set s = Ylip
+grep "&gt;" <span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-genome.fasta | awk '{print $1"\t"$5}' | tr -d '&gt;' &gt;! Orthogroups/Locations/$s.chrAlias.tab
+set s = Spom
+grep "&gt;" <span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-genome.fasta | awk '{print $1"\t"FNR}' | tr -d '&gt;' &gt;! Orthogroups/Locations/$s.chrAlias.tab
+set s = Scer
+grep "&gt;" <span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-genome.fasta | awk '{print $1"\t"$NF}' | sed 's/\[chromosome=//g' | tr -d '\]' | sed 's/\[top=//g' | tr -d '&gt;' &gt;! Orthogroups/Locations/$s.chrAlias.tab
+set s = Sjap
+grep "&gt;" <span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-genome.fasta | awk '{print $1"\tsupercont"substr($1,13)}' | tr -d '&gt;'&gt;! Orthogroups/Locations/$s.chrAlias.tab
+set s = Soct
+grep "&gt;" <span class='wikiword'>Orthogroups/GenomicSeqsAndAnnotations</span>/$s/$s-genome.fasta | awk '{print $1"\tsupercont"substr($1,13)}' | tr -d '&gt;'&gt;! Orthogroups/Locations/$s.chrAlias.tab
+</p>
+<p class='vspace'>foreach f ( Orthogroups/Locations/*.chrAlias.tab )
+set s = $f:at:ar
+echo $s
+Scripts/changeLocationChrNames.pl --location_file Orthogroups/Locations/$s-locations.txt --chrAlias_file Orthogroups/Locations/$s.chrAlias.tab --output Orthogroups/Locations/$s-locations.alias.txt
+end
+</p>
+<p class='vspace'>foreach s (`cat species`)
+ln -s $s-locations.txt Orthogroups/Locations/$s-locations.alias.txt
+rm -f $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/$s-location.alias.txt
+ln -s ../../Orthogroups/Locations/$s-locations.alias.txt $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/.
+end
+</p>
+<div class='vspace'></div><ol><li>extract bestMatches, and find the correct mapping
+</li></ol><p class='vspace'>foreach s (`cat species`)
+echo $s
+cd $s/<span class='wikiword'>MatchAssemblies2Transcripts</span>/
+../../Scripts/findBestMatchInPSL.pl --psl_file $s.all.Trinity.mappedToGenome.wCounts.psl --location_file $s-locations.alias.txt --bestMatches_file bestMatches.out --output $s.bestMatches.mappedToGenome.psl
+cd ../../
+end
+</p>
+<div class='vspace'></div><dl><dd><ol><li>make the ortholog bed files
+</li></ol></dd></dl><p class='vspace'>foreach s (`cat speciesNScer`)
+echo $s
+Scripts/psl2bed_withScerOrthologs.pl --psl $s/Raw/$s.psl --bed $s/Raw/$s.<span class='wikiword'>ScerOrthologs</span>.bed --orthologs_file Orthogroups/Orthologs/Scer-$s""-orthologs.txt --scerNames_file Scer/Raw/Scer.names.tab
+end
+</p>
+<p class='vspace'>foreach s (`cat species`)
+cd $s/<span class='wikiword'>GenomeMappedReads</span>/
+foreach c (log hs plat)
+cd $c
+bsub -q regevlab -R "rusage[mem=15]" -P <span class='wikiword'>MultiYeast</span> -g /regev/moran/<span class='wikiword'>MultiYeast/GenomicMap</span> -J map2Gen.$c.$s -oo tmp.map2Genome.$s.$c.out/seq/annotation/bio_tools/trinityrnaseq/current/util/alignReads.pl --left $s.$c.left.fq --right $s.$c.right.fq --seqType fq --target $s-genome.fasta --aligner BLAT --SS_lib_type RF
+</p>
+<p class='vspace'>cd ../
+end
+cd ../../
+end
+</p>
+<div class='vspace'></div>
+</div>
+
+	</div>
+</div>
+
+<!--PageLeftFmt-->
+<div id='sidebar' >
+	<ul>
+		
+		<li>
+			<h2>Menu</h2>
+			<p><h2>
+Pages:</h2><p>
+<ul><li><a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=Main.HomePage'>HomePage</a>
+</li><li><a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=Main.WikiSandbox'>WikiSandbox</a>
+</li><li><a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=Main.HomePage#Projects'>Projects</a>
+</li><li><a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=Main.HomePage#People'>People</a>
+</li><li><a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=MultiYeastRNAseq.RecentChanges'>Recent Changes</a>
+</li></ul><p class='vspace'><h2>
+Docs:</h2><p>
+<p class='sidehead'> <a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=PmWiki.PmWiki'>PmWiki</a> 
+</p><ul><li><a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=PmWiki.BasicEditing'>Basic Editing</a>
+</li><li><a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=PmWiki.DocumentationIndex'>Documentation Index</a>
+</li><li><a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=PmWiki.FAQ'>PmWiki FAQ</a>
+<div class='vspace'></div></li><li><a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=Main.HomePage?action=logout'>logout</a>
+</li></ul><p  style='text-align: right;'><span style='font-size:83%'><a class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=Site.SideBar?action=edit'>edit SideBar</a></span>
+</p>
+
+		</li>
+		<li>
+			<h2>Actions</h2>
+			<ul><li class='browse'><a accesskey=''  class='selflink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=MultiYeastRNAseq.README'>View</a>
+</li><li class='edit'><a accesskey='e'  rel='nofollow'  class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=MultiYeastRNAseq.README?action=edit'>Edit</a>
+</li><li class='diff'><a accesskey='h'  rel='nofollow'  class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=MultiYeastRNAseq.README?action=diff'>History</a>
+</li><li class='upload'><a accesskey='ak_attach'  rel='nofollow'  class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=MultiYeastRNAseq.README?action=upload'>Attach</a>
+</li><li class='print'><a accesskey=''  rel='nofollow'  class='wikilink' href='http://wikis.cs.huji.ac.il/compbio/index.php?n=MultiYeastRNAseq.README?action=print'>Print</a>
+</li></ul>
+
+		</li>
+		<li id='search'>
+			<h2><label for='s'>Search</label></h2>
+			<form id='searchform' action='http://wikis.cs.huji.ac.il/compbio/index.php'>
+			<div>
+				<input type='hidden' name='n' value='MultiYeastRNAseq.README' />
+    			<input type='hidden' name='action' value='search' />
+				<input id='s' name='q' type='text' value='' tabindex='1' size='10' />
+				<br />
+				<input id='searchsubmit' name='searchsubmit' type='submit' value='Find' tabindex='2' />
+			</div>
+			</form> 
+		</li>
+	</ul>
+</div>
+<!--/PageLeftFmt-->
+
+	<div id='footer'>
+		<p>
+			&copy; 2012 Administrator
+			|
+			Powered by <a href='http://www.pmwiki.com/' title='PmWiki'>PmWiki</a>
+			|
+			<a href='http://www.plaintxt.org/themes/barthelme/' title='Barthelme for WordPress' rel='follow'>Barthelme</a> theme by <a href='http://scottwallick.com/' title='scottwallick.com' rel='follow'>Scott</a> and ported by <a href='http://cscheng.info/blog'>Chi Shang</a>
+			|
+			Valid <a href='http://validator.w3.org/check?uri=http://wikis.cs.huji.ac.il/compbio/index.php&amp;outline=1&amp;verbose=1' title='Valid XHTML 1.0 Strict' rel='nofollow'>XHTML</a> &amp; <a href='http://jigsaw.w3.org/css-validator/validator?uri=http://wikis.cs.huji.ac.il/compbio/pub/skins/barthelme/barthelme.css&amp;profile=css2&amp;warning=no' title='Valid CSS' rel='nofollow'>CSS</a>
+		</p>
+	</div>
+
+</div>
+
+    <!--HTMLFooter-->
+  <script>
+    jsMath.Autoload.Check();
+    jsMath.Process(document);
+  </script>
+
+<!-- The 'Barthelme' theme copyright (c) 2006 Scott Allan Wallick - http://www.plaintxt.org/themes/ -->
+
+</body>
+</html>
