@@ -1,0 +1,177 @@
+﻿Enriched in,GO term,Description,P-value,FDR q-value,"Enrichment (N, B, n, b)",GO part
+conserved,GO:0032991,protein-containing complex,1.26E-21,1.34E-18,"1.39 (5368,2062,958,510)",Component
+conserved,GO:1905368,peptidase complex,4.03E-10,0.000000214,"3.17 (5368,71,834,35)",Component
+conserved,GO:0044422,organelle part,1.23E-08,0.00000326,"1.17 (5368,2829,961,593)",Component
+conserved,GO:0044446,intracellular organelle part,9.36E-09,0.00000332,"1.17 (5368,2820,961,592)",Component
+conserved,GO:0043170,macromolecule metabolic process,1.13E-09,0.00000584,"1.24 (5368,2206,909,463)",Process
+conserved,GO:0071840,cellular component organization or biogenesis,8.97E-09,0.0000233,"1.25 (5368,1914,975,433)",Process
+conserved,GO:1905369,endopeptidase complex,0.00000017,0.0000301,"3.55 (5368,43,774,22)",Component
+conserved,GO:0000502,proteasome complex,0.00000017,0.0000361,"3.55 (5368,43,774,22)",Component
+conserved,GO:0009057,macromolecule catabolic process,4.93E-08,0.0000639,"1.89 (5368,380,606,81)",Process
+conserved,GO:0051641,cellular localization,4.27E-08,0.0000739,"1.42 (5368,841,965,214)",Process
+conserved,GO:0044428,nuclear part,0.000000544,0.0000826,"1.31 (5368,1125,987,272)",Component
+conserved,GO:0044265,cellular macromolecule catabolic process,9.73E-08,0.0000841,"1.93 (5368,345,597,74)",Process
+conserved,GO:0016070,RNA metabolic process,9.28E-08,0.0000963,"1.41 (5368,842,944,209)",Process
+conserved,GO:0043232,intracellular non-membrane-bounded organelle,0.000000897,0.000106,"1.35 (5368,968,945,230)",Component
+conserved,GO:0043228,non-membrane-bounded organelle,0.000000897,0.000119,"1.35 (5368,968,945,230)",Component
+conserved,GO:0006396,RNA processing,0.000000177,0.000131,"1.53 (5368,520,966,143)",Process
+conserved,GO:1902494,catalytic complex,0.00000126,0.000134,"1.56 (5368,681,610,121)",Component
+conserved,GO:0044424,intracellular part,0.00000174,0.000169,"1.06 (5368,4858,586,561)",Component
+conserved,GO:1990904,ribonucleoprotein complex,0.00000394,0.000349,"1.44 (5368,604,944,153)",Component
+conserved,GO:0019941,modification-dependent protein catabolic process,0.000000587,0.00038,"2.22 (5368,203,559,47)",Process
+conserved,GO:0019538,protein metabolic process,0.000000686,0.000395,"1.32 (5368,1244,876,267)",Process
+conserved,GO:0043632,modification-dependent macromolecule catabolic process,0.000000855,0.000443,"2.14 (5368,224,559,50)",Process
+conserved,GO:0033036,macromolecule localization,0.00000102,0.000443,"1.42 (5368,738,918,179)",Process
+conserved,GO:0006511,ubiquitin-dependent protein catabolic process,0.000000949,0.000447,"2.22 (5368,199,559,46)",Process
+conserved,GO:0044452,nucleolar part,0.00000591,0.000483,"2.49 (5368,72,897,30)",Component
+conserved,GO:0000124,SAGA complex,0.00000658,0.0005,"4.18 (5368,20,834,13)",Component
+conserved,GO:0034515,proteasome storage granule,0.0000071,0.000503,"6.75 (5368,26,306,10)",Component
+conserved,GO:0030163,protein catabolic process,0.00000172,0.000687,"2.80 (5368,188,306,30)",Process
+conserved,GO:0044085,cellular component biogenesis,0.00000201,0.000746,"1.76 (5368,241,938,74)",Process
+conserved,GO:0044451,nucleoplasm part,0.000013,0.000863,"1.97 (5368,242,564,50)",Component
+conserved,GO:0044260,cellular macromolecule metabolic process,0.00000279,0.000905,"1.23 (5368,1750,877,353)",Process
+conserved,GO:0044430,cytoskeletal part,0.0000148,0.000925,"1.82 (5368,232,750,59)",Component
+conserved,GO:0060255,regulation of macromolecule metabolic process,0.00000271,0.000936,"1.34 (5368,1074,818,220)",Process
+conserved,GO:0031597,cytosolic proteasome complex,0.000016,0.000947,"6.27 (5368,28,306,10)",Component
+conserved,GO:0003723,RNA binding,0.000000384,0.00095,"1.50 (5368,558,949,148)",Function
+conserved,GO:0051603,proteolysis involved in cellular protein catabolic process,0.000004,0.000987,"2.06 (5368,225,567,49)",Process
+conserved,GO:0034470,ncRNA processing,0.00000398,0.00103,"1.57 (5368,361,985,104)",Process
+conserved,GO:0022613,ribonucleoprotein complex biogenesis,0.00000446,0.00105,"1.78 (5368,216,938,67)",Process
+conserved,GO:0010498,proteasomal protein catabolic process,0.0000039,0.00106,"3.06 (5368,149,306,26)",Process
+conserved,GO:0034660,ncRNA metabolic process,0.00000365,0.00111,"1.51 (5368,467,944,124)",Process
+conserved,GO:0006807,nitrogen compound metabolic process,0.00000494,0.00111,"1.20 (5368,2639,622,366)",Process
+conserved,GO:0042254,ribosome biogenesis,0.00000389,0.00112,"1.84 (5368,190,938,61)",Process
+conserved,GO:0005730,nucleolus,0.0000201,0.00113,"1.65 (5368,262,944,76)",Component
+conserved,GO:0070727,cellular macromolecule localization,0.0000057,0.00114,"1.54 (5368,465,838,112)",Process
+conserved,GO:0043161,proteasome-mediated ubiquitin-dependent protein catabolic process,0.00000558,0.00116,"3.09 (5368,142,306,25)",Process
+conserved,GO:0043412,macromolecule modification,0.00000544,0.00118,"1.38 (5368,811,876,183)",Process
+conserved,GO:0016071,mRNA metabolic process,0.00000852,0.00158,"1.71 (5368,286,810,74)",Process
+conserved,GO:0019222,regulation of metabolic process,0.00000847,0.00163,"1.32 (5368,1142,818,229)",Process
+conserved,GO:0005515,protein binding,0.00000148,0.00183,"1.39 (5368,906,817,192)",Function
+conserved,GO:0046907,intracellular transport,0.0000139,0.00206,"1.41 (5368,594,965,151)",Process
+conserved,GO:0008104,protein localization,0.000012,0.00208,"1.39 (5368,712,918,169)",Process
+conserved,GO:0080090,regulation of primary metabolic process,0.0000137,0.00208,"1.33 (5368,1042,818,211)",Process
+conserved,GO:0051649,establishment of localization in cell,0.0000117,0.0021,"1.41 (5368,616,965,156)",Process
+conserved,GO:0060260,regulation of transcription initiation from RNA polymerase II promoter,0.0000134,0.0021,"4.10 (5368,22,774,13)",Process
+conserved,GO:0005634,nucleus,0.0000404,0.00215,"1.17 (5368,2117,988,455)",Component
+conserved,GO:0006364,rRNA processing,0.000015,0.00216,"1.66 (5368,250,985,76)",Process
+conserved,GO:2000142,"regulation of DNA-templated transcription, initiation",0.0000134,0.00217,"4.10 (5368,22,774,13)",Process
+conserved,GO:0051171,regulation of nitrogen compound metabolic process,0.0000133,0.00222,"1.34 (5368,1007,818,205)",Process
+conserved,GO:0030121,AP-1 adaptor complex,0.0000486,0.00246,"15.38 (5368,4,349,4)",Component
+conserved,GO:0036211,protein modification process,0.0000205,0.0028,"1.39 (5368,720,876,163)",Process
+conserved,GO:0070461,SAGA-type complex,0.0000586,0.00283,"3.64 (5368,23,834,13)",Component
+conserved,GO:0006464,cellular protein modification process,0.0000205,0.00287,"1.39 (5368,720,876,163)",Process
+conserved,GO:0051028,mRNA transport,0.0000274,0.00364,"2.13 (5368,99,942,37)",Process
+conserved,GO:0046695,SLIK (SAGA-like) complex,0.0000789,0.00365,"5.35 (5368,17,531,9)",Component
+conserved,GO:0016072,rRNA metabolic process,0.0000313,0.00406,"1.58 (5368,293,985,85)",Process
+conserved,GO:0051169,nuclear transport,0.000034,0.0041,"1.84 (5368,167,944,54)",Process
+conserved,GO:0006913,nucleocytoplasmic transport,0.000034,0.00419,"1.84 (5368,167,944,54)",Process
+conserved,GO:0009987,cellular process,0.0000335,0.00424,"1.07 (5368,4252,909,771)",Process
+conserved,GO:0060261,positive regulation of transcription initiation from RNA polymerase II promoter,0.0000393,0.00453,"4.62 (5368,15,774,10)",Process
+conserved,GO:2000144,"positive regulation of DNA-templated transcription, initiation",0.0000393,0.00463,"4.62 (5368,15,774,10)",Process
+conserved,GO:0043229,intracellular organelle,0.000108,0.00477,"1.06 (5368,4189,993,825)",Component
+conserved,GO:0031323,regulation of cellular metabolic process,0.0000449,0.00496,"1.36 (5368,1062,628,169)",Process
+conserved,GO:0044087,regulation of cellular component biogenesis,0.0000441,0.00498,"1.90 (5368,172,774,47)",Process
+conserved,GO:0043226,organelle,0.000119,0.00506,"1.07 (5368,4190,993,826)",Component
+conserved,GO:0045943,positive regulation of transcription by RNA polymerase I,0.0000553,0.00598,"3.98 (5368,22,736,12)",Process
+conserved,GO:0048308,organelle inheritance,0.0000565,0.00598,"3.06 (5368,58,575,19)",Process
+conserved,GO:0051640,organelle localization,0.0000579,0.00601,"1.81 (5368,170,892,51)",Process
+conserved,GO:0007010,cytoskeleton organization,0.0000632,0.00643,"1.76 (5368,170,971,54)",Process
+conserved,GO:0008092,cytoskeletal protein binding,0.00000825,0.0068,"3.41 (5368,109,303,21)",Function
+conserved,GO:0016043,cellular component organization,0.0000834,0.00832,"1.19 (5368,1752,988,383)",Process
+conserved,GO:0044267,cellular protein metabolic process,0.0000937,0.00917,"1.28 (5368,1054,876,221)",Process
+conserved,GO:0050789,regulation of biological process,0.0000999,0.00959,"1.22 (5368,1619,820,302)",Process
+conserved,GO:0090304,nucleic acid metabolic process,0.000109,0.0101,"1.33 (5368,1154,620,177)",Process
+conserved,GO:0034613,cellular protein localization,0.000108,0.0102,"1.48 (5368,440,838,102)",Process
+conserved,GO:0015031,protein transport,0.000122,0.0111,"1.38 (5368,578,965,143)",Process
+conserved,GO:0032784,"regulation of DNA-templated transcription, elongation",0.00013,0.0117,"2.54 (5368,54,861,22)",Process
+conserved,GO:0006356,regulation of transcription by RNA polymerase I,0.000137,0.012,"3.22 (5368,34,736,15)",Process
+conserved,GO:0044238,primary metabolic process,0.000142,0.0123,"1.16 (5368,2844,622,381)",Process
+conserved,GO:0008541,"proteasome regulatory particle, lid subcomplex",0.000328,0.0134,"5.24 (5368,10,717,7)",Component
+conserved,GO:0006896,Golgi to vacuole transport,0.000174,0.0146,"5.33 (5368,24,378,9)",Process
+conserved,GO:0097435,supramolecular fiber organization,0.000178,0.0147,"2.78 (5368,70,552,20)",Process
+conserved,GO:0010556,regulation of macromolecule biosynthetic process,0.000174,0.0148,"1.34 (5368,788,834,164)",Process
+conserved,GO:0015833,peptide transport,0.000183,0.0148,"1.37 (5368,582,965,143)",Process
+conserved,GO:0010468,regulation of gene expression,0.000191,0.0152,"1.32 (5368,827,877,178)",Process
+conserved,GO:0051254,positive regulation of RNA metabolic process,0.000197,0.0155,"1.52 (5368,369,834,87)",Process
+conserved,GO:0044089,positive regulation of cellular component biogenesis,0.000206,0.016,"2.59 (5368,76,600,22)",Process
+conserved,GO:0051236,establishment of RNA localization,0.000214,0.0161,"1.78 (5368,160,944,50)",Process
+conserved,GO:0008154,actin polymerization or depolymerization,0.000217,0.0161,"4.85 (5368,8,969,7)",Process
+conserved,GO:0032506,cytokinetic process,0.00022,0.0161,"4.21 (5368,32,438,11)",Process
+conserved,GO:0098789,pre-mRNA cleavage required for polyadenylation,0.000223,0.0161,"45.75 (5368,16,22,3)",Process
+conserved,GO:0050658,RNA transport,0.000214,0.0163,"1.78 (5368,160,944,50)",Process
+conserved,GO:0006997,nucleus organization,0.000242,0.0172,"2.76 (5368,36,918,17)",Process
+conserved,GO:0043966,histone H3 acetylation,0.000245,0.0172,"5.14 (5368,9,813,7)",Process
+conserved,GO:0006996,organelle organization,0.00025,0.0173,"1.40 (5368,835,578,126)",Process
+conserved,GO:0005849,mRNA cleavage factor complex,0.000464,0.0183,"36.60 (5368,20,22,3)",Component
+conserved,GO:0098787,mRNA cleavage involved in mRNA processing,0.000283,0.0191,"43.06 (5368,17,22,3)",Process
+conserved,GO:0045184,establishment of protein localization,0.000282,0.0193,"1.35 (5368,598,993,149)",Process
+conserved,GO:0022607,cellular component assembly,0.00029,0.0193,"1.32 (5368,725,930,166)",Process
+conserved,GO:0050657,nucleic acid transport,0.000301,0.0197,"1.76 (5368,162,944,50)",Process
+conserved,GO:0045899,positive regulation of RNA polymerase II transcriptional preinitiation complex assembly,0.000313,0.0203,"4.62 (5368,12,774,8)",Process
+conserved,GO:0006892,post-Golgi vesicle-mediated transport,0.000355,0.0227,"2.67 (5368,75,537,20)",Process
+conserved,GO:0031326,regulation of cellular biosynthetic process,0.000372,0.0233,"1.32 (5368,816,834,167)",Process
+conserved,GO:0007015,actin filament organization,0.00037,0.0234,"2.90 (5368,57,552,17)",Process
+conserved,GO:1903508,positive regulation of nucleic acid-templated transcription,0.000401,0.0244,"1.50 (5368,355,834,83)",Process
+conserved,GO:0009889,regulation of biosynthetic process,0.00041,0.0245,"1.31 (5368,818,834,167)",Process
+conserved,GO:0006508,proteolysis,0.000408,0.0246,"1.68 (5368,322,567,57)",Process
+conserved,GO:1902680,positive regulation of RNA biosynthetic process,0.000401,0.0247,"1.50 (5368,355,834,83)",Process
+conserved,GO:0000993,RNA polymerase II complex binding,0.0000405,0.025,"3.58 (5368,26,808,14)",Function
+conserved,GO:0006378,mRNA polyadenylation,0.000464,0.027,"36.60 (5368,20,22,3)",Process
+conserved,GO:0051246,regulation of protein metabolic process,0.00047,0.0271,"1.49 (5368,367,834,85)",Process
+conserved,GO:0006379,mRNA cleavage,0.000464,0.0273,"36.60 (5368,20,22,3)",Process
+conserved,GO:0044464,cell part,0.000829,0.0284,"1.04 (5368,4994,586,566)",Component
+conserved,GO:1990234,transferase complex,0.000755,0.0287,"1.61 (5368,370,560,62)",Component
+conserved,GO:0070478,"nuclear-transcribed mRNA catabolic process, 3'-5' exonucleolytic nonsense-mediated decay",0.000514,0.0287,"7.58 (5368,17,250,6)",Process
+conserved,GO:0005885,Arp2/3 protein complex,0.000788,0.0289,"7.06 (5368,7,543,5)",Component
+conserved,GO:0044237,cellular metabolic process,0.000524,0.0289,"1.13 (5368,3033,626,401)",Process
+conserved,GO:0034427,"nuclear-transcribed mRNA catabolic process, exonucleolytic, 3'-5'",0.000514,0.029,"7.58 (5368,17,250,6)",Process
+conserved,GO:0005838,proteasome regulatory particle,0.000876,0.0291,"7.49 (5368,4,717,4)",Component
+conserved,GO:0019773,"proteasome core complex, alpha-subunit complex",0.000825,0.0292,"6.97 (5368,7,550,5)",Component
+conserved,GO:0050794,regulation of cellular process,0.000514,0.0293,"1.25 (5368,1520,632,223)",Process
+conserved,GO:0006886,intracellular protein transport,0.000539,0.0294,"1.44 (5368,377,961,97)",Process
+conserved,GO:0032786,"positive regulation of DNA-templated transcription, elongation",0.000543,0.0294,"2.44 (5368,51,861,20)",Process
+conserved,GO:0031228,intrinsic component of Golgi membrane,0.000957,0.0299,"14.91 (5368,24,60,4)",Component
+conserved,GO:0030173,integral component of Golgi membrane,0.000957,0.0308,"14.91 (5368,24,60,4)",Component
+conserved,GO:0009100,glycoprotein metabolic process,0.000597,0.0316,"11.02 (5368,29,84,5)",Process
+conserved,GO:0050684,regulation of mRNA processing,0.000595,0.0318,"5.18 (5368,12,605,7)",Process
+conserved,GO:1901565,organonitrogen compound catabolic process,0.000719,0.0376,"2.00 (5368,290,306,33)",Process
+conserved,GO:0080135,regulation of cellular response to stress,0.000729,0.0378,"2.53 (5368,58,694,19)",Process
+conserved,GO:0042886,amide transport,0.000743,0.0382,"1.33 (5368,598,965,143)",Process
+conserved,GO:0043928,exonucleolytic nuclear-transcribed mRNA catabolic process involved in deadenylation-dependent decay,0.000766,0.0382,"7.16 (5368,18,250,6)",Process
+conserved,GO:0051170,import into nucleus,0.000753,0.0383,"2.19 (5368,64,918,24)",Process
+conserved,GO:0045010,actin nucleation,0.000764,0.0384,"5.93 (5368,10,543,6)",Process
+conserved,GO:0031334,positive regulation of protein complex assembly,0.000788,0.0386,"2.49 (5368,53,774,19)",Process
+conserved,GO:0034314,Arp2/3 complex-mediated actin nucleation,0.000788,0.0389,"7.06 (5368,7,543,5)",Process
+conserved,GO:0031328,positive regulation of cellular biosynthetic process,0.000852,0.0391,"1.44 (5368,421,834,94)",Process
+conserved,GO:1903311,regulation of mRNA metabolic process,0.000835,0.0394,"3.03 (5368,41,605,14)",Process
+conserved,GO:0080134,regulation of response to stress,0.000844,0.0394,"2.39 (5368,68,694,21)",Process
+conserved,GO:0009891,positive regulation of biosynthetic process,0.000852,0.0394,"1.44 (5368,421,834,94)",Process
+conserved,GO:0045893,"positive regulation of transcription, DNA-templated",0.000833,0.0396,"1.49 (5368,347,832,80)",Process
+conserved,GO:0019219,regulation of nucleobase-containing compound metabolic process,0.000819,0.0397,"1.32 (5368,725,834,149)",Process
+conserved,GO:0048518,positive regulation of biological process,0.000832,0.04,"1.32 (5368,738,839,152)",Process
+conserved,GO:0017038,protein import,0.000905,0.0412,"1.84 (5368,121,918,38)",Process
+conserved,GO:0045935,positive regulation of nucleobase-containing compound metabolic process,0.000932,0.042,"1.45 (5368,396,834,89)",Process
+conserved,GO:0030515,snoRNA binding,0.0000873,0.0432,"4.02 (5368,26,617,12)",Function
+conserved,GO:0005488,binding,0.000145,0.0597,"1.13 (5368,2833,810,485)",Function
+conserved,GO:0019213,deacetylase activity,0.000243,0.0752,"3.33 (5368,20,967,12)",Function
+conserved,GO:0003676,nucleic acid binding,0.000216,0.0764,"1.33 (5368,1106,589,162)",Function
+conserved,GO:0070063,RNA polymerase binding,0.000506,0.104,"3.00 (5368,31,808,14)",Function
+conserved,GO:0001099,basal RNA polymerase II transcription machinery binding,0.000425,0.105,"2.93 (5368,34,808,15)",Function
+conserved,GO:0043175,RNA polymerase core enzyme binding,0.000506,0.114,"3.00 (5368,31,808,14)",Function
+conserved,GO:0001098,basal transcription machinery binding,0.000425,0.117,"2.93 (5368,34,808,15)",Function
+diverged,GO:0016491,oxidoreductase activity,0.000196,0.162,"1.53 (5368,315,912,82)",Function
+diverged,GO:0002953,5'-deoxynucleotidase activity,0.000373,0.184,"2,684.00 (5368,1,2,1)",Function
+diverged,GO:0008514,organic anion transmembrane transporter activity,0.000479,0.197,"2.09 (5368,84,885,29)",Function
+diverged,GO:0050484,GMP 5'-nucleotidase activity,0.000373,0.23,"2,684.00 (5368,1,2,1)",Function
+diverged,GO:0005342,organic acid transmembrane transporter activity,0.000189,0.233,"2.33 (5368,65,885,25)",Function
+diverged,GO:0046943,carboxylic acid transmembrane transporter activity,0.000106,0.262,"2.41 (5368,63,885,25)",Function
+diverged,GO:0008509,anion transmembrane transporter activity,0.000812,0.287,"1.96 (5368,98,893,32)",Function
+diverged,GO:0055114,oxidation-reduction process,0.000545,0.471,"1.42 (5368,397,981,103)",Process
+diverged,GO:0051444,negative regulation of ubiquitin-protein transferase activity,0.000798,0.517,"7.66 (5368,4,701,4)",Process
+diverged,GO:0045338,farnesyl diphosphate metabolic process,0.000501,0.52,"5.23 (5368,7,879,6)",Process
+diverged,GO:1904667,negative regulation of ubiquitin protein ligase activity,0.000798,0.591,"7.66 (5368,4,701,4)",Process
+diverged,GO:0015849,organic acid transport,0.000479,0.621,"2.09 (5368,84,885,29)",Process
+diverged,GO:0009159,deoxyribonucleoside monophosphate catabolic process,0.000373,0.644,"2,684.00 (5368,1,2,1)",Process
+diverged,GO:0046942,carboxylic acid transport,0.000289,0.75,"2.15 (5368,82,885,29)",Process
+diverged,GO:0006066,alcohol metabolic process,0.000154,0.797,"2.19 (5368,88,835,30)",Process
