@@ -1,7 +1,7 @@
 
 Dear User,
 
-This repository contains the code for our <a href = "https://www.biorxiv.org/content/10.1101/2021.02.17.430503v1.full.pdf">manuscript</a> : 
+This repository contains the code for our <a href = "https://www.biorxiv.org/content/10.1101/2021.02.17.430503v1">manuscript</a> : 
 
  <h3 align="center">A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic <i>cis</i>-regulatory DNA sequences</h3>
 
