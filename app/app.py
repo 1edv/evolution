@@ -296,7 +296,7 @@ if valid_input and submit:
             with st.beta_container() : 
                 st.header('Results')
                 evolvability_output_df
-                tmp_download_link = download_link(evolvability_output_df, 'evolvability_output_df.csv', 'Click here to download the expression results as a CSV')
+                tmp_download_link = download_link(evolvability_output_df, 'evolvability_output_df.csv', 'Click here to download the results as a CSV')
                 st.markdown(tmp_download_link, unsafe_allow_html=True)
 
 
