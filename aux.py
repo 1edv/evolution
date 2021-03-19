@@ -114,6 +114,8 @@ def get_available_gpus():
     return [x.name for x in local_device_protos if x.device_type == 'GPU']
 
 
+
+
 def seq2110(data):
     ###Make sure the length is 110bp
     for i in (range(0,len(data))) : 
@@ -271,7 +273,7 @@ def evaluate_model(X,model, scaler, batch_size, *graph) :
 
 def load_model(model_conditions ) : 
     NUM_GPU = len(get_available_gpus())
-    dir_path=os.path.join('..','..','data',model_conditions)
+    dir_path=os.path.join('models',model_conditions)
     model_path=os.path.join(dir_path,"fitness_function.h5")
 
     ### Load the parameters used for training the model
@@ -282,18 +284,17 @@ def load_model(model_conditions ) :
 
 
     
-    ### Load the model on multiple GPUs with the largest possible batch size
-    if NUM_GPU > 0 :
-        scaler= sklearn.externals.joblib.load(os.path.join(dir_path,'scaler.save'))
-        model_params['batch_size'] = np.power(2,10 + NUM_GPU)
-        batch_size = model_params['batch_size']
-        model_params['device_type'] = 'gpu'
-        model = fitness_function_model(model_params)
-        model.load_weights(model_path)
-        if NUM_GPU > 1 :
-            model = tf.keras.utils.multi_gpu_model(model,NUM_GPU,cpu_merge=True,cpu_relocation=False)
+    ### Load the model on multiple CPU/GPU(s) with the largest possible batch size
+    scaler= sklearn.externals.joblib.load(os.path.join(dir_path,'scaler.save'))
+    model_params['batch_size'] = np.power(2,10 + NUM_GPU)
+    batch_size = model_params['batch_size']
+    model_params['device_type'] = 'gpu'
+    model = fitness_function_model(model_params)
+    model.load_weights(model_path)
+    if NUM_GPU > 1 :
+        model = tf.keras.utils.multi_gpu_model(model,NUM_GPU,cpu_merge=True,cpu_relocation=False)
 
-    else : ### Changing the batch size on using the tf.keras.models.load_model is not permitted,but TPU needs this
+    if 0 : #Change to 1 if using TPU ## Changing the batch size on using the tf.keras.models.load_model is not permitted,but TPU needs this
         scaler= sklearn.externals.joblib.load(os.path.join(dir_path,'scaler.save'))
         batch_size = model_params['batch_size']
         model_params['device_type'] = 'tpu'
