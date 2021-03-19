@@ -7,6 +7,8 @@ This repository contains the code for our <a href = "https://doi.org/10.1101/202
 
 All data and trained models used in the manuscript can be downloaded <a href='https://zenodo.org/record/4436477#.X_8V-hNKgUF'>here</a>.
 
+You may also interface with the models using our interactive web <a href='https://116be389feb2.ngrok.io/'>app</a>.
+
 The conda environment required for running this notebook can be installed and activated by running the following on the command line from within this folder: \
 <code>conda env create -f evolution_env.yml </code>  \
 <code>conda activate me</code>
