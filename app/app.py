@@ -4,9 +4,9 @@ import base64
 
 
 import sys 
-sys.path.insert(0, '../')
-import aux
-from aux import *  
+sys.path.insert(0, './')
+import app_aux
+from app_aux import *  
 tf.reset_default_graph() 
 tf.keras.backend.clear_session()
 gc.collect() 
