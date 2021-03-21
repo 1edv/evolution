@@ -180,16 +180,23 @@ if valid_input and submit:
             ## Next line should be a box where you can pick models (on the left side) 
             model, scaler,batch_size = load_model(model_conditions)
 
-
+    
     if mode=="Expression" :
         sequences = list(input_df.iloc[:,0].values)
+        single_sequence_input = 0 
+        if(len(sequences) == 1) :
+            single_sequence_input = 1 
+            sequences = sequences+sequences
         X,_ = parse_seqs(sequences)
+
         with st.spinner('Predicting expression from sequence using model...'):
             Y_pred = evaluate_model(X, model, scaler, batch_size , fitness_function_graph)
         st.success('Expression prediction complete !')
 
         expression_output_df = pd.DataFrame([ sequences , Y_pred ]  ).transpose()
         expression_output_df.columns = ['sequence' , 'expression']
+        if single_sequence_input==1 :
+            expression_output_df = pd.DataFrame(expression_output_df.loc[0,:]).T
         with st.beta_container() : 
             st.header('Results')
             expression_output_df
@@ -234,9 +241,7 @@ if valid_input and submit:
                     population_next.append(list(population_current[i]))
                     population_next.append(list(population_current[i]))
                     
-                    if (population_current[i][j] not in ['A' , 'C' , 'G' , 'T']) : # New here, just to remove any random characters a user adds
-                        population_current[i][j]  = random.choice(['A' , 'C' , 'G' , 'T']) # If there are N's or anything, just assign the base.
-
+                
                     if (population_current[i][j] == 'A') :
                         population_next[3*(args['sequence_length']*i + j) ][j] = 'C'
                         population_next[3*(args['sequence_length']*i + j) + 1][j] = 'G'
@@ -281,6 +286,10 @@ if valid_input and submit:
             return snpdev_dist
 
         sequences = list(input_df.iloc[:,0].values)
+        single_sequence_input = 0 
+        if(len(sequences) == 1) :
+                single_sequence_input = 1 
+                sequences = sequences+sequences
         X , sequences_flanked = parse_seqs(sequences)
         with st.spinner('Computing expression from sequence using the model...'):
             Y_pred = evaluate_model(X, model, scaler, batch_size , fitness_function_graph)
@@ -292,6 +301,8 @@ if valid_input and submit:
             evolvability_vector = get_snpdev_dist(sequences_flanked)
         st.success('Evolvability vectors and expression computed !')
         evolvability_output_df['evolvability_vectors'] = evolvability_vector
+        if single_sequence_input==1 :
+            evolvability_output_df = pd.DataFrame(evolvability_output_df.loc[0,:]).T
         if 1 : 
             with st.beta_container() : 
                 st.header('Results')
