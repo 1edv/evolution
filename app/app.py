@@ -83,9 +83,11 @@ with st.beta_container() :
 
 with st.beta_container() : 
     st.header('Please upload your sequences :')  
-    reqs = st.beta_expander('Sequence file format requirements 👉', expanded=False)
+    reqs = st.beta_expander('Example input file and sequence file format requirements 👉', expanded=False)
     with reqs : 
-        st.write('Every line in the file must contain just a single DNA sequence with no additional special characters. If there are more than 80 bases in a given sequence, the last 80 bases will be used for the downstream computations. If there are less than 80 bases in a given sequence, it will be padded with N bases in the beginning until each input sequence is 80bp in length. You can download a sample input file below.')
+        st.write('* Every line in the file must contain just a single DNA sequence with no additional special characters, spaces, tabs or linebreaks.')
+        st.write('* If there are more than 80 bases in a given sequence, the last 80 bases will be used for the downstream computations. If there are less than 80 bases in a given sequence, it will be padded with N bases in the beginning until each input sequence is 80bp in length.')
+        st.write('* You can download a sample input file below.')
         
         ### START : This block of code should be ignored by users to avoid confusion 
         df = pd.read_csv('sample_seqs_vs_gluexp.txt', sep = '\t' , header = None)
@@ -112,7 +114,7 @@ with st.beta_container() :
 
     with cols[-1] :  
         st.subheader('Paste one sequence per line here 👇')
-        text_area = st.text_area(label='' , value = '')
+        text_area = st.text_area(label='' , value = 'GAGGCATCGTTTTATCAGATGATAGTTTAATTAGTACGTGCAGCACCTTAAAGGATATAAGGGCCGGTAGAACATAACGC\nGAGGCCACTGTAAATAATGGTCAGAAGTGTTGTTATGACACTTTGCAAGGGTGTCTCCCAGTGTAGCGCCTCTCGCCCTA')
      
 
     button_cols = st.beta_columns(19)
@@ -133,7 +135,7 @@ if uploaded_file is not None:
     input_df = pd.read_csv(uploaded_file , header = None)
     valid_input = 1
 
-elif submit == 1 or text_area : 
+elif text_area : 
     X = text_area
     X_list= X.split('\n')
     input_df = pd.DataFrame(X_list)
@@ -164,7 +166,7 @@ st.sidebar.image('HHMI_logo.jpeg')
 
  
 
-if valid_input and submit: 
+if valid_input : 
     with st.spinner('Loading deep transformer neural network model ...'):
 
         if condition == "Defined Media" :
