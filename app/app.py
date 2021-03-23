@@ -1,8 +1,3 @@
-import streamlit as st
-import time
-import base64
-
-
 import sys 
 sys.path.insert(0, './')
 import app_aux
@@ -17,7 +12,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",)
  
 
-
+@st.cache
 def download_link(object_to_download, download_filename, download_link_text):
     """
     Generates a link to download the given object_to_download.
@@ -39,7 +34,7 @@ def download_link(object_to_download, download_filename, download_link_text):
 
     return f'<a href="data:file/txt;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
 
-
+@st.cache
 def parse_seqs(sequences) :
     sequences = population_add_flank(sequences) ### NOTE : This is different from all other functions ! (User input doesn't have flanks)
     for i in tqdm(range(0,len(sequences))) : 
@@ -96,6 +91,16 @@ with st.beta_container() :
         st.markdown(tmp_download_link, unsafe_allow_html=True)
         ### END : This block of code should be ignored by users to avoid confusion 
 
+    if 0 :
+        st.subheader('Upload the sequence file here 👇')
+        uploaded_file = st.file_uploader("")
+
+        st.write('**OR**')
+
+        st.subheader('Paste one sequence per line here 👇')
+        text_area = st.text_area(label='' , value = 'GAGGCATCGTTTTATCAGATGATAGTTTAATTAGTACGTGCAGCACCTTAAAGGATATAAGGGCCGGTAGAACATAACGC\nGAGGCCACTGTAAATAATGGTCAGAAGTGTTGTTATGACACTTTGCAAGGGTGTCTCCCAGTGTAGCGCCTCTCGCCCTA')
+
+        submit = st.button('Submit Sequences')
 
 
 
@@ -110,17 +115,24 @@ with st.beta_container() :
         """### \
 &nbsp;
 \
-&nbsp; **OR**""" 
+&nbsp;
+\
+&nbsp;
+\
+&nbsp;
+\
+&nbsp;**OR**""" 
 
-    with cols[-1] :  
-        st.subheader('Paste one sequence per line here 👇')
-        text_area = st.text_area(label='' , value = 'GAGGCATCGTTTTATCAGATGATAGTTTAATTAGTACGTGCAGCACCTTAAAGGATATAAGGGCCGGTAGAACATAACGC\nGAGGCCACTGTAAATAATGGTCAGAAGTGTTGTTATGACACTTTGCAAGGGTGTCTCCCAGTGTAGCGCCTCTCGCCCTA')
-     
+    with cols[-1] : 
+        with st.beta_container() : 
+            st.subheader('Paste one sequence per line here 👇')
+            text_area = st.text_area(label='' , value = 'GAGGCATCGTTTTATCAGATGATAGTTTAATTAGTACGTGCAGCACCTTAAAGGATATAAGGGCCGGTAGAACATAACGC\nGAGGCCACTGTAAATAATGGTCAGAAGTGTTGTTATGACACTTTGCAAGGGTGTCTCCCAGTGTAGCGCCTCTCGCCCTA')
+        
 
-    button_cols = st.beta_columns(19)
-    with button_cols[9] :
-        submit = st.button('Submit Sequences')
-
+    button_cols = st.beta_columns([0.95, 0.1, 0.95])
+    with button_cols[-1] :
+        with st.beta_container() : 
+            submit = st.button('Submit Sequences')
 
 
 
@@ -168,7 +180,6 @@ st.sidebar.image('HHMI_logo.jpeg')
 
 if valid_input : 
     with st.spinner('Loading deep transformer neural network model ...'):
-
         if condition == "Defined Media" :
             model_conditions='SC_Ura' #SC_Ura 
         else :

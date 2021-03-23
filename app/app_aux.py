@@ -14,12 +14,9 @@ import argparse,pwd,os,numpy as np,h5py
 from os import makedirs
 from os.path import splitext,exists,dirname,join,basename , realpath
 import multiprocessing as mp, ctypes
-from sklearn.metrics import *
-from scipy.stats import *
-import time , csv ,pickle ,joblib , matplotlib  , multiprocessing,itertools
-from joblib import Parallel, delayed 
+import time , csv ,pickle  , matplotlib  , multiprocessing,itertools
 import seaborn as sns
-import os, gc , datetime , sklearn , scipy , pydot , random  , anndata
+import os, gc , datetime , sklearn , scipy , pydot , random  
 from tqdm import tqdm 
 from tensorflow.keras.utils import plot_model
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
@@ -40,10 +37,10 @@ from tensorflow import nn
 from tensorflow.contrib import rnn
 from os import makedirs
 from tensorflow.keras.utils import multi_gpu_model
-import scanpy as sc
-import statsmodels.nonparametric.api as smnp
 import glob , math
-from adjustText import adjust_text
+import time , base64 , copy
+import streamlit as st
+
 
 
 
@@ -161,7 +158,7 @@ class OHCSeq:
     transformed = None
     data = None
 
-
+@st.cache 
 def seq2feature(data):
     num_cores = multiprocessing.cpu_count()-2
     nproc = np.min([16,num_cores])
@@ -241,7 +238,6 @@ def hamming_distance(s1, s2):
     return sum(ch1 != ch2 for ch1,ch2 in zip(s1,s2))
 
 
-
 def evaluate_model(X,model, scaler, batch_size, *graph) :
     if(graph) : 
         default_graph = graph[0]
@@ -270,7 +266,7 @@ def evaluate_model(X,model, scaler, batch_size, *graph) :
  
     return Y_pred
     
-
+    
 def load_model(model_conditions ) : 
     NUM_GPU = len(get_available_gpus())
     dir_path=os.path.join('models',model_conditions)
@@ -440,11 +436,6 @@ class RevCompConv1D(Conv1D):
 ### All the classes below this line are adapted/modified for our purposes from : https://github.com/CyberZHG
 ### ( Thanks CyberZHG ! )
 ### 
-import tensorflow.keras as keras
-import tensorflow.keras.backend as K
-import copy
-
-
 
 
 
