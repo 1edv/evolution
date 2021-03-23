@@ -329,4 +329,4 @@ with st.beta_container() :
     st.header('Project Overview')
     image_cols = st.beta_columns([0.05 , 0.05 , 0.05  , 0.7 , 0.05, 0.05 ,0.05 ])
     with image_cols[3] :
-        st.image('../overview.png' , caption = '')
+        st.image('overview.png' , caption = '')
