@@ -73,7 +73,7 @@ with st.beta_container() :
     st.header('What would you like to compute?')
     mode = st.selectbox(
         '',
-        ["Expression",  'Evolvability vector'] ,
+        ['Evolvability vector' , "Expression"] ,
     )
 
 with st.beta_container() : 

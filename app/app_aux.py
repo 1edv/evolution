@@ -269,7 +269,7 @@ def evaluate_model(X,model, scaler, batch_size, *graph) :
     
 def load_model(model_conditions ) : 
     NUM_GPU = len(get_available_gpus())
-    dir_path=os.path.join('models',model_conditions)
+    dir_path=os.path.join('./app/models',model_conditions)
     model_path=os.path.join(dir_path,"fitness_function.h5")
 
     ### Load the parameters used for training the model
