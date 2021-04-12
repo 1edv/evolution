@@ -85,7 +85,7 @@ with st.beta_container() :
         st.write('* You can download a sample input file below.')
         
         ### START : This block of code should be ignored by users to avoid confusion 
-        df = pd.read_csv('sample_seqs_vs_gluexp.txt', sep = '\t' , header = None)
+        df = pd.read_csv('./app/sample_seqs_vs_gluexp.txt', sep = '\t' , header = None)
         sample_list = population_remove_flank(list(df.iloc[:,0].values)) # Removing the flanks is necessary here (see Methods section for details.)
         tmp_download_link = download_link("\n".join(sample_list), 'example_input_file.txt', 'Click here to download an example sequence input file')
         st.markdown(tmp_download_link, unsafe_allow_html=True)
