@@ -73,7 +73,7 @@ with st.beta_container() :
     st.header('What would you like to compute?')
     mode = st.selectbox(
         '',
-        ['Evolvability vector' , "Expression"] ,
+        ['Mutational Robustness','Evolvability vector' , "Expression"] ,
     )
 
 with st.beta_container() : 
@@ -207,9 +207,12 @@ if valid_input :
         st.success('Expression prediction complete !')
 
         expression_output_df = pd.DataFrame([ sequences , Y_pred ]  ).transpose()
-        expression_output_df.columns = ['sequence' , 'expression']
+        expression_output_df.columns = ['Sequence' , 'Expression']
+        expression_output_df['Expression (percentile)']  = expression_output_df['Expression'].rank(pct=1)
+
         if single_sequence_input==1 :
             expression_output_df = pd.DataFrame(expression_output_df.loc[0,:]).T
+        
         with st.beta_container() : 
             st.header('Results')
             expression_output_df
@@ -241,9 +244,8 @@ if valid_input :
 
 
 
-
-    if mode=="Evolvability vector" :
-
+    if mode=="Evolvability vector"  or mode=="Mutational Robustness":
+        epsilon = 0.1616
         def population_mutator( population_current , args) :
             population_current = population_remove_flank(population_current)
             population_next = []  
@@ -308,12 +310,23 @@ if valid_input :
             Y_pred = evaluate_model(X, model, scaler, batch_size , fitness_function_graph)
 
         evolvability_output_df = pd.DataFrame([ sequences , Y_pred ]  ).transpose()
-        evolvability_output_df.columns = ['sequence' , 'expression']
-            
-        with st.spinner('Computing evolvability vectors for sequences...'):
-            evolvability_vector = get_snpdev_dist(sequences_flanked)
-        st.success('Evolvability vectors and expression computed !')
-        evolvability_output_df['evolvability_vectors'] = evolvability_vector
+        evolvability_output_df.columns = ['Sequence' , 'Expression']
+        
+        if mode=="Evolvability vector" : 
+            with st.spinner('Computing evolvability vectors for sequences...'):
+                evolvability_vector = get_snpdev_dist(sequences_flanked)
+            st.success('Evolvability vectors and expression computed !')
+            evolvability_output_df['Evolvability vector'] = evolvability_vector
+
+        if mode=="Mutational Robustness" :
+            with st.spinner('Computing mutational robustness for sequences...'):
+                evolvability_vector = get_snpdev_dist(sequences_flanked)
+            st.success('Mutational robustness, evolvability vectors and expression computed !')
+            evolvability_output_df['Evolvability Vector'] = evolvability_vector
+            evolvability_output_df['Mutational Robustness'] = [np.sum(np.abs(i)<epsilon)/240 for i in evolvability_vector]
+            evolvability_output_df['Mutational Robustness (percentile)']  = evolvability_output_df['Mutational Robustness'].rank(pct=1)
+            evolvability_output_df['Expression (percentile)']  = evolvability_output_df['Expression'].rank(pct=1)
+
         if single_sequence_input==1 :
             evolvability_output_df = pd.DataFrame(evolvability_output_df.loc[0,:]).T
         if 1 : 
