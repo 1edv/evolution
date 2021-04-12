@@ -168,13 +168,13 @@ condition = st.sidebar.selectbox(
 st.sidebar.header('') 
 
 
-st.sidebar.image('MIT_logo.png')
+st.sidebar.image('./app/MIT_logo.png')
 st.sidebar.write('')
 
-st.sidebar.image('Broad_logo.png')
+st.sidebar.image('./app/Broad_logo.png')
 st.sidebar.write('')
 
-st.sidebar.image('HHMI_logo.jpeg')
+st.sidebar.image('./app/HHMI_logo.jpeg')
 
  
 
@@ -225,7 +225,7 @@ if valid_input :
             plt.plot(x,y, c='k' ,label='Expression Distribution')
             plt.fill_between(x, 0, y ,color='gray' ,alpha=0.5)
             st.pyplot(fig)
-            with open('sample_seqs_vs_gluexp.txt') as f:
+            with open('./app/sample_seqs_vs_gluexp.txt') as f:
                 reader = csv.reader(f, delimiter="\t")
                 d = list(reader)
 
@@ -329,4 +329,4 @@ with st.beta_container() :
     st.header('Project Overview')
     image_cols = st.beta_columns([0.05 , 0.05 , 0.05  , 0.7 , 0.05, 0.05 ,0.05 ])
     with image_cols[3] :
-        st.image('overview.png' , caption = '')
+        st.image('./app/overview.png' , caption = '')
