@@ -33,7 +33,7 @@ This directory is organized into the following subdirectories :
 <br>
 
 <p align="center">
-  <a href="./manuscript_code/overview.png">
-    <img src="./manuscript_code/overview.png" alt="Logo">
+  <a href="./app/overview.png">
+    <img src="./app/overview.png" alt="Logo">
   </a>
  </p>
