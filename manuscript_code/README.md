@@ -1,15 +1,18 @@
 
 Dear User,
 
-This folder contains the code for our <a href = "https://doi.org/10.1101/2021.02.17.430503">manuscript</a> : 
+This directory contains the code for our <a href = "https://doi.org/10.1101/2021.02.17.430503">manuscript</a> : 
 
  <h3 align="center">A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic <i>cis</i>-regulatory DNA sequences</h3>
 
 All data and trained models used in the manuscript can be downloaded : <a href='https://zenodo.org/record/4436477#.X_8V-hNKgUF'>🗄️</a>.
 
 The conda environment required for running this notebook can be installed and activated by running the following on the command line from within this folder: \
-<code>conda env create -f evolution_env.yml </code>  \
-<code>conda activate me</code>
+
+```bash
+conda env create -f evolution_env.yml 
+conda activate me
+```
 
 This directory is organized into the following subdirectories :
 <ul>
