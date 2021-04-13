@@ -42,7 +42,7 @@ import time , base64 , copy
 import streamlit as st
 
 if "platform" in os.environ:
-    if platform == 'streamlit_sharing' : 
+    if os.environ['platform'] == 'streamlit_sharing' : 
         path_prefix = './app/'
 else :
     path_prefix = ''
