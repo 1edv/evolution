@@ -1,39 +1,25 @@
 
-Dear User,
+<center >
 
-This repository contains the code for our <a href = "https://doi.org/10.1101/2021.02.17.430503">manuscript</a> : 
 
- <h3 align="center">A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic <i>cis</i>-regulatory DNA sequences</h3>
+[![Paper DOI:https://doi.org/10.1101/2021.02.17.430503](https://zenodo.org/badge/DOI/10.1101/2021.02.17.430503.svg)](https://doi.org/10.1101/2021.02.17.430503) [![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution) [![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/1edv/evolution/app/app.py)
 
-You may interface with the models using our interactive web app : <a href='https://share.streamlit.io/1edv/evolution/app/app.py'>🤖</a>.
+# The evolution, evolvability and engineering of gene regulatory DNA
+</center>
 
-All data and trained models used in the manuscript can be downloaded : <a href='https://zenodo.org/record/4436477#.X_8V-hNKgUF'>🗄️</a>.
 
-The conda environment required for running this notebook can be installed and activated by running the following on the command line from within this folder: \
-<code>conda env create -f evolution_env.yml </code>  \
-<code>conda activate me</code>
 
-This directory is organized into the following subdirectories :
-<ul>
+## You may interface with the models using our interactive web app : 
 
-    
-<li> <code>ecc_mr_fr</code>: contains the notebooks for computing the Expression Conservation Coefficient (ECC), Mutational Robustness and Fitness Responsivity.
-    
-<li> <code>evolvability</code> : contains the notebooks for computing the evolvability vectors and their two-dimensional representations. It also has examples for generating the landscape visualizations shown in the manuscript that the user may use for their own new sequences.
-    
-<li> <code>ga</code> : contains the notebooks for sequence design using a genetic algorithm.
+<center >
 
-<li> <code>model</code> : contains the notebooks for pre-processing the data, training the model and using the model. This model can run on TPUs and GPUs. A subfolder called 'gpu_only_model' contains the same for the version of the model that runs on GPUs only (and not TPUs) as described in the manuscript.
-    
-<li> <code>rna_seq</code> : contains all the code used for processing the in-house cross-species RNA-seq data.
+<a href='https://share.streamlit.io/1edv/evolution/app/app.py'><img src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>  
 
-<li> <code>trajectories</code> : contains the notebooks for computing the sequence trajectories under different evolutionary regimes.
+[comment]: <> (<a href=https://evolution-app-vbxxkl6a7a-uc.a.run.app/><img src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>) 
 
-</ul>
-<br>
 
-<p align="center">
-  <a href="./app/overview.png">
-    <img src="./app/overview.png" alt="Logo">
-  </a>
- </p>
+</center>
+
+
+
+
