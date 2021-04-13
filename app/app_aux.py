@@ -41,7 +41,7 @@ import glob , math
 import time , base64 , copy
 import streamlit as st
 
-if "platform" in locals() or "platform" in globals():
+if "platform" in os.environ:
     if platform == 'streamlit_sharing' : 
         path_prefix = './app/'
 else :
