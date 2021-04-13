@@ -85,7 +85,7 @@ with st.beta_container() :
         st.write('* You can download a sample input file below.')
         
         ### START : This block of code should be ignored by users to avoid confusion 
-        df = pd.read_csv('./app/sample_seqs_vs_gluexp.txt', sep = '\t' , header = None)
+        df = pd.read_csv(path_prefix+'sample_seqs_vs_gluexp.txt', sep = '\t' , header = None)
         sample_list = population_remove_flank(list(df.iloc[:,0].values)) # Removing the flanks is necessary here (see Methods section for details.)
         tmp_download_link = download_link("\n".join(sample_list), 'example_input_file.txt', 'Click here to download an example sequence input file')
         st.markdown(tmp_download_link, unsafe_allow_html=True)
@@ -168,13 +168,13 @@ condition = st.sidebar.selectbox(
 st.sidebar.header('') 
 
 
-st.sidebar.image('./app/MIT_logo.png')
+st.sidebar.image(path_prefix+'MIT_logo.png')
 st.sidebar.write('')
 
-st.sidebar.image('./app/Broad_logo.png')
+st.sidebar.image(path_prefix+'Broad_logo.png')
 st.sidebar.write('')
 
-st.sidebar.image('./app/HHMI_logo.jpeg')
+st.sidebar.image(path_prefix+'HHMI_logo.jpeg')
 
  
 
@@ -228,7 +228,7 @@ if valid_input :
             plt.plot(x,y, c='k' ,label='Expression Distribution')
             plt.fill_between(x, 0, y ,color='gray' ,alpha=0.5)
             st.pyplot(fig)
-            with open('./app/sample_seqs_vs_gluexp.txt') as f:
+            with open(path_prefix+'sample_seqs_vs_gluexp.txt') as f:
                 reader = csv.reader(f, delimiter="\t")
                 d = list(reader)
 
@@ -342,4 +342,4 @@ with st.beta_container() :
     st.header('Project Overview')
     image_cols = st.beta_columns([0.05 , 0.05 , 0.05  , 0.7 , 0.05, 0.05 ,0.05 ])
     with image_cols[3] :
-        st.image('./app/overview.png' , caption = '')
+        st.image(path_prefix+'overview.png' , caption = '')
