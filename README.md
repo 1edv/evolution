@@ -6,14 +6,11 @@
 
 
 
-## View the live interactive web app : 
-
-
-<a href='https://share.streamlit.io/1edv/evolution/app/app.py'><img align="center" src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>  
+## View the live interactive web app : <a href='https://share.streamlit.io/1edv/evolution/app/app.py'><img align="center" src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>  
 
 [comment]: <> (<a href=https://evolution-app-vbxxkl6a7a-uc.a.run.app/><img src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>) 
 
-
+![Example of live coding an app in Streamlit|635x380](demo.gif)
 
 
 
