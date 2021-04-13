@@ -7,7 +7,7 @@ tf.keras.backend.clear_session()
 gc.collect() 
 
 st.set_page_config(
-    page_title="Expression, Evolution and Evolvability",
+    page_title=" Evolution, Evolvability and Expression",
     layout="wide",
     initial_sidebar_state="expanded",)
  
