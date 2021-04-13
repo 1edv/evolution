@@ -8,7 +8,7 @@
 
 
 ## Quickstart
-View the live web app now. __No downloads__. __No installation.__ 👇 
+View the live app now. __No downloads__. __No installation.__ 👇 
 <p align = 'center'>
 <a href='https://share.streamlit.io/1edv/evolution/app/app.py'><img align="center" src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>  
 
