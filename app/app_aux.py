@@ -47,7 +47,6 @@ if "platform" in locals() or "platform" in globals():
 else :
     path_prefix = ''
 
-
 ##TPU
 from tensorflow.contrib import tpu
 from tensorflow.contrib.cluster_resolver import TPUClusterResolver

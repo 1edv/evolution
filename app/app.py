@@ -11,6 +11,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",)
  
+st.write('Path Prefix is ' + path_prefix)
 
 @st.cache
 def download_link(object_to_download, download_filename, download_link_text):
