@@ -16,7 +16,7 @@ Use the live app now. __No downloads__. __No installation.__ 👇
 
 [comment]: <> (<a href=https://evolution-app-vbxxkl6a7a-uc.a.run.app/><img src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>) 
 
-![Example of live coding an app in Streamlit|635x380](demo.gif)
+[![Example of live coding an app in Streamlit|635x380](demo.gif)](https://share.streamlit.io/1edv/evolution/app/app.py)
 
 
 ## Repository overview
@@ -36,8 +36,9 @@ docker pull edv123456789/evolution_app:latest
 
 docker run --rm -d  -p 8501:8501/tcp edv123456789/evolution_app:latest
 ```
-The app is now running and you can then access it by navigating to [http://localhost:8501/](http://localhost:8501/) in your web browser. If running on your local cluster, you may want to expose port ```8501``` using [ngrok](https://ngrok.com/).
+The app is now running and you can then access it by navigating to [http://localhost:8501/](http://localhost:8501/) in your web browser. If running on a remote cluster, you may want to expose port ```8501``` using [ngrok](https://ngrok.com/).
 
+## Training and loading model
 
 
 ## Reference and Data
