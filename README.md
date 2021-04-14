@@ -39,7 +39,7 @@ docker run --rm -d  -p 8501:8501/tcp edv123456789/evolution_app:latest
 The app is now running and you can access it by navigating to [http://localhost:8501/](http://localhost:8501/) in your web browser. If running on a remote cluster, you may want to expose port ```8501``` using [ngrok](https://ngrok.com/).
 
 ## Using the model directly
-1. After installing docker and pulling the latest image as described in the first two steps above, run the following command on a terminal :
+1. After installing docker and pulling the latest image as described in the first two steps above, run the following on a terminal :
 ```bash
 docker run -it --rm --entrypoint /bin/bash edv123456789/evolution_app
 
