@@ -50,18 +50,28 @@ python
 ```python
 from app_aux import *
 
-model, _ , __ = load_model('Glu')
+model_condition = 'Glu' #or, 'SC_Ura'
+
+model, _ , __ = load_model(model_condition) 
 
 model.summary()
 ```
 
 You have now loaded our ```tensorflow.keras``` model loaded. You may use this as is for downstream computations as described in the manuscript or adapt it for your application by transfer learning. 
 
-To exit the docker container, simply press ```Ctrl+D``` twice.
+To exit the python shell and the docker container, simply press ```Ctrl+D``` twice.
 
-## Reference and Data
+## Data
+All data and trained models used in the manuscript can be downloaded here 👇 
+<p align = 'center'>
+<a href='https://zenodo.org/record/4436477#.X_8V-hNKgUF'><img align="center" src="https://img.icons8.com/nolan/96/database.png"/></a>  
+
+</p>
+
+## Reference 
 DOI : https://doi.org/10.1101/2021.02.17.430503\
-_A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic cis-regulatory DNA sequences, biorXiv 2021._\
+_A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic cis-regulatory DNA sequences, biorXiv 2021._
+
 Eeshit Dhaval Vaishnav,  Carl G. de Boer,  Moran Yassour,  Jennifer Molinet, Lin Fan,  Xian Adiconis, Dawn A. Thompson,  Francisco A. Cubillos,  Joshua Z. Levin,  Aviv Regev. 
 
 
