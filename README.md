@@ -62,7 +62,7 @@ You have now loaded our ```tensorflow.keras``` model loaded. You may use this as
 To exit the python shell and the docker container, simply press ```Ctrl+D``` twice.
 
 ## Data
-All data and trained models used in the manuscript can be downloaded here 👇 
+Download all data and models used in the manuscript here 👇 
 <p align = 'center'>
 <a href='https://zenodo.org/record/4436477#.X_8V-hNKgUF'><img align="center" src="https://img.icons8.com/nolan/96/database.png"/></a>  
 
