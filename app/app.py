@@ -82,7 +82,7 @@ with st.beta_container() :
     reqs = st.beta_expander('Example input file and sequence file format requirements 👉', expanded=False)
     with reqs : 
         st.write('* Every line in the file must contain just a single DNA sequence with no additional special characters, spaces, tabs or linebreaks.')
-        st.write('* If there are more than 80 bases in a given sequence, the last 80 bases will be used for the downstream computations. If there are less than 80 bases in a given sequence, it will be padded with N bases in the beginning until each input sequence is 80bp in length.')
+        st.write('* If there are more than 80 bases in a given sequence, the last 80 bases will be used for the downstream computations. If there are less than 80 bases in a given sequence, it will be padded with N bases after adding the constant flanking sequence in the beginning (as described in the paper) until each input sequence has the same length.')
         st.write('* You can download a sample input file below.')
         
         ### START : This block of code should be ignored by users to avoid confusion 
