@@ -73,7 +73,7 @@ DOI : https://doi.org/10.1101/2021.02.17.430503
 
 _A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic cis-regulatory DNA sequences, biorXiv 2021._
 
-Eeshit Dhaval Vaishnav,  Carl G. de Boer,  Moran Yassour,  Jennifer Molinet, Lin Fan,  Xian Adiconis, Dawn A. Thompson,  Francisco A. Cubillos,  Joshua Z. Levin,  Aviv Regev. 
+Eeshit Dhaval Vaishnav<sup>*§</sup>,  Carl G. de Boer<sup>*§</sup>,  Moran Yassour,  Jennifer Molinet, Lin Fan,  Xian Adiconis, Dawn A. Thompson,  Francisco A. Cubillos,  Joshua Z. Levin,  Aviv Regev<sup>§</sup>. 
 
 
 
