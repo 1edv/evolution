@@ -449,11 +449,23 @@ if valid_input :
                         p.output_backend="svg"
 
                         st.bokeh_chart(p , use_container_width=0)      # show the plot
+
+                        maxima=df.loc[df.Expression.idxmax()]
+                        maxima.name='Max'
+                        minima=df.loc[df.Expression.idxmin()]
+                        minima.name='Min'
+                        
+                        extrema_cols = st.beta_columns([1, 1])
+                        with extrema_cols[0]:
+                            maxima
+                        with extrema_cols[1]:
+                            minima
+                        
                         ###
                         #output
                         tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
                         st.markdown(tmp_download_link, unsafe_allow_html=True)
-
+                        
                         if 0 : 
                             source.selected.js_on_change(
                                 "indices",
@@ -483,9 +495,9 @@ if valid_input :
                             st.subheader("Raw Event Data")
                             st.write(event_result)
 
-                        st.write('Extrema : ')  
-                        df.loc[df.Expression.idxmax()]
-                        df.loc[df.Expression.idxmin()]
+
+
+
 
                         return output,df,p
 
