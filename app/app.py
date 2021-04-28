@@ -379,13 +379,24 @@ if valid_input :
                 
                 cmap_list = plt.colormaps()
 
-                cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
+                
+            with st.beta_container() : 
+                st.header('Visualization of the 3L mutational neighbourhood of a sequence')
+                select_cmap = st.beta_expander('Expression', expanded=True)
+                with select_cmap : 
+                    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
 
-                fig=plt.figure(figsize = (16, 2) , dpi= 500)
-                sns.heatmap(output  , linewidths=0.5, cmap = cmap , square = 0)
+                fig=plt.figure(figsize = (9, 1.5) )
+                sns.heatmap(output  , linewidths=0.5, cmap = cmap , square = 1, cbar_kws={"shrink": 0.5} , 
+                            xticklabels = output.columns , yticklabels = output.index.values)
                 st.pyplot(fig)
-                st.write('Tip : Hide the sidebar for better visualization')
+
                 output
+
+                tips = st.beta_expander('Visualization tips', expanded=True)
+                with tips : 
+                    st.write('* Hide the sidebar for better visualization')
+
 
         if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
             with st.spinner('Computing expression from sequence using the model...'):
