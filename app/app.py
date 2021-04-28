@@ -482,6 +482,11 @@ if valid_input :
 
                             st.subheader("Raw Event Data")
                             st.write(event_result)
+
+                        st.write('Extrema : ')  
+                        df.loc[df.Expression.idxmax()]
+                        df.loc[df.Expression.idxmin()]
+
                         return output,df,p
 
             output, df,p = plot_el_visualization(sequences_flanked)
