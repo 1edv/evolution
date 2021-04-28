@@ -8,14 +8,6 @@ tf.reset_default_graph()
 tf.keras.backend.clear_session()
 gc.collect() 
 
-
-###events
-from bokeh.models import ColumnDataSource, CustomJS
-import bokeh.io
-from bokeh.plotting import figure
-from streamlit_bokeh_events import streamlit_bokeh_events
-###events
-
 st.set_page_config(
     page_title=" Evolution, Evolvability and Expression",
     layout="wide",
@@ -438,8 +430,12 @@ if valid_input :
                         p.axis.major_label_standoff = 0
                         p.xaxis.major_label_orientation = pi / 3
                         
+                        ###events
+                        from bokeh.models import ColumnDataSource, CustomJS
+                        from bokeh.plotting import figure
+                        from streamlit_bokeh_events import streamlit_bokeh_events
                         source = ColumnDataSource(df)
-
+                        ###events
                         p.rect(x="position", y="base", width=1, height=1,
                             source=source,
                             fill_color={'field': 'Expression', 'transform': mapper},
@@ -452,79 +448,62 @@ if valid_input :
                         #p.add_layout(color_bar, 'left')
                         p.output_backend="svg"
 
-                        #st.bokeh_chart(p , use_container_width=0)      # show the plot
-
-
-
+                        st.bokeh_chart(p , use_container_width=0)      # show the plot
 
                         maxima=df.loc[df.Expression.idxmax()]
                         maxima.name='Max'
                         minima=df.loc[df.Expression.idxmin()]
                         minima.name='Min'
                         
-                        tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
-
-                        if 0 : 
-                            extrema_cols = st.beta_columns([1, 1])
-                            with extrema_cols[0]:
-                                maxima
-                            with extrema_cols[1]:
-                                minima
+                        extrema_cols = st.beta_columns([1, 1])
+                        with extrema_cols[0]:
+                            maxima
+                        with extrema_cols[1]:
+                            minima
                         
-                            ###
-                            #output
-                            st.markdown(tmp_download_link, unsafe_allow_html=True)
-                            
+                        ###
+                        #output
+                        tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
+                        st.markdown(tmp_download_link, unsafe_allow_html=True)
+                        
+                        if 0 : 
+                            source.selected.js_on_change(
+                                "indices",
+                                CustomJS(
+                                    args=dict(source=source),
+                                    code="""
+                                    document.dispatchEvent(
+                                        new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
+                                    )
+                                """,
+                                ),
+                            )
+                            event_result = streamlit_bokeh_events(
+                                events="TestSelectEvent",
+                                bokeh_plot=p,
+                                key="foo",
+                                debounce_time=100,
+                                refresh_on_update=False
+                            )
+                            if event_result is not None:
+                                # TestSelectEvent was thrown
+                                if "TestSelectEvent" in event_result:
+                                    st.subheader("Selected Points' Pandas Stat summary")
+                                    indices = event_result["TestSelectEvent"].get("indices", [])
+                                    st.table(df.iloc[indices].describe())
+
+                            st.subheader("Raw Event Data")
+                            st.write(event_result)
 
 
 
-                        return tmp_download_link, maxima, minima, output,df,source,p
+
+
+                        return output,df,p
+
+            output, df,p = plot_el_visualization(sequences_flanked)
             
-            tmp_download_link, maxima, minima, output,df,source,p = plot_el_visualization(sequences_flanked)
-            p_tuple = (tmp_download_link, maxima, minima, output,df,source,p )
-            p_list = [p_tuple]
-            i= 1
-            st.bokeh_chart(p)
-            from bokeh.io import export_svgs
-            export_svgs(p, filename="plot.svg")
-
-            ### Grid export does not work for bokeh 2.2 https://github.com/bokeh/bokeh/issues/9169, 
-            # STreamlit does not work with any other bokeh version.
-            #from bokeh.layouts import gridplot
-            #q = gridplot([[p],[p]])
-            #st.bokeh_chart(q)
-
-            if 1: 
-                #df = p_list[i-1][-3]
-                #source = p_list[i-1][-2]
-                #p = p_list[i-1][-1]
-                source.selected.js_on_change(
-                    "indices",
-                    CustomJS(
-                        args=dict(source=source),
-                        code="""
-                        document.dispatchEvent(
-                            new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
-                        )
-                    """,
-                    ),
-                )
-                event_result = streamlit_bokeh_events(
-                    events="TestSelectEvent",
-                    bokeh_plot=p,
-                    key="foo",
-                    debounce_time=100,
-                    refresh_on_update=False
-                )
-                if event_result is not None:
-                    # TestSelectEvent was thrown
-                    if "TestSelectEvent" in event_result:
-                        st.subheader("Selected Points' Pandas Stat summary")
-                        indices = event_result["TestSelectEvent"].get("indices", [])
-                        st.table(df.iloc[indices].describe())
-
-                st.subheader("Raw Event Data")
-                st.write(event_result)
+            
 
         if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
             with st.spinner('Computing expression from sequence using the model...'):
@@ -560,7 +539,7 @@ if valid_input :
 
 
 with st.beta_container() : 
-    if mode=="Mutational Robustness" : 
+    if mode=="Mutation Tolerance" : 
 
         st.header('')
         st.header('')
