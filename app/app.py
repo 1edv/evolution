@@ -63,6 +63,114 @@ def parse_seqs(sequences) :
 
 
 
+#############Functions and global constants
+epsilon = 0.1616
+def population_mutator( population_current , args) :
+    population_current = population_remove_flank(population_current)
+    population_next = []  
+    for i in range(len(population_current)) :         
+        for j in range(args['sequence_length']) : 
+        #First create three copies of the same individual, one for each possible mutation at the basepair.
+            population_next.append(list(population_current[i]))
+            population_next.append(list(population_current[i]))
+            population_next.append(list(population_current[i]))
+            
+        
+            if (population_current[i][j] == 'A') :
+                population_next[3*(args['sequence_length']*i + j) ][j] = 'C'
+                population_next[3*(args['sequence_length']*i + j) + 1][j] = 'G'
+                population_next[3*(args['sequence_length']*i + j) + 2][j] = 'T'
+                
+            elif (population_current[i][j] == 'C') :
+                population_next[3*(args['sequence_length']*i + j)][j] = 'A'
+                population_next[3*(args['sequence_length']*i + j) + 1][j] = 'G'
+                population_next[3*(args['sequence_length']*i + j) + 2][j] = 'T'
+            
+            elif (population_current[i][j] == 'G') :
+                population_next[3*(args['sequence_length']*i + j)][j] = 'C'
+                population_next[3*(args['sequence_length']*i + j) + 1][j] = 'A'
+                population_next[3*(args['sequence_length']*i + j) + 2][j] = 'T'
+                
+            elif (population_current[i][j] == 'T') :
+                population_next[3*(args['sequence_length']*i + j)][j] = 'C'
+                population_next[3*(args['sequence_length']*i + j) + 1][j] = 'G'
+                population_next[3*(args['sequence_length']*i + j) + 2][j] = 'A'
+            
+        
+    population_next= population_add_flank(population_next)        
+    return list(population_next) 
+
+
+def get_snpdev_dist(population) : 
+    population_fitness = np.array(evaluate_model(list(population),model,scaler,batch_size,fitness_function_graph))
+    args  = {'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
+    population_1bp_all_sequences = population_mutator(list(population) , args)
+    population_1bp_all_fitness = np.array(evaluate_model(list(population_1bp_all_sequences),model,scaler,batch_size,fitness_function_graph))
+
+
+    snpdev_dist = []
+    for i in (range(len(population))) :   
+        original_fitness = population_fitness[i]
+        sequence = population[i]
+
+        exp_dist = population_1bp_all_fitness[3*args['sequence_length']*i:3*args['sequence_length']*(i+1)]
+        snpdev_dist = snpdev_dist + [np.sort((exp_dist-original_fitness))]
+
+    sequences = population
+    return snpdev_dist
+
+#### Functions for Visualization
+def snpdev_str_to_list(snpdev_str) : 
+    return [float(i) for i in snpdev_str.replace("\n" , "").replace("[","").replace("]","").split()]
+def get_ordered_snpdev(population) : 
+    population_fitness = np.array(evaluate_model(list(population),model,scaler,batch_size,fitness_function_graph))
+    args  = {'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
+    population_1bp_all_sequences = population_mutator(list(population) , args)
+    population_1bp_all_fitness = np.array(evaluate_model(list(population_1bp_all_sequences),model,scaler,batch_size,fitness_function_graph))
+
+
+    snpdev_dist = []
+    for i in (range(len(population))) :   
+        original_fitness = population_fitness[i]
+        sequence = population[i]
+
+        exp_dist = population_1bp_all_fitness[3*args['sequence_length']*i:3*args['sequence_length']*(i+1)]
+
+    return exp_dist , population_fitness
+
+def get_map(s):
+    loc_list = []
+    for j in range(len(s)) : 
+        i = j+1
+        if (s[j] == 'A') :
+            loc_list = loc_list + [('C',i)]
+            loc_list = loc_list + [('G',i)]
+            loc_list = loc_list + [('T',i)]
+
+        elif (s[j]  == 'C') :
+            loc_list = loc_list + [('A',i)]
+            loc_list = loc_list + [('G',i)]
+            loc_list = loc_list + [('T',i)]
+
+        elif (s[j] == 'G') :
+            loc_list = loc_list + [('C',i)]
+            loc_list = loc_list + [('A',i)]
+            loc_list = loc_list + [('T',i)]
+
+        elif (s[j]  == 'T') :
+            loc_list = loc_list + [('C',i)]
+            loc_list = loc_list + [('G',i)]
+            loc_list = loc_list + [('A',i)]
+    return loc_list
+####
+
+
+
+############
+
+
+
+
 st.title('The evolution, evolvability and engineering of gene regulatory DNA')
 """
 [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
@@ -74,7 +182,7 @@ with st.beta_container() :
     st.header('What would you like to compute?')
     mode = st.selectbox(
         '',
-        ['Mutational Robustness','Evolvability vector' , "Expression"] ,
+        ['Mutational Robustness','Evolvability vector' , "Expression" , "Visualize sequence"] ,
     )
 
 with st.beta_container() : 
@@ -245,61 +353,7 @@ if valid_input :
 
 
 
-    if mode=="Evolvability vector"  or mode=="Mutational Robustness":
-        epsilon = 0.1616
-        def population_mutator( population_current , args) :
-            population_current = population_remove_flank(population_current)
-            population_next = []  
-            for i in range(len(population_current)) :         
-                for j in range(args['sequence_length']) : 
-                #First create three copies of the same individual, one for each possible mutation at the basepair.
-                    population_next.append(list(population_current[i]))
-                    population_next.append(list(population_current[i]))
-                    population_next.append(list(population_current[i]))
-                    
-                
-                    if (population_current[i][j] == 'A') :
-                        population_next[3*(args['sequence_length']*i + j) ][j] = 'C'
-                        population_next[3*(args['sequence_length']*i + j) + 1][j] = 'G'
-                        population_next[3*(args['sequence_length']*i + j) + 2][j] = 'T'
-                        
-                    elif (population_current[i][j] == 'C') :
-                        population_next[3*(args['sequence_length']*i + j)][j] = 'A'
-                        population_next[3*(args['sequence_length']*i + j) + 1][j] = 'G'
-                        population_next[3*(args['sequence_length']*i + j) + 2][j] = 'T'
-                    
-                    elif (population_current[i][j] == 'G') :
-                        population_next[3*(args['sequence_length']*i + j)][j] = 'C'
-                        population_next[3*(args['sequence_length']*i + j) + 1][j] = 'A'
-                        population_next[3*(args['sequence_length']*i + j) + 2][j] = 'T'
-                        
-                    elif (population_current[i][j] == 'T') :
-                        population_next[3*(args['sequence_length']*i + j)][j] = 'C'
-                        population_next[3*(args['sequence_length']*i + j) + 1][j] = 'G'
-                        population_next[3*(args['sequence_length']*i + j) + 2][j] = 'A'
-                    
-                
-            population_next= population_add_flank(population_next)        
-            return list(population_next) 
-
-
-        def get_snpdev_dist(population) : 
-            population_fitness = np.array(evaluate_model(list(population),model,scaler,batch_size,fitness_function_graph))
-            args  = {'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
-            population_1bp_all_sequences = population_mutator(list(population) , args)
-            population_1bp_all_fitness = np.array(evaluate_model(list(population_1bp_all_sequences),model,scaler,batch_size,fitness_function_graph))
-
-
-            snpdev_dist = []
-            for i in (range(len(population))) :   
-                original_fitness = population_fitness[i]
-                sequence = population[i]
-
-                exp_dist = population_1bp_all_fitness[3*args['sequence_length']*i:3*args['sequence_length']*(i+1)]
-                snpdev_dist = snpdev_dist + [np.sort((exp_dist-original_fitness))]
-
-            sequences = population
-            return snpdev_dist
+    if mode=="Evolvability vector"  or mode=="Mutational Robustness" or mode=="Visualize sequence":
 
         sequences = list(input_df.iloc[:,0].values)
         single_sequence_input = 0 
@@ -307,35 +361,62 @@ if valid_input :
                 single_sequence_input = 1 
                 sequences = sequences+sequences
         X , sequences_flanked = parse_seqs(sequences)
-        with st.spinner('Computing expression from sequence using the model...'):
-            Y_pred = evaluate_model(X, model, scaler, batch_size , fitness_function_graph)
-
-        evolvability_output_df = pd.DataFrame([ sequences , Y_pred ]  ).transpose()
-        evolvability_output_df.columns = ['Sequence' , 'Expression']
         
-        if mode=="Evolvability vector" : 
-            with st.spinner('Computing evolvability vectors for sequences...'):
-                evolvability_vector = get_snpdev_dist(sequences_flanked)
-            st.success('Evolvability vectors and expression computed !')
-            evolvability_output_df['Evolvability vector'] = evolvability_vector
+        if mode=="Visualize sequence" : 
+            with st.spinner('Generating visualization of the 3L neighbourhood of the (first) sequence in your input...'):
+                output = pd.DataFrame(index = ['A','C','G','T'] , columns = [i+1 for i in range(80)])
+                sequences_unflanked = population_remove_flank(sequences_flanked)
+                el_list , el= get_ordered_snpdev([sequences_flanked[0]]) #only the first element
+                
+                s = sequences_unflanked[0]
+                loc_list = get_map(s)
+                el_map = dict(zip(loc_list, el_list))
+                for i in el_map : 
+                    output.loc[i] = el_map[i]
+                    
+                output = output.fillna(el[0]) 
+                output.columns = [ i for i in s]
+                
+                cmap_list = plt.colormaps()
 
-        if mode=="Mutational Robustness" :
-            with st.spinner('Computing mutational robustness for sequences...'):
-                evolvability_vector = get_snpdev_dist(sequences_flanked)
-            st.success('Mutational robustness, evolvability vectors and expression computed !')
-            evolvability_output_df['Evolvability Vector'] = evolvability_vector
-            evolvability_output_df['Mutational Robustness'] = [np.sum(np.abs(i)<epsilon)/240 for i in evolvability_vector]
-            evolvability_output_df['Mutational Robustness (percentile)']  = evolvability_output_df['Mutational Robustness'].rank(pct=1)
-            evolvability_output_df['Expression (percentile)']  = evolvability_output_df['Expression'].rank(pct=1)
+                cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
 
-        if single_sequence_input==1 :
-            evolvability_output_df = pd.DataFrame(evolvability_output_df.loc[0,:]).T
-        if 1 : 
-            with st.beta_container() : 
-                st.header('Results')
-                evolvability_output_df
-                tmp_download_link = download_link(evolvability_output_df, 'evolvability_output_df.csv', 'Click here to download the results as a CSV')
-                st.markdown(tmp_download_link, unsafe_allow_html=True)
+                fig=plt.figure(figsize = (16, 2) , dpi= 500)
+                sns.heatmap(output  , linewidths=0.5, cmap = cmap , square = 0)
+                st.pyplot(fig)
+                st.write('Tip : Hide the sidebar for better visualization')
+                output
+
+        if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
+            with st.spinner('Computing expression from sequence using the model...'):
+                Y_pred = evaluate_model(X, model, scaler, batch_size , fitness_function_graph)
+
+            evolvability_output_df = pd.DataFrame([ sequences , Y_pred ]  ).transpose()
+            evolvability_output_df.columns = ['Sequence' , 'Expression']
+            
+            if mode=="Evolvability vector" : 
+                with st.spinner('Computing evolvability vectors for sequences...'):
+                    evolvability_vector = get_snpdev_dist(sequences_flanked)
+                st.success('Evolvability vectors and expression computed !')
+                evolvability_output_df['Evolvability vector'] = evolvability_vector
+
+            if mode=="Mutational Robustness" :
+                with st.spinner('Computing mutational robustness for sequences...'):
+                    evolvability_vector = get_snpdev_dist(sequences_flanked)
+                st.success('Mutational robustness, evolvability vectors and expression computed !')
+                evolvability_output_df['Evolvability Vector'] = evolvability_vector
+                evolvability_output_df['Mutational Robustness'] = [np.sum(np.abs(i)<epsilon)/240 for i in evolvability_vector]
+                evolvability_output_df['Mutational Robustness (percentile)']  = evolvability_output_df['Mutational Robustness'].rank(pct=1)
+                evolvability_output_df['Expression (percentile)']  = evolvability_output_df['Expression'].rank(pct=1)
+
+            if single_sequence_input==1 :
+                evolvability_output_df = pd.DataFrame(evolvability_output_df.loc[0,:]).T
+            if 1 : 
+                with st.beta_container() : 
+                    st.header('Results')
+                    evolvability_output_df
+                    tmp_download_link = download_link(evolvability_output_df, 'evolvability_output_df.csv', 'Click here to download the results as a CSV')
+                    st.markdown(tmp_download_link, unsafe_allow_html=True)
 
 
 
