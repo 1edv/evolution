@@ -429,9 +429,9 @@ if valid_input :
                                     ticker=BasicTicker(desired_num_ticks=len(colors)),
                                     formatter=PrintfTickFormatter(format="%d"),
                                     label_standoff=6, border_line_color=None)
-                #p.add_layout(color_bar, 'right')
+                #p.add_layout(color_bar, 'left')
 
-                st.write(p , use_container_width=0)      # show the plot
+                st.bokeh_chart(p , use_container_width=1)      # show the plot
 
                 ###
 
@@ -439,7 +439,7 @@ if valid_input :
                 tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
                 st.markdown(tmp_download_link, unsafe_allow_html=True)
 
-            
+
         if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
             with st.spinner('Computing expression from sequence using the model...'):
                 Y_pred = evaluate_model(X, model, scaler, batch_size , fitness_function_graph)
