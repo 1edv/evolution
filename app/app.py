@@ -498,6 +498,13 @@ if valid_input :
                 debounce_time=100,
                 refresh_on_update=False
             )
+
+            extrema_cols = st.beta_columns([1, 1])
+            with extrema_cols[0]:
+                p_tuple[3]
+            with extrema_cols[1]:
+                p_tuple[4]
+            st.markdown(p_tuple[2], unsafe_allow_html=True)
             if event_result is not None:
                 # TestSelectEvent was thrown
                 if "TestSelectEvent" in event_result:
