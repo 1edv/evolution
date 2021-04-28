@@ -381,9 +381,9 @@ if valid_input :
             st.write('')
             vis_reqs = st.beta_expander('Guidelines 👉', expanded=True)
             with vis_reqs : 
-                st.write('Please click on the mutations you wish to introduce to the starting sequence. Use the Shift key if selecting sequential mutations in a trajectory.')
+                st.write('Please click on the mutations you wish to introduce to the starting sequence. Use the Shift key if selecting sequential mutations in a trajectory. The first sequence is used if multiple sequences are entered.')
             def plot_el_visualization(sequences_flanked):
-                with st.spinner('Generating visualization of the 3L neighbourhood of the (first) sequence in your input...'):
+                with st.spinner('Generating visualization of the 3L neighbourhood of your input...'):
                     output = pd.DataFrame(index = ['A','C','G','T'] , columns = [i+1 for i in range(80)])
                     sequences_unflanked = population_remove_flank(sequences_flanked)
                     el_list , el= get_ordered_snpdev([sequences_flanked[0]]) #only the first element
