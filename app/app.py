@@ -419,7 +419,12 @@ if valid_input :
 
                         df = pd.DataFrame(output.stack(), columns=['Expression']).reset_index()
                         df.columns =  ['base' , 'position' , 'Expression']
-
+                        ###
+                        maxima=df.loc[df.Expression.idxmax()]
+                        maxima.name='Max'
+                        minima=df.loc[df.Expression.idxmin()]
+                        minima.name='Min'
+                        ###
 
                         # this is the colormap from the original NYTimes plot
                         colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
@@ -440,6 +445,13 @@ if valid_input :
                         p.axis.major_label_standoff = 0
                         p.xaxis.major_label_orientation = pi / 3
                         
+
+
+                        #from bokeh.models import BoxAnnotation
+                        #box = BoxAnnotation(left=20+5, right=30, bottom =2 , top =3 ,fill_alpha=0.5, fill_color='grey')
+                        #p.add_layout(box)
+
+
                         source = ColumnDataSource(df)
                         tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
 
@@ -448,22 +460,16 @@ if valid_input :
                             fill_color={'field': 'Expression', 'transform': mapper},
                             line_color=None)
 
-                        color_bar = ColorBar(color_mapper=mapper, major_label_text_font_size="9px",
-                                            ticker=BasicTicker(desired_num_ticks=len(colors)),
-                                            formatter=PrintfTickFormatter(format="%d"),
-                                            label_standoff=6, border_line_color=None)
+                        #color_bar = ColorBar(color_mapper=mapper, major_label_text_font_size="9px",
+                        #                    ticker=BasicTicker(desired_num_ticks=len(colors)),
+                        #                    formatter=PrintfTickFormatter(format="%d"),
+                        #                    label_standoff=6, border_line_color=None)
                         #p.add_layout(color_bar, 'left')
                         p.output_backend="svg"
 
                         #st.bokeh_chart(p , use_container_width=0)      # show the plot
 
-                        maxima=df.loc[df.Expression.idxmax()]
-                        maxima.name='Max'
-                        minima=df.loc[df.Expression.idxmin()]
-                        minima.name='Min'
-
-                        
-
+                       
 
 
 
@@ -474,77 +480,76 @@ if valid_input :
             p_tuple = ('Input',s,tmp_download_link, maxima,minima,source,output,df,p )
             p_list = [p_tuple]
 
-            if 1 : 
-                source.selected.js_on_change(
-                    "indices",
-                    CustomJS(
-                        args=dict(source=source),
-                        code="""
-                        document.dispatchEvent(
-                            new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
-                        )
-                    """,
-                    ),
-                )
-                event_result = streamlit_bokeh_events(
-                    events="TestSelectEvent",
-                    bokeh_plot=p,
-                    key="foo",
-                    debounce_time=100,
-                    refresh_on_update=False
-                )
-                if event_result is not None:
-                    # TestSelectEvent was thrown
-                    if "TestSelectEvent" in event_result:
-                        #st.subheader("Selected Points' Pandas Stat summary")
-                        indices = event_result["TestSelectEvent"].get("indices", [])
-                        #st.table(df.iloc[indices].describe())
-                        index_list = [int(re.split('(\d+)',str(i))[1])-1 for i in df.iloc[indices]['position'].values]
-                        index_list.reverse() ### Because clicking order is stored as stack
-                        mutation_list = [ df.loc[i,'position'] + df.loc[i,'base'] for i in df.iloc[indices].index]
-                        mutation_list.reverse()
+            source.selected.js_on_change(
+                "indices",
+                CustomJS(
+                    args=dict(source=source),
+                    code="""
+                    document.dispatchEvent(
+                        new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
+                    )
+                """,
+                ),
+            )
+            event_result = streamlit_bokeh_events(
+                events="TestSelectEvent",
+                bokeh_plot=p,
+                key="foo",
+                debounce_time=100,
+                refresh_on_update=False
+            )
+            if event_result is not None:
+                # TestSelectEvent was thrown
+                if "TestSelectEvent" in event_result:
+                    #st.subheader("Selected Points' Pandas Stat summary")
+                    indices = event_result["TestSelectEvent"].get("indices", [])
+                    #st.table(df.iloc[indices].describe())
+                    index_list = [int(re.split('(\d+)',str(i))[1])-1 for i in df.iloc[indices]['position'].values]
+                    index_list.reverse() ### Because clicking order is stored as stack
+                    mutation_list = [ df.loc[i,'position'] + df.loc[i,'base'] for i in df.iloc[indices].index]
+                    mutation_list.reverse()
+                    
+                    mutation = 'Input'
+                    for index,m in zip(index_list,mutation_list) : 
+                        mutation = mutation + '->' + m
+                        new_sequences_unflanked = copy.deepcopy([i for i in s])
+                        new_sequences_unflanked[index] = str(df.iloc[indices]['base'].values[0])
+                        #st.write(new_sequences_unflanked[index] )
+                        new_sequences_unflanked = ''.join(new_sequences_unflanked)
+                        new_sequences_flanked = population_add_flank([new_sequences_unflanked])
+                        if 0 :  ### All tests work
+                            s[index]
+                            new_s[index]
+                            population_remove_flank([sequences_flanked[0]])[0]==new_s#[index]                       
+                            population_remove_flank([sequences_flanked[0]])[0]
+                            new_s
+                            df.iloc[indices]
                         
-                        mutation = 'Input'
-                        for index,m in zip(index_list,mutation_list) : 
-                            mutation = mutation + '->' + m
-                            new_sequences_unflanked = copy.deepcopy([i for i in s])
-                            new_sequences_unflanked[index] = str(df.iloc[indices]['base'].values[0])
-                            #st.write(new_sequences_unflanked[index] )
-                            new_sequences_unflanked = ''.join(new_sequences_unflanked)
-                            new_sequences_flanked = population_add_flank([new_sequences_unflanked])
-                            if 0 :  ### All tests work
-                                s[index]
-                                new_s[index]
-                                population_remove_flank([sequences_flanked[0]])[0]==new_s#[index]                       
-                                population_remove_flank([sequences_flanked[0]])[0]
-                                new_s
-                                df.iloc[indices]
-                            
-                            s,tmp_download_link, maxima,minima,source,output,df,p = plot_el_visualization(new_sequences_flanked)
-                            p_tuple = (mutation,s,tmp_download_link, maxima,minima,source,output,df,p )
-                            p_list = p_list + [p_tuple]
-                        
-                        st.header("Results")
-                        #st.write(event_result)
+                        s,tmp_download_link, maxima,minima,source,output,df,p = plot_el_visualization(new_sequences_flanked)
+                        p_tuple = (mutation,s,tmp_download_link, maxima,minima,source,output,df,p )
+                        p_list = p_list + [p_tuple]
+                    
+                    st.header("Results")
+                    #st.write(event_result)
+                    for p_tuple in p_list:
+
+                        st.subheader(p_tuple[0])
+                        st.write(p_tuple[-1])
+                        extrema_cols = st.beta_columns([1, 1])
+                        with extrema_cols[0]:
+                            p_tuple[3]
+                        with extrema_cols[1]:
+                            p_tuple[4]
+                        st.markdown(p_tuple[2], unsafe_allow_html=True)
+
+                    if 0 : 
+                        st.header("Aggregated export of SVGs")
+                        q = []
                         for p_tuple in p_list:
-
-                            st.subheader(p_tuple[0])
-                            st.write(p_tuple[-1])
-                            extrema_cols = st.beta_columns([1, 1])
-                            with extrema_cols[0]:
-                                p_tuple[3]
-                            with extrema_cols[1]:
-                                p_tuple[4]
-                            st.markdown(p_tuple[2], unsafe_allow_html=True)
-
-                        if 0 : 
-                            st.header("Aggregated export of SVGs")
-                            q = []
-                            for p_tuple in p_list:
-                                q = q+[[p_tuple[-1]]]
-                            from bokeh.layouts import gridplot
-                            st.bokeh_chart(gridplot(q))
-                        
+                            q = q+[[p_tuple[-1]]]
+                        from bokeh.layouts import gridplot
+                        st.bokeh_chart(gridplot(q))
+                    
 
 
         if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
