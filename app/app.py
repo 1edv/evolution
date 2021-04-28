@@ -527,9 +527,11 @@ if valid_input :
 
 
 with st.beta_container() : 
-    st.header('')
-    st.header('')
-    st.header('Project Overview')
-    image_cols = st.beta_columns([0.05 , 0.05 , 0.05  , 0.7 , 0.05, 0.05 ,0.05 ])
-    with image_cols[3] :
-        st.image(path_prefix+'overview.png' , caption = '')
+    if mode=="Mutation Tolerance" : 
+
+        st.header('')
+        st.header('')
+        st.header('Project Overview')
+        image_cols = st.beta_columns([0.05 , 0.05 , 0.05  , 0.7 , 0.05, 0.05 ,0.05 ])
+        with image_cols[3] :
+            st.image(path_prefix+'overview.png' , caption = '')
