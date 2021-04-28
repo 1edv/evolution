@@ -31,7 +31,7 @@ from tensorflow.keras.backend import conv1d
 from tensorflow.python.keras.utils import conv_utils
 from tensorflow.keras import backend as K
 import matplotlib.pyplot as plt
-import h5py , tensorflow
+import h5py , tensorflow , re
 import tensorflow as tf, sys, numpy as np, h5py, pandas as pd
 from tensorflow import nn
 from tensorflow.contrib import rnn

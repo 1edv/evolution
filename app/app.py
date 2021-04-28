@@ -1,12 +1,18 @@
 
 ####
-import sys 
+import sys, re
 sys.path.insert(0, './')
 import app_aux
 from app_aux import *  
 tf.reset_default_graph() 
 tf.keras.backend.clear_session()
 gc.collect() 
+
+###events
+from bokeh.models import ColumnDataSource, CustomJS
+from bokeh.plotting import figure
+from streamlit_bokeh_events import streamlit_bokeh_events
+###events
 
 st.set_page_config(
     page_title=" Evolution, Evolvability and Expression",
@@ -190,7 +196,7 @@ with st.beta_container() :
     st.header('What would you like to compute?')
     mode = st.selectbox(
         '',
-        ['Mutational Robustness','Evolvability vector' , "Expression" , "Visualize sequence"] ,
+        ["Visualize sequence",'Mutational Robustness','Evolvability vector' , "Expression" ] ,
     )
 
 with st.beta_container() : 
@@ -296,19 +302,19 @@ st.sidebar.image(path_prefix+'HHMI_logo.jpeg')
  
 
 if valid_input : 
-    with st.spinner('Loading deep transformer neural network model ...'):
-        if condition == "Defined Media" :
-            model_conditions='SC_Ura' #SC_Ura 
-        else :
-            model_conditions='Glu'
-        NUM_GPU = len(get_available_gpus())
-        if(NUM_GPU>0) :
-            config = tf.ConfigProto()
-            config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
-        fitness_function_graph = tf.Graph()
-        with fitness_function_graph.as_default():
-            ## Next line should be a box where you can pick models (on the left side) 
-            model, scaler,batch_size = load_model(model_conditions)
+    #with st.spinner('Loading deep transformer neural network model ...'):
+    if condition == "Defined Media" :
+        model_conditions='SC_Ura' #SC_Ura 
+    else :
+        model_conditions='Glu'
+    NUM_GPU = len(get_available_gpus())
+    if(NUM_GPU>0) :
+        config = tf.ConfigProto()
+        config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+    fitness_function_graph = tf.Graph()
+    with fitness_function_graph.as_default():
+        ## Next line should be a box where you can pick models (on the left side) 
+        model, scaler,batch_size = load_model(model_conditions)
 
     
     if mode=="Expression" :
@@ -371,6 +377,11 @@ if valid_input :
         X , sequences_flanked = parse_seqs(sequences)
         
         if mode=="Visualize sequence" : 
+            st.header('Visualizing expression effects of mutation')
+            st.write('')
+            vis_reqs = st.beta_expander('Guidelines 👉', expanded=True)
+            with vis_reqs : 
+                st.write('Please click on the mutations you wish to introduce to the starting sequence. Use the Shift key if selecting sequential mutations in a trajectory.')
             def plot_el_visualization(sequences_flanked):
                 with st.spinner('Generating visualization of the 3L neighbourhood of the (first) sequence in your input...'):
                     output = pd.DataFrame(index = ['A','C','G','T'] , columns = [i+1 for i in range(80)])
@@ -390,8 +401,7 @@ if valid_input :
 
                         
                     with st.beta_container() : 
-                        st.header('Visualization of the 3L mutational neighbourhood of a sequence')
-                        st.write('')
+                        
                         #select_cmap = st.beta_expander('Expression', expanded=True)
                         #with select_cmap : 
                         #    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
@@ -417,7 +427,7 @@ if valid_input :
 
                         TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom,tap"
 
-                        p = figure(title="Visualizing expression effects of mutation",
+                        p = figure(
                                 x_range=list(output.columns), y_range=list(output.index.values),
                                 x_axis_location="above", plot_width=1000, plot_height=200,
                                 tools=TOOLS, toolbar_location='below',
@@ -430,12 +440,9 @@ if valid_input :
                         p.axis.major_label_standoff = 0
                         p.xaxis.major_label_orientation = pi / 3
                         
-                        ###events
-                        from bokeh.models import ColumnDataSource, CustomJS
-                        from bokeh.plotting import figure
-                        from streamlit_bokeh_events import streamlit_bokeh_events
                         source = ColumnDataSource(df)
-                        ###events
+                        tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
+
                         p.rect(x="position", y="base", width=1, height=1,
                             source=source,
                             fill_color={'field': 'Expression', 'transform': mapper},
@@ -448,62 +455,97 @@ if valid_input :
                         #p.add_layout(color_bar, 'left')
                         p.output_backend="svg"
 
-                        st.bokeh_chart(p , use_container_width=0)      # show the plot
+                        #st.bokeh_chart(p , use_container_width=0)      # show the plot
 
                         maxima=df.loc[df.Expression.idxmax()]
                         maxima.name='Max'
                         minima=df.loc[df.Expression.idxmin()]
                         minima.name='Min'
+
                         
-                        extrema_cols = st.beta_columns([1, 1])
-                        with extrema_cols[0]:
-                            maxima
-                        with extrema_cols[1]:
-                            minima
+
+
+
+
+
+                        return s,tmp_download_link, maxima,minima,source,output,df,p
+
+            s,tmp_download_link, maxima,minima,source,output,df,p = plot_el_visualization(sequences_flanked)
+            p_tuple = ('Input',s,tmp_download_link, maxima,minima,source,output,df,p )
+            p_list = [p_tuple]
+
+            if 1 : 
+                source.selected.js_on_change(
+                    "indices",
+                    CustomJS(
+                        args=dict(source=source),
+                        code="""
+                        document.dispatchEvent(
+                            new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
+                        )
+                    """,
+                    ),
+                )
+                event_result = streamlit_bokeh_events(
+                    events="TestSelectEvent",
+                    bokeh_plot=p,
+                    key="foo",
+                    debounce_time=100,
+                    refresh_on_update=False
+                )
+                if event_result is not None:
+                    # TestSelectEvent was thrown
+                    if "TestSelectEvent" in event_result:
+                        #st.subheader("Selected Points' Pandas Stat summary")
+                        indices = event_result["TestSelectEvent"].get("indices", [])
+                        #st.table(df.iloc[indices].describe())
+                        index_list = [int(re.split('(\d+)',str(i))[1])-1 for i in df.iloc[indices]['position'].values]
+                        index_list.reverse() ### Because clicking order is stored as stack
+                        mutation_list = [ df.loc[i,'position'] + df.loc[i,'base'] for i in df.iloc[indices].index]
+                        mutation_list.reverse()
                         
-                        ###
-                        #output
-                        tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
-                        st.markdown(tmp_download_link, unsafe_allow_html=True)
+                        mutation = 'Input'
+                        for index,m in zip(index_list,mutation_list) : 
+                            mutation = mutation + '->' + m
+                            new_sequences_unflanked = copy.deepcopy([i for i in s])
+                            new_sequences_unflanked[index] = str(df.iloc[indices]['base'].values[0])
+                            #st.write(new_sequences_unflanked[index] )
+                            new_sequences_unflanked = ''.join(new_sequences_unflanked)
+                            new_sequences_flanked = population_add_flank([new_sequences_unflanked])
+                            if 0 :  ### All tests work
+                                s[index]
+                                new_s[index]
+                                population_remove_flank([sequences_flanked[0]])[0]==new_s#[index]                       
+                                population_remove_flank([sequences_flanked[0]])[0]
+                                new_s
+                                df.iloc[indices]
+                            
+                            s,tmp_download_link, maxima,minima,source,output,df,p = plot_el_visualization(new_sequences_flanked)
+                            p_tuple = (mutation,s,tmp_download_link, maxima,minima,source,output,df,p )
+                            p_list = p_list + [p_tuple]
                         
+                        st.header("Results")
+                        #st.write(event_result)
+                        for p_tuple in p_list:
+
+                            st.subheader(p_tuple[0])
+                            st.write(p_tuple[-1])
+                            extrema_cols = st.beta_columns([1, 1])
+                            with extrema_cols[0]:
+                                p_tuple[3]
+                            with extrema_cols[1]:
+                                p_tuple[4]
+                            st.markdown(p_tuple[2], unsafe_allow_html=True)
+
                         if 0 : 
-                            source.selected.js_on_change(
-                                "indices",
-                                CustomJS(
-                                    args=dict(source=source),
-                                    code="""
-                                    document.dispatchEvent(
-                                        new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
-                                    )
-                                """,
-                                ),
-                            )
-                            event_result = streamlit_bokeh_events(
-                                events="TestSelectEvent",
-                                bokeh_plot=p,
-                                key="foo",
-                                debounce_time=100,
-                                refresh_on_update=False
-                            )
-                            if event_result is not None:
-                                # TestSelectEvent was thrown
-                                if "TestSelectEvent" in event_result:
-                                    st.subheader("Selected Points' Pandas Stat summary")
-                                    indices = event_result["TestSelectEvent"].get("indices", [])
-                                    st.table(df.iloc[indices].describe())
+                            st.header("Aggregated export of SVGs")
+                            q = []
+                            for p_tuple in p_list:
+                                q = q+[[p_tuple[-1]]]
+                            from bokeh.layouts import gridplot
+                            st.bokeh_chart(gridplot(q))
+                        
 
-                            st.subheader("Raw Event Data")
-                            st.write(event_result)
-
-
-
-
-
-                        return output,df,p
-
-            output, df,p = plot_el_visualization(sequences_flanked)
-            
-            
 
         if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
             with st.spinner('Computing expression from sequence using the model...'):
@@ -539,7 +581,7 @@ if valid_input :
 
 
 with st.beta_container() : 
-    if mode=="Mutation Tolerance" : 
+    if mode=="Mutational Robustness" : 
 
         st.header('')
         st.header('')
