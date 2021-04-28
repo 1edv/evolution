@@ -392,6 +392,8 @@ if valid_input :
                 st.pyplot(fig)
 
                 output
+                tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
+                st.markdown(tmp_download_link, unsafe_allow_html=True)
 
                 tips = st.beta_expander('Visualization tips', expanded=True)
                 with tips : 
