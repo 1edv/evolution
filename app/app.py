@@ -387,6 +387,12 @@ if valid_input :
                 #    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
 
                 ###Plot with Bokeh
+                ###Bokeh imports
+                from math import pi
+                from bokeh.io import show
+                from bokeh.models import BasicTicker, ColorBar, LinearColorMapper, PrintfTickFormatter
+                from bokeh.plotting import figure
+                ###
                 output.columns = output.columns +[str(i+1) for i in range(len(output.columns))]
                 output.columns.name = 'sequence'
                 output.index.name = 'base'

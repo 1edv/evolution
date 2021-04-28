@@ -52,12 +52,7 @@ from tensorflow.contrib import tpu
 from tensorflow.contrib.cluster_resolver import TPUClusterResolver
 ##TPU
 
-###Bokeh
-from math import pi
-from bokeh.io import show
-from bokeh.models import BasicTicker, ColorBar, LinearColorMapper, PrintfTickFormatter
-from bokeh.plotting import figure
-###
+
 
 ##Matplotlib rc params
 # Font family : https://matplotlib.org/tutorials/introductory/customizing.html , http://aeturrell.com/2018/01/31/publication-quality-plots-in-python/ , https://www.dmcdougall.co.uk/publication-ready-the-first-time-beautiful-reproducible-plots-with-matplotlib , https://stackoverflow.com/questions/26106552/matplotlib-style-library-not-updating-when-mplstyle-files-added-deleted , https://tonysyu.github.io/raw_content/matplotlib-style-gallery/gallery.html , http://www.jesshamrick.com/2016/04/13/reproducible-plots/ , 
