@@ -169,13 +169,18 @@ def get_map(s):
 ############
 
 
-
-
-st.title('The evolution, evolvability and engineering of gene regulatory DNA')
-"""
+st.write("""
 [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
 &nbsp[![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets)
-"""
+""")
+st.title('The evolution, evolvability and engineering of gene regulatory DNA')
+st.write('')
+st.write('')
+st.write('')
+st.write('')
+
+#st.write('')
+
 valid_input = 0 
 
 with st.beta_container() : 
@@ -382,6 +387,7 @@ if valid_input :
                 
             with st.beta_container() : 
                 st.header('Visualization of the 3L mutational neighbourhood of a sequence')
+                st.write('')
                 #select_cmap = st.beta_expander('Expression', expanded=True)
                 #with select_cmap : 
                 #    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
@@ -431,11 +437,9 @@ if valid_input :
                                     label_standoff=6, border_line_color=None)
                 #p.add_layout(color_bar, 'left')
 
-                st.bokeh_chart(p , use_container_width=1)      # show the plot
-
+                st.bokeh_chart(p , use_container_width=0)      # show the plot
                 ###
-
-                output
+                #output
                 tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
                 st.markdown(tmp_download_link, unsafe_allow_html=True)
 
@@ -474,6 +478,8 @@ if valid_input :
 
 
 with st.beta_container() : 
+    st.header('')
+    st.header('')
     st.header('Project Overview')
     image_cols = st.beta_columns([0.05 , 0.05 , 0.05  , 0.7 , 0.05, 0.05 ,0.05 ])
     with image_cols[3] :
