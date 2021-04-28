@@ -382,24 +382,58 @@ if valid_input :
                 
             with st.beta_container() : 
                 st.header('Visualization of the 3L mutational neighbourhood of a sequence')
-                select_cmap = st.beta_expander('Expression', expanded=True)
-                with select_cmap : 
-                    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
+                #select_cmap = st.beta_expander('Expression', expanded=True)
+                #with select_cmap : 
+                #    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
 
-                fig=plt.figure(figsize = (9, 1.5) )
-                sns.heatmap(output  , linewidths=0.5, cmap = cmap , square = 1, cbar_kws={"shrink": 0.5} , 
-                            xticklabels = output.columns , yticklabels = output.index.values)
-                st.pyplot(fig)
+                ###Plot with Bokeh
+                output.columns = output.columns +[str(i+1) for i in range(len(output.columns))]
+                output.columns.name = 'sequence'
+                output.index.name = 'base'
+
+                df = pd.DataFrame(output.stack(), columns=['Expression']).reset_index()
+                df.columns =  ['base' , 'position' , 'Expression']
+
+
+                # this is the colormap from the original NYTimes plot
+                colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
+                mapper = LinearColorMapper(palette=colors, low=df.Expression.min(), high=df.Expression.max())
+
+                TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom"
+
+                p = figure(title="Visualizing expression effects of mutation",
+                        x_range=list(output.columns), y_range=list(output.index.values),
+                        x_axis_location="above", plot_width=1400, plot_height=200,
+                        tools=TOOLS, toolbar_location='below',
+                        tooltips=[('Mutation', '@position@base'), ('Expression', '@Expression')])
+
+                p.grid.grid_line_color = None
+                p.axis.axis_line_color = None
+                p.axis.major_tick_line_color = None
+                p.axis.major_label_text_font_size = "9px"
+                p.axis.major_label_standoff = 0
+                p.xaxis.major_label_orientation = pi / 3
+
+                p.rect(x="position", y="base", width=1, height=1,
+                    source=df,
+                    fill_color={'field': 'Expression', 'transform': mapper},
+                    line_color=None)
+
+                color_bar = ColorBar(color_mapper=mapper, major_label_text_font_size="9px",
+                                    ticker=BasicTicker(desired_num_ticks=len(colors)),
+                                    formatter=PrintfTickFormatter(format="%d"),
+                                    label_standoff=6, border_line_color=None)
+                #p.add_layout(color_bar, 'right')
+
+                st.write(p , use_container_width=0)      # show the plot
+
+                ###
 
                 output
                 tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
                 st.markdown(tmp_download_link, unsafe_allow_html=True)
 
-                tips = st.beta_expander('Visualization tips', expanded=True)
-                with tips : 
-                    st.write('* Hide the sidebar for better visualization')
-
-
+            
         if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
             with st.spinner('Computing expression from sequence using the model...'):
                 Y_pred = evaluate_model(X, model, scaler, batch_size , fitness_function_graph)
