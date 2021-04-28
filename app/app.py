@@ -508,12 +508,15 @@ if valid_input :
                     index_list.reverse() ### Because clicking order is stored as stack
                     mutation_list = [ df.loc[i,'position'] + df.loc[i,'base'] for i in df.iloc[indices].index]
                     mutation_list.reverse()
+                    newbase_list = [ df.loc[i,'base'] for i in df.iloc[indices].index]
+                    newbase_list.reverse()
+                    
                     
                     mutation = 'Input'
-                    for index,m in zip(index_list,mutation_list) : 
+                    for index,m,newbase in zip(index_list,mutation_list,newbase_list) : 
                         mutation = mutation + '->' + m
                         new_sequences_unflanked = copy.deepcopy([i for i in s])
-                        new_sequences_unflanked[index] = str(df.iloc[indices]['base'].values[0])
+                        new_sequences_unflanked[index] = newbase
                         #st.write(new_sequences_unflanked[index] )
                         new_sequences_unflanked = ''.join(new_sequences_unflanked)
                         new_sequences_flanked = population_add_flank([new_sequences_unflanked])
