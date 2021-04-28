@@ -1,3 +1,5 @@
+
+####
 import sys 
 sys.path.insert(0, './')
 import app_aux
@@ -12,6 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",)
  
 #st.write('Path Prefix is ' + path_prefix)
+
 
 @st.cache
 def download_link(object_to_download, download_filename, download_link_text):
@@ -368,81 +371,122 @@ if valid_input :
         X , sequences_flanked = parse_seqs(sequences)
         
         if mode=="Visualize sequence" : 
-            with st.spinner('Generating visualization of the 3L neighbourhood of the (first) sequence in your input...'):
-                output = pd.DataFrame(index = ['A','C','G','T'] , columns = [i+1 for i in range(80)])
-                sequences_unflanked = population_remove_flank(sequences_flanked)
-                el_list , el= get_ordered_snpdev([sequences_flanked[0]]) #only the first element
-                
-                s = sequences_unflanked[0]
-                loc_list = get_map(s)
-                el_map = dict(zip(loc_list, el_list))
-                for i in el_map : 
-                    output.loc[i] = el_map[i]
+            def plot_el_visualization(sequences_flanked):
+                with st.spinner('Generating visualization of the 3L neighbourhood of the (first) sequence in your input...'):
+                    output = pd.DataFrame(index = ['A','C','G','T'] , columns = [i+1 for i in range(80)])
+                    sequences_unflanked = population_remove_flank(sequences_flanked)
+                    el_list , el= get_ordered_snpdev([sequences_flanked[0]]) #only the first element
                     
-                output = output.fillna(el[0]) 
-                output.columns = [ i for i in s]
-                
-                cmap_list = plt.colormaps()
+                    s = sequences_unflanked[0]
+                    loc_list = get_map(s)
+                    el_map = dict(zip(loc_list, el_list))
+                    for i in el_map : 
+                        output.loc[i] = el_map[i]
+                        
+                    output = output.fillna(el[0]) 
+                    output.columns = [ i for i in s]
+                    
+                    cmap_list = plt.colormaps()
 
-                
-            with st.beta_container() : 
-                st.header('Visualization of the 3L mutational neighbourhood of a sequence')
-                st.write('')
-                #select_cmap = st.beta_expander('Expression', expanded=True)
-                #with select_cmap : 
-                #    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
+                        
+                    with st.beta_container() : 
+                        st.header('Visualization of the 3L mutational neighbourhood of a sequence')
+                        st.write('')
+                        #select_cmap = st.beta_expander('Expression', expanded=True)
+                        #with select_cmap : 
+                        #    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
 
-                ###Plot with Bokeh
-                ###Bokeh imports
-                from math import pi
-                from bokeh.io import show
-                from bokeh.models import BasicTicker, ColorBar, LinearColorMapper, PrintfTickFormatter
-                from bokeh.plotting import figure
-                ###
-                output.columns = output.columns +[str(i+1) for i in range(len(output.columns))]
-                output.columns.name = 'sequence'
-                output.index.name = 'base'
+                        ###Plot with Bokeh
+                        ###Bokeh imports
+                        from math import pi
+                        from bokeh.io import show
+                        from bokeh.models import BasicTicker, ColorBar, LinearColorMapper, PrintfTickFormatter
+                        from bokeh.plotting import figure
+                        ###
+                        output.columns = output.columns +[str(i+1) for i in range(len(output.columns))]
+                        output.columns.name = 'sequence'
+                        output.index.name = 'base'
 
-                df = pd.DataFrame(output.stack(), columns=['Expression']).reset_index()
-                df.columns =  ['base' , 'position' , 'Expression']
+                        df = pd.DataFrame(output.stack(), columns=['Expression']).reset_index()
+                        df.columns =  ['base' , 'position' , 'Expression']
 
 
-                # this is the colormap from the original NYTimes plot
-                colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
-                mapper = LinearColorMapper(palette=colors, low=df.Expression.min(), high=df.Expression.max())
+                        # this is the colormap from the original NYTimes plot
+                        colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
+                        mapper = LinearColorMapper(palette=colors, low=df.Expression.min(), high=df.Expression.max())
 
-                TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom"
+                        TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom,tap"
 
-                p = figure(title="Visualizing expression effects of mutation",
-                        x_range=list(output.columns), y_range=list(output.index.values),
-                        x_axis_location="above", plot_width=1400, plot_height=200,
-                        tools=TOOLS, toolbar_location='below',
-                        tooltips=[('Mutation', '@position@base'), ('Expression', '@Expression')])
+                        p = figure(title="Visualizing expression effects of mutation",
+                                x_range=list(output.columns), y_range=list(output.index.values),
+                                x_axis_location="above", plot_width=1000, plot_height=200,
+                                tools=TOOLS, toolbar_location='below',
+                                tooltips=[('Mutation', '@position@base'), ('Expression', '@Expression')])
 
-                p.grid.grid_line_color = None
-                p.axis.axis_line_color = None
-                p.axis.major_tick_line_color = None
-                p.axis.major_label_text_font_size = "9px"
-                p.axis.major_label_standoff = 0
-                p.xaxis.major_label_orientation = pi / 3
+                        p.grid.grid_line_color = None
+                        p.axis.axis_line_color = None
+                        p.axis.major_tick_line_color = None
+                        p.axis.major_label_text_font_size = "9px"
+                        p.axis.major_label_standoff = 0
+                        p.xaxis.major_label_orientation = pi / 3
+                        
+                        ###events
+                        from bokeh.models import ColumnDataSource, CustomJS
+                        from bokeh.plotting import figure
+                        from streamlit_bokeh_events import streamlit_bokeh_events
+                        source = ColumnDataSource(df)
+                        ###events
+                        p.rect(x="position", y="base", width=1, height=1,
+                            source=source,
+                            fill_color={'field': 'Expression', 'transform': mapper},
+                            line_color=None)
 
-                p.rect(x="position", y="base", width=1, height=1,
-                    source=df,
-                    fill_color={'field': 'Expression', 'transform': mapper},
-                    line_color=None)
+                        color_bar = ColorBar(color_mapper=mapper, major_label_text_font_size="9px",
+                                            ticker=BasicTicker(desired_num_ticks=len(colors)),
+                                            formatter=PrintfTickFormatter(format="%d"),
+                                            label_standoff=6, border_line_color=None)
+                        #p.add_layout(color_bar, 'left')
+                        p.output_backend="svg"
 
-                color_bar = ColorBar(color_mapper=mapper, major_label_text_font_size="9px",
-                                    ticker=BasicTicker(desired_num_ticks=len(colors)),
-                                    formatter=PrintfTickFormatter(format="%d"),
-                                    label_standoff=6, border_line_color=None)
-                #p.add_layout(color_bar, 'left')
+                        st.bokeh_chart(p , use_container_width=0)      # show the plot
+                        ###
+                        #output
+                        tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
+                        st.markdown(tmp_download_link, unsafe_allow_html=True)
 
-                st.bokeh_chart(p , use_container_width=0)      # show the plot
-                ###
-                #output
-                tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
-                st.markdown(tmp_download_link, unsafe_allow_html=True)
+                        if 0 : 
+                            source.selected.js_on_change(
+                                "indices",
+                                CustomJS(
+                                    args=dict(source=source),
+                                    code="""
+                                    document.dispatchEvent(
+                                        new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
+                                    )
+                                """,
+                                ),
+                            )
+                            event_result = streamlit_bokeh_events(
+                                events="TestSelectEvent",
+                                bokeh_plot=p,
+                                key="foo",
+                                debounce_time=100,
+                                refresh_on_update=False
+                            )
+                            if event_result is not None:
+                                # TestSelectEvent was thrown
+                                if "TestSelectEvent" in event_result:
+                                    st.subheader("Selected Points' Pandas Stat summary")
+                                    indices = event_result["TestSelectEvent"].get("indices", [])
+                                    st.table(df.iloc[indices].describe())
 
+                            st.subheader("Raw Event Data")
+                            st.write(event_result)
+                        return output,df,p
+
+            output, df,p = plot_el_visualization(sequences_flanked)
+            
+            
 
         if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
             with st.spinner('Computing expression from sequence using the model...'):
