@@ -266,6 +266,7 @@ with st.beta_container() :
 
 
 ### Read and Validate Input
+
 if text_area and uploaded_file :
     st.warning('Warning : A file was uploaded and sequences were pasted into the textbox. This application will now proceed with the file and ignore the textbox. Please pick one mode of input if that is not the intended behaviour.')
 
@@ -503,8 +504,15 @@ if valid_input :
                             
                     return s,tmp_download_link,maxima,minima,df,source,p
 
-            
-            
+            ### Reset if new input is entered
+            if session_state.seq_list !=[] : 
+                if session_state.seq_list[0] != population_remove_flank([sequences_flanked[0]])[0] : 
+                    session_state.seq_list = [] 
+                    session_state.mutation_list = [] 
+                    session_state.event_result_list = []  
+                    session_state.counter = 0
+
+                
             ####BLOCK : Better not to put inside function
             session_state.counter=session_state.counter+1
 
