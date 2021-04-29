@@ -386,7 +386,7 @@ if valid_input :
         
         if mode=="Sequence Visualization" : 
             ####Session state
-            session_state = SessionState.get(seq_list = [] ,mutation_list = [], event_result_list = [] , counter = 0, cmap_range='Absolute')
+            session_state = SessionState.get(input = None, seq_list = [] ,mutation_list = [], event_result_list = [] , counter = 0, cmap_range='Absolute')
 
 
             st.header('Visualizing expression effects of mutation')
@@ -521,9 +521,9 @@ if valid_input :
             ### Reset if new input is entered
 
 
-            if session_state.seq_list !=[] : 
-                if session_state.seq_list[0] != population_remove_flank([sequences_flanked[0]])[0] : 
-                    reset_state()
+            if (session_state.input !=sequences_flanked ): 
+                reset_state()
+
                 
             ####BLOCK : Better not to put inside function
             session_state.counter=session_state.counter+1
@@ -533,87 +533,87 @@ if valid_input :
             #session_state.seq_list
             #session_state.mutation_list
             
-            if (1): 
-                if (session_state.event_result_list==[]) :
-                    session_state.seq_list = session_state.seq_list +[population_remove_flank([sequences_flanked[0]])[0]]
-                    session_state.mutation_list = session_state.mutation_list +['Input']
-                    s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(sequences_flanked)
-                else :
-                    s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(population_add_flank([session_state.seq_list[-1]]))
+            if (session_state.event_result_list==[]) :
+                session_state.seq_list = session_state.seq_list +[population_remove_flank([sequences_flanked[0]])[0]]
+                session_state.input = sequences_flanked
+                session_state.mutation_list = session_state.mutation_list +['Input']
+                s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(sequences_flanked)
+            else :
+                s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(population_add_flank([session_state.seq_list[-1]]))
 
+                    
+
+
+            source.selected.js_on_change(
+                "indices",
+                CustomJS(
+                    args=dict(source=source),
+                    code="""
+                    document.dispatchEvent(
+                        new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
+                    )
+                """,
+                ),
+            )
+            
+            st.subheader(session_state.mutation_list[-1])
+
+            event_result = streamlit_bokeh_events(
+                events="TestSelectEvent",
+                bokeh_plot=p,
+                key="foo",
+                debounce_time=100,
+                refresh_on_update=True
+            )
+
+            if 0 : 
+                extrema_cols = st.beta_columns([1, 1])
+                with extrema_cols[0]:
+                    maxima
+                with extrema_cols[1]:
+                    minima
+            st.markdown(tmp_download_link, unsafe_allow_html=True)
+            
+            session_state.event_result_list =  session_state.event_result_list + [event_result]
+
+        #if session_state.seq_list!=[] : 
+        #    sequences_flanked = population_add_flank([ session_state.seq_list[-1] ])
+        #    s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(sequences_flanked)
+
+            if ((session_state.counter%2) ==0) and (event_result is not None) : 
+                event_result = session_state.event_result_list[-1]
+                # TestSelectEvent was thrown
+                if "TestSelectEvent" in event_result:
+                    #st.subheader("Selected Points' Pandas Stat summary")
+                    #if session_state.seq_list == [] : 
+
+                    indices = event_result["TestSelectEvent"].get("indices", [])
+                    #st.table(df.iloc[indices].describe())
+                    index_list = [int(re.split('(\d+)',str(i))[1])-1 for i in df.iloc[indices]['position'].values]
+                    index_list.reverse() ### Because clicking order is stored as stack
+                    mutation_list = [ df.loc[i,'position'] + df.loc[i,'base'] for i in df.iloc[indices].index]
+                    mutation_list.reverse()
+                    newbase_list = [ df.loc[i,'base'] for i in df.iloc[indices].index]
+                    newbase_list.reverse()
                         
+                    
+                    mutation = 'Input'
+                    for index,m,newbase in zip(index_list,mutation_list,newbase_list) : 
+                        mutation = mutation + '->' + m
+                        new_sequences_unflanked = copy.deepcopy([i for i in s])
+                        new_sequences_unflanked[index] = newbase
+                        #st.write(new_sequences_unflanked[index] )
+                        new_sequences_unflanked = ''.join(new_sequences_unflanked)
+                        new_sequences_flanked = population_add_flank([new_sequences_unflanked])
+                    
+                    session_state.seq_list = session_state.seq_list +[new_sequences_unflanked]
+                    session_state.mutation_list = session_state.mutation_list+[session_state.mutation_list[-1]+'->'+m]
 
-
-                source.selected.js_on_change(
-                    "indices",
-                    CustomJS(
-                        args=dict(source=source),
-                        code="""
-                        document.dispatchEvent(
-                            new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
-                        )
-                    """,
-                    ),
-                )
-                
-                st.subheader(session_state.mutation_list[-1])
-
-                event_result = streamlit_bokeh_events(
-                    events="TestSelectEvent",
-                    bokeh_plot=p,
-                    key="foo",
-                    debounce_time=100,
-                    refresh_on_update=True
-                )
-  
-                if 0 : 
-                    extrema_cols = st.beta_columns([1, 1])
-                    with extrema_cols[0]:
-                        maxima
-                    with extrema_cols[1]:
-                        minima
-                st.markdown(tmp_download_link, unsafe_allow_html=True)
-                
-                session_state.event_result_list =  session_state.event_result_list + [event_result]
-
-            #if session_state.seq_list!=[] : 
-            #    sequences_flanked = population_add_flank([ session_state.seq_list[-1] ])
-            #    s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(sequences_flanked)
-
-                if ((session_state.counter%2) ==0) and (event_result is not None) : 
-                    event_result = session_state.event_result_list[-1]
-                    # TestSelectEvent was thrown
-                    if "TestSelectEvent" in event_result:
-                        #st.subheader("Selected Points' Pandas Stat summary")
-                        #if session_state.seq_list == [] : 
-
-                        indices = event_result["TestSelectEvent"].get("indices", [])
-                        #st.table(df.iloc[indices].describe())
-                        index_list = [int(re.split('(\d+)',str(i))[1])-1 for i in df.iloc[indices]['position'].values]
-                        index_list.reverse() ### Because clicking order is stored as stack
-                        mutation_list = [ df.loc[i,'position'] + df.loc[i,'base'] for i in df.iloc[indices].index]
-                        mutation_list.reverse()
-                        newbase_list = [ df.loc[i,'base'] for i in df.iloc[indices].index]
-                        newbase_list.reverse()
-                         
-                        
-                        mutation = 'Input'
-                        for index,m,newbase in zip(index_list,mutation_list,newbase_list) : 
-                            mutation = mutation + '->' + m
-                            new_sequences_unflanked = copy.deepcopy([i for i in s])
-                            new_sequences_unflanked[index] = newbase
-                            #st.write(new_sequences_unflanked[index] )
-                            new_sequences_unflanked = ''.join(new_sequences_unflanked)
-                            new_sequences_flanked = population_add_flank([new_sequences_unflanked])
-                        
-                        session_state.seq_list = session_state.seq_list +[new_sequences_unflanked]
-                        session_state.mutation_list = session_state.mutation_list+[session_state.mutation_list[-1]+'->'+m]
-
-                        ###Reload Page to get correct plot
-                        #from streamlit.script_runner import StopException, RerunException
-                        #RerunException()  
-                        st.experimental_rerun()
-                        ###Reload Page to get correct plot
+                    ###Reload Page to get correct plot
+                    #from streamlit.script_runner import StopException, RerunException
+                    #RerunException()  
+                    st.experimental_rerun()
+                    ###Reload Page to get correct plot
 
 
             st.subheader('Sequences in trajectory')
