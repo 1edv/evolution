@@ -14,6 +14,12 @@ from bokeh.models import ColumnDataSource, CustomJS
 from bokeh.plotting import figure
 from streamlit_bokeh_events import streamlit_bokeh_events
 import bokeh
+
+def reset_state() : 
+    session_state.seq_list = [] 
+    session_state.mutation_list = [] 
+    session_state.event_result_list = []  
+    session_state.counter = 0
 ###events
 
 st.set_page_config(
@@ -380,7 +386,7 @@ if valid_input :
         
         if mode=="Sequence Visualization" : 
             ####Session state
-            session_state = SessionState.get(seq_list = [] ,mutation_list = [], event_result_list = [] , counter = 0)
+            session_state = SessionState.get(seq_list = [] ,mutation_list = [], event_result_list = [] , counter = 0, cmap_range='Absolute')
 
 
             st.header('Visualizing expression effects of mutation')
@@ -391,6 +397,9 @@ if valid_input :
             
             st.write('')
             cmap_range = st.selectbox( "Select the color range scheme for the heatmap", ('Absolute', 'Relative'))
+            if (cmap_range != session_state.cmap_range) :
+                reset_state()
+                session_state.cmap_range = 'Relative'
             
             def plot_el_visualization(sequences_flanked):
                 output = pd.DataFrame(index = ['A','C','G','T'] , columns = [i+1 for i in range(80)])
@@ -510,13 +519,11 @@ if valid_input :
                 return s,tmp_download_link,maxima,minima,df,source,p
 
             ### Reset if new input is entered
+
+
             if session_state.seq_list !=[] : 
                 if session_state.seq_list[0] != population_remove_flank([sequences_flanked[0]])[0] : 
-                    session_state.seq_list = [] 
-                    session_state.mutation_list = [] 
-                    session_state.event_result_list = []  
-                    session_state.counter = 0
-
+                    reset_state()
                 
             ####BLOCK : Better not to put inside function
             session_state.counter=session_state.counter+1
