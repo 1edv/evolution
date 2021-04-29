@@ -180,27 +180,25 @@ valid_input = 0
 
 ############
 
-#with st.beta_container() : 
+with st.beta_container() : 
+    st.write("""
+    [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
+    &nbsp[![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets)
+    """)
 
-st.write("""
-[![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
-&nbsp[![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets)
-""")
-st.title('The evolution, evolvability and engineering of gene regulatory DNA')
-st.write('')
-st.write('')
-st.write('')
-st.write('')
+    st.title('The evolution, evolvability and engineering of gene regulatory DNA \n')
+    st.title('')
+
 
 #st.write('')
 
 
-#with st.beta_container() : 
-st.header('What would you like to compute?')
-mode = st.selectbox(
-    '',
-    ["Visualize sequence",'Mutational Robustness','Evolvability vector' , "Expression" ] ,
-)
+with st.beta_container() : 
+    st.header('What would you like to compute?')
+    mode = st.selectbox(
+        '',
+        ["Sequence Visualization",'Mutational Robustness','Evolvability vector' , "Expression" ] ,
+    )
 
 with st.beta_container() : 
     st.header('Please upload your sequences :')  
@@ -371,7 +369,7 @@ if valid_input :
 
 
 
-    if mode=="Evolvability vector"  or mode=="Mutational Robustness" or mode=="Visualize sequence":
+    if mode=="Evolvability vector"  or mode=="Mutational Robustness" or mode=="Sequence Visualization":
 
         sequences = list(input_df.iloc[:,0].values)
         single_sequence_input = 0 
@@ -380,7 +378,7 @@ if valid_input :
                 sequences = sequences+sequences
         X , sequences_flanked = parse_seqs(sequences)
         
-        if mode=="Visualize sequence" : 
+        if mode=="Sequence Visualization" : 
             ####Session state
             session_state = SessionState.get(seq_list = [] ,mutation_list = [], event_result_list = [] , counter = 0)
 
