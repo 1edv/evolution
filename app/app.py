@@ -386,6 +386,10 @@ if valid_input :
             vis_reqs = st.beta_expander('Guidelines 👉', expanded=True)
             with vis_reqs : 
                 st.write('Please click on a single mutation that you wish to introduce to the starting sequence or any subsequent sequence in the trajectory you create. The first sequence is used if multiple sequences are entered above.')
+            
+            st.write('')
+            cmap_range = st.selectbox( "Select the color range scheme for the heatmap", ('Absolute', 'Relative'))
+            
             def plot_el_visualization(sequences_flanked):
                 output = pd.DataFrame(index = ['A','C','G','T'] , columns = [i+1 for i in range(80)])
                 sequences_unflanked = population_remove_flank(sequences_flanked)
@@ -431,7 +435,10 @@ if valid_input :
 
                     # this is the colormap from the original NYTimes plot
                     colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
-                    mapper = LinearColorMapper(palette=colors, low=df.Expression.min(), high=df.Expression.max())
+                    if cmap_range =="Absolute" : 
+                        mapper = LinearColorMapper(palette=colors, low=3, high=16)
+                    if cmap_range == 'Relative' : 
+                        mapper = LinearColorMapper(palette=colors, low=df.Expression.min(), high=df.Expression.max())
 
                     TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom,tap"
 
