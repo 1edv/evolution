@@ -387,101 +387,100 @@ if valid_input :
             with vis_reqs : 
                 st.write('Please click on a single mutation that you wish to introduce to the starting sequence or any subsequent sequence in the trajectory you create. The first sequence is used if multiple sequences are entered above.')
             def plot_el_visualization(sequences_flanked):
-                with st.spinner('Generating visualization of the 3L neighbourhood of your input...'):
-                    output = pd.DataFrame(index = ['A','C','G','T'] , columns = [i+1 for i in range(80)])
-                    sequences_unflanked = population_remove_flank(sequences_flanked)
-                    el_list , el= get_ordered_snpdev([sequences_flanked[0]]) #only the first element
+                output = pd.DataFrame(index = ['A','C','G','T'] , columns = [i+1 for i in range(80)])
+                sequences_unflanked = population_remove_flank(sequences_flanked)
+                el_list , el= get_ordered_snpdev([sequences_flanked[0]]) #only the first element
+                
+                s = sequences_unflanked[0]
+                loc_list = get_map(s)
+                el_map = dict(zip(loc_list, el_list))
+                for i in el_map : 
+                    output.loc[i] = el_map[i]
                     
-                    s = sequences_unflanked[0]
-                    loc_list = get_map(s)
-                    el_map = dict(zip(loc_list, el_list))
-                    for i in el_map : 
-                        output.loc[i] = el_map[i]
-                        
-                    output = output.fillna(el[0]) 
-                    output.columns = [ i for i in s]
+                output = output.fillna(el[0]) 
+                output.columns = [ i for i in s]
+                
+                cmap_list = plt.colormaps()
+
                     
-                    cmap_list = plt.colormaps()
+                with st.beta_container() : 
+                    
+                    #select_cmap = st.beta_expander('Expression', expanded=True)
+                    #with select_cmap : 
+                    #    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
 
-                        
-                    with st.beta_container() : 
-                        
-                        #select_cmap = st.beta_expander('Expression', expanded=True)
-                        #with select_cmap : 
-                        #    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
+                    ###Plot with Bokeh
+                    ###Bokeh imports
+                    from math import pi
+                    from bokeh.io import show
+                    from bokeh.models import BasicTicker, ColorBar, LinearColorMapper, PrintfTickFormatter
+                    from bokeh.plotting import figure
+                    ###
+                    output.columns = output.columns +[str(i+1) for i in range(len(output.columns))]
+                    output.columns.name = 'sequence'
+                    output.index.name = 'base'
 
-                        ###Plot with Bokeh
-                        ###Bokeh imports
-                        from math import pi
-                        from bokeh.io import show
-                        from bokeh.models import BasicTicker, ColorBar, LinearColorMapper, PrintfTickFormatter
-                        from bokeh.plotting import figure
-                        ###
-                        output.columns = output.columns +[str(i+1) for i in range(len(output.columns))]
-                        output.columns.name = 'sequence'
-                        output.index.name = 'base'
+                    df = pd.DataFrame(output.stack(), columns=['Expression']).reset_index()
+                    df.columns =  ['base' , 'position' , 'Expression']
+                    ###
+                    maxima=df.loc[df.Expression.idxmax()]
+                    maxima.name='Max'
+                    minima=df.loc[df.Expression.idxmin()]
+                    minima.name='Min'
+                    ###
 
-                        df = pd.DataFrame(output.stack(), columns=['Expression']).reset_index()
-                        df.columns =  ['base' , 'position' , 'Expression']
-                        ###
-                        maxima=df.loc[df.Expression.idxmax()]
-                        maxima.name='Max'
-                        minima=df.loc[df.Expression.idxmin()]
-                        minima.name='Min'
-                        ###
+                    # this is the colormap from the original NYTimes plot
+                    colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
+                    mapper = LinearColorMapper(palette=colors, low=df.Expression.min(), high=df.Expression.max())
 
-                        # this is the colormap from the original NYTimes plot
-                        colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
-                        mapper = LinearColorMapper(palette=colors, low=df.Expression.min(), high=df.Expression.max())
+                    TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom,tap"
 
-                        TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom,tap"
+                    p = figure(
+                            x_range=list(output.columns), y_range=list(output.index.values),
+                            x_axis_location="above", plot_width=1000, plot_height=200,
+                            tools=TOOLS, toolbar_location='below',
+                            tooltips=[('Mutation', '@position@base'), ('Expression', '@Expression')])
 
-                        p = figure(
-                                x_range=list(output.columns), y_range=list(output.index.values),
-                                x_axis_location="above", plot_width=1000, plot_height=200,
-                                tools=TOOLS, toolbar_location='below',
-                                tooltips=[('Mutation', '@position@base'), ('Expression', '@Expression')])
-
-                        p.grid.grid_line_color = None
-                        p.axis.axis_line_color = None
-                        p.axis.major_tick_line_color = None
-                        p.axis.major_label_text_font_size = "9px"
-                        p.axis.major_label_standoff = 0
-                        p.xaxis.major_label_orientation = pi / 3
-                        
+                    p.grid.grid_line_color = None
+                    p.axis.axis_line_color = None
+                    p.axis.major_tick_line_color = None
+                    p.axis.major_label_text_font_size = "9px"
+                    p.axis.major_label_standoff = 0
+                    p.xaxis.major_label_orientation = pi / 3
+                    
 
 
-                        #from bokeh.models import BoxAnnotation
-                        #box = BoxAnnotation(left=20+5, right=30, bottom =2 , top =3 ,fill_alpha=0.5, fill_color='grey')
-                        #p.add_layout(box)
+                    #from bokeh.models import BoxAnnotation
+                    #box = BoxAnnotation(left=20+5, right=30, bottom =2 , top =3 ,fill_alpha=0.5, fill_color='grey')
+                    #p.add_layout(box)
 
 
-                        source = ColumnDataSource(df)
-                        tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
+                    source = ColumnDataSource(df)
+                    tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
 
-                        renderer= p.rect(x="position", y="base", width=1, height=1,
-                            source=source,
-                            fill_color={'field': 'Expression', 'transform': mapper},
-                            line_color=None,
-                             )
+                    renderer= p.rect(x="position", y="base", width=1, height=1,
+                        source=source,
+                        fill_color={'field': 'Expression', 'transform': mapper},
+                        line_color=None,
+                            )
 
-                        #renderer.nonselection_glyph = Null
+                    #renderer.nonselection_glyph = Null
 
-                        #p.add_glyph(    )
-                        #color_bar = ColorBar(color_mapper=mapper, major_label_text_font_size="9px",
-                        #                    ticker=BasicTicker(desired_num_ticks=len(colors)),
-                        #                    formatter=PrintfTickFormatter(format="%d"),
-                        #                    label_standoff=6, border_line_color=None)
-                        #p.add_layout(color_bar, 'left')
-                        p.output_backend="svg"
+                    #p.add_glyph(    )
+                    #color_bar = ColorBar(color_mapper=mapper, major_label_text_font_size="9px",
+                    #                    ticker=BasicTicker(desired_num_ticks=len(colors)),
+                    #                    formatter=PrintfTickFormatter(format="%d"),
+                    #                    label_standoff=6, border_line_color=None)
+                    #p.add_layout(color_bar, 'left')
+                    p.output_backend="svg"
 
-                        #st.bokeh_chart(p , use_container_width=0)      # show the plot
+                    #st.bokeh_chart(p , use_container_width=0)      # show the plot
 
-                       
-                        
+                    
+                    
 
-                                
-                        return s,tmp_download_link,maxima,minima,df,source,p
+                            
+                    return s,tmp_download_link,maxima,minima,df,source,p
 
             
             
@@ -525,7 +524,6 @@ if valid_input :
                     debounce_time=100,
                     refresh_on_update=True
                 )
-                st.write(event_result)
   
 
                 extrema_cols = st.beta_columns([1, 1])
