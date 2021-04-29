@@ -19,6 +19,9 @@ def reset_state() :
     session_state.seq_list = [] 
     session_state.mutation_list = [] 
     session_state.event_result_list = []  
+    session_state.p_list = [] 
+    session_state.download_list = [] 
+
     session_state.counter = 0
 ###events
 
@@ -538,9 +541,11 @@ if valid_input :
                 session_state.input = sequences_flanked
                 session_state.mutation_list = session_state.mutation_list +['Input']
                 s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(sequences_flanked)
+                session_state.p_list = session_state.p_list + [p]
+                session_state.download_list = session_state.download_list + [tmp_download_link]
+
             else :
                 s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(population_add_flank([session_state.seq_list[-1]]))
-
                     
 
 
@@ -572,7 +577,6 @@ if valid_input :
                     maxima
                 with extrema_cols[1]:
                     minima
-            st.markdown(tmp_download_link, unsafe_allow_html=True)
             
             session_state.event_result_list =  session_state.event_result_list + [event_result]
 
@@ -608,7 +612,8 @@ if valid_input :
                     
                     session_state.seq_list = session_state.seq_list +[new_sequences_unflanked]
                     session_state.mutation_list = session_state.mutation_list+[session_state.mutation_list[-1]+'->'+m]
-
+                    session_state.p_list = session_state.p_list + [p]
+                    session_state.download_list = session_state.download_list + [tmp_download_link]
                     ###Reload Page to get correct plot
                     #from streamlit.script_runner import StopException, RerunException
                     #RerunException()  
@@ -620,9 +625,15 @@ if valid_input :
             session_state.seq_list
             st.subheader('Mutations in trajectory')
             session_state.mutation_list
-                #####ENDBLOCK
 
-                #session_state.user_name
+
+            #####ENDBLOCK
+            st.subheader('Trajectory')
+            for i in range(len(session_state.p_list)):
+                st.subheader(session_state.mutation_list[i])
+                st.bokeh_chart(session_state.p_list[i] )
+                st.markdown(tmp_download_link, unsafe_allow_html=True)
+
 
             if 0 : 
                 s,tmp_download_link, maxima,minima,source,output,df,p = plot_el_visualization(new_sequences_flanked)
