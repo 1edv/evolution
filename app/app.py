@@ -625,15 +625,19 @@ if valid_input :
             session_state.seq_list
             st.subheader('Mutations in trajectory')
             session_state.mutation_list
+            #session_state.p_list
 
 
             #####ENDBLOCK
-            st.subheader('Trajectory')
-            for i in range(len(session_state.p_list)):
-                st.subheader(session_state.mutation_list[i])
-                st.bokeh_chart(session_state.p_list[i] )
-                st.markdown(tmp_download_link, unsafe_allow_html=True)
-
+            if 0 : 
+                st.subheader('Trajectory')
+                for i in range(len(session_state.p_list)):
+                    st.subheader(session_state.mutation_list[i])
+                    st.bokeh_chart(session_state.p_list[i] )
+                    st.markdown(session_state.download_list[i], unsafe_allow_html=True)
+                
+                
+  
 
             if 0 : 
                 s,tmp_download_link, maxima,minima,source,output,df,p = plot_el_visualization(new_sequences_flanked)
