@@ -13,6 +13,7 @@ gc.collect()
 from bokeh.models import ColumnDataSource, CustomJS
 from bokeh.plotting import figure
 from streamlit_bokeh_events import streamlit_bokeh_events
+import bokeh
 ###events
 
 st.set_page_config(
@@ -438,10 +439,12 @@ if valid_input :
 
                 # this is the colormap from the original NYTimes plot
                 colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
+                #bokeh.palettes.__palettes__
+                palette = 'Blues256'
                 if cmap_range =="Absolute" : 
-                    mapper = LinearColorMapper(palette=colors, low=3, high=16)
+                    mapper = LinearColorMapper(palette= palette, low=3, high=16)
                 if cmap_range == 'Relative' : 
-                    mapper = LinearColorMapper(palette=colors, low=df.Expression.min(), high=df.Expression.max())
+                    mapper = LinearColorMapper(palette=palette, low=df.Expression.min(), high=df.Expression.max())
 
                 TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom,tap"
 
@@ -470,10 +473,11 @@ if valid_input :
                 min_y = base_y_dict[minima['base']]
 
                 from bokeh.models import BoxAnnotation
-                box_max = BoxAnnotation(left=max_x, right=max_x+1, bottom = max_y, top = max_y+1 , line_dash = "solid" , line_width = 2 , line_color = 'black',line_alpha =1 , fill_alpha=0)
+                line_color = 'black'
+                box_max = BoxAnnotation(left=max_x, right=max_x+1, bottom = max_y, top = max_y+1 , line_dash = "solid" , line_width = 2 , line_color = line_color,line_alpha =1 , fill_alpha=0)
                 p.add_layout(box_max)
 
-                box_min = BoxAnnotation(left=min_x, right=min_x+1, bottom = min_y, top = min_y+1 , line_dash = "dotted" , line_width = 2 , line_color = 'black', line_alpha = 1, fill_alpha=0)
+                box_min = BoxAnnotation(left=min_x, right=min_x+1, bottom = min_y, top = min_y+1 , line_dash = "dotted" , line_width = 2 , line_color = line_color, line_alpha = 1, fill_alpha=0)
                 p.add_layout(box_min)
 
 
