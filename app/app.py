@@ -410,9 +410,9 @@ if valid_input :
             vis_reqs = st.beta_expander('How to use this interface 👉', expanded=False)
             with vis_reqs : 
                 st.write('Please click on a single mutation that you wish to introduce to the starting sequence or any subsequent sequence in the trajectory you create. The solid line denotes the mutation with the maximum expression and the dotted line denotes the mutation with the minumum expression. The first sequence is used if multiple sequences are entered above.')
-            print_reqs = st.beta_expander('How to print the complete trajectory at the end👉', expanded=False)
+            print_reqs = st.beta_expander('How to print the complete trajectory and export all data👉', expanded=False)
             with print_reqs : 
-                session_state.print_trajectory = st.button('Just click here')
+                session_state.print_trajectory = st.button('Just click here at the end of your experiment')
             st.write('')
             cmap_range = st.selectbox( "Select the color range scheme for the heatmap", ('Absolute', 'Relative'))
             if (cmap_range != session_state.cmap_range) :
