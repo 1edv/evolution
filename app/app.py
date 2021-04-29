@@ -389,15 +389,30 @@ if valid_input :
         
         if mode=="Sequence Visualization" : 
             ####Session state
-            session_state = SessionState.get(input = None, seq_list = [] ,mutation_list = [], event_result_list = [] , counter = 0, cmap_range='Absolute')
-
+            session_state = SessionState.get(input = None, seq_list = [] ,mutation_list = [], event_result_list = [] , 
+                                            counter = 0, cmap_range='Absolute' , print_trajectory = 0)
+            
 
             st.header('Visualizing expression effects of mutation')
             st.write('')
-            vis_reqs = st.beta_expander('Guidelines 👉', expanded=True)
+
+
+            if session_state.print_trajectory == 1 :  
+                st.subheader('Trajectory')
+                for i in range(len(session_state.p_list)-1):
+                    st.subheader(session_state.mutation_list[i])
+                    st.bokeh_chart(session_state.p_list[i+1] )
+                    st.markdown(session_state.download_list[i+1], unsafe_allow_html=True)
+                    #bokeh.io.export_svgs(obj = session_state.p_list[i+1] , filename = session_state.seq_list[0]+session_state.mutation_list[i]+'.svg' )
+                session_state.print_trajectory = 0
+                reset_state()
+
+            vis_reqs = st.beta_expander('How to use this interface 👉', expanded=False)
             with vis_reqs : 
                 st.write('Please click on a single mutation that you wish to introduce to the starting sequence or any subsequent sequence in the trajectory you create. The solid line denotes the mutation with the maximum expression and the dotted line denotes the mutation with the minumum expression. The first sequence is used if multiple sequences are entered above.')
-            
+            print_reqs = st.beta_expander('How to print the complete trajectory at the end👉', expanded=False)
+            with print_reqs : 
+                session_state.print_trajectory = st.button('Just click here')
             st.write('')
             cmap_range = st.selectbox( "Select the color range scheme for the heatmap", ('Absolute', 'Relative'))
             if (cmap_range != session_state.cmap_range) :
@@ -627,14 +642,11 @@ if valid_input :
             session_state.mutation_list
             #session_state.p_list
 
+            
 
+            
             #####ENDBLOCK
-            if 0 : 
-                st.subheader('Trajectory')
-                for i in range(len(session_state.p_list)):
-                    st.subheader(session_state.mutation_list[i])
-                    st.bokeh_chart(session_state.p_list[i] )
-                    st.markdown(session_state.download_list[i], unsafe_allow_html=True)
+
                 
                 
   
