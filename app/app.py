@@ -1,12 +1,16 @@
 
 ####
-import sys, re
+import sys, re ,SessionState
 sys.path.insert(0, './')
 import app_aux
 from app_aux import *  
 tf.reset_default_graph() 
 tf.keras.backend.clear_session()
 gc.collect() 
+
+####Session state
+session_state = SessionState.get(seq_list = [] ,mutation_list = [], event_result_list = [] , counter = 0)
+
 
 ###events
 from bokeh.models import ColumnDataSource, CustomJS
@@ -17,7 +21,7 @@ from streamlit_bokeh_events import streamlit_bokeh_events
 st.set_page_config(
     page_title=" Evolution, Evolvability and Expression",
     layout="wide",
-    initial_sidebar_state="expanded",)
+    initial_sidebar_state="auto",)
  
 #st.write('Path Prefix is ' + path_prefix)
 
@@ -381,7 +385,7 @@ if valid_input :
             st.write('')
             vis_reqs = st.beta_expander('Guidelines 👉', expanded=True)
             with vis_reqs : 
-                st.write('Please click on the mutations you wish to introduce to the starting sequence. Use the Shift key if selecting sequential mutations in a trajectory. The first sequence is used if multiple sequences are entered.')
+                st.write('Please click on a single mutation that you wish to introduce to the starting sequence or any subsequent sequence in the trajectory you create. The first sequence is used if multiple sequences are entered above.')
             def plot_el_visualization(sequences_flanked):
                 with st.spinner('Generating visualization of the 3L neighbourhood of your input...'):
                     output = pd.DataFrame(index = ['A','C','G','T'] , columns = [i+1 for i in range(80)])
@@ -455,11 +459,15 @@ if valid_input :
                         source = ColumnDataSource(df)
                         tmp_download_link = download_link(output, 'output.csv', 'Click here to download the results as a CSV')
 
-                        p.rect(x="position", y="base", width=1, height=1,
+                        renderer= p.rect(x="position", y="base", width=1, height=1,
                             source=source,
                             fill_color={'field': 'Expression', 'transform': mapper},
-                            line_color=None)
+                            line_color=None,
+                             )
 
+                        #renderer.nonselection_glyph = Null
+
+                        #p.add_glyph(    )
                         #color_bar = ColorBar(color_mapper=mapper, major_label_text_font_size="9px",
                         #                    ticker=BasicTicker(desired_num_ticks=len(colors)),
                         #                    formatter=PrintfTickFormatter(format="%d"),
@@ -470,96 +478,139 @@ if valid_input :
                         #st.bokeh_chart(p , use_container_width=0)      # show the plot
 
                        
-
-
-
-
-                        return s,tmp_download_link, maxima,minima,source,output,df,p
-
-            s,tmp_download_link, maxima,minima,source,output,df,p = plot_el_visualization(sequences_flanked)
-            p_tuple = ('Input',s,tmp_download_link, maxima,minima,source,output,df,p )
-            p_list = [p_tuple]
-
-            source.selected.js_on_change(
-                "indices",
-                CustomJS(
-                    args=dict(source=source),
-                    code="""
-                    document.dispatchEvent(
-                        new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
-                    )
-                """,
-                ),
-            )
-            event_result = streamlit_bokeh_events(
-                events="TestSelectEvent",
-                bokeh_plot=p,
-                key="foo",
-                debounce_time=100,
-                refresh_on_update=False
-            )
-
-            extrema_cols = st.beta_columns([1, 1])
-            with extrema_cols[0]:
-                p_tuple[3]
-            with extrema_cols[1]:
-                p_tuple[4]
-            st.markdown(p_tuple[2], unsafe_allow_html=True)
-            if event_result is not None:
-                # TestSelectEvent was thrown
-                if "TestSelectEvent" in event_result:
-                    #st.subheader("Selected Points' Pandas Stat summary")
-                    indices = event_result["TestSelectEvent"].get("indices", [])
-                    #st.table(df.iloc[indices].describe())
-                    index_list = [int(re.split('(\d+)',str(i))[1])-1 for i in df.iloc[indices]['position'].values]
-                    index_list.reverse() ### Because clicking order is stored as stack
-                    mutation_list = [ df.loc[i,'position'] + df.loc[i,'base'] for i in df.iloc[indices].index]
-                    mutation_list.reverse()
-                    newbase_list = [ df.loc[i,'base'] for i in df.iloc[indices].index]
-                    newbase_list.reverse()
-                    
-                    
-                    mutation = 'Input'
-                    for index,m,newbase in zip(index_list,mutation_list,newbase_list) : 
-                        mutation = mutation + '->' + m
-                        new_sequences_unflanked = copy.deepcopy([i for i in s])
-                        new_sequences_unflanked[index] = newbase
-                        #st.write(new_sequences_unflanked[index] )
-                        new_sequences_unflanked = ''.join(new_sequences_unflanked)
-                        new_sequences_flanked = population_add_flank([new_sequences_unflanked])
-                        if 0 :  ### All tests work
-                            s[index]
-                            new_s[index]
-                            population_remove_flank([sequences_flanked[0]])[0]==new_s#[index]                       
-                            population_remove_flank([sequences_flanked[0]])[0]
-                            new_s
-                            df.iloc[indices]
                         
-                        s,tmp_download_link, maxima,minima,source,output,df,p = plot_el_visualization(new_sequences_flanked)
-                        p_tuple = (mutation,s,tmp_download_link, maxima,minima,source,output,df,p )
-                        p_list = p_list + [p_tuple]
-                    
-                    st.header("Results")
-                    #st.write(event_result)
+
+                                
+                        return s,tmp_download_link,maxima,minima,df,source,p
+
+            
+            
+            ####BLOCK : Better not to put inside function
+            session_state.counter=session_state.counter+1
+
+            #session_state.counter
+            #session_state.event_result_list
+            #session_state.seq_list
+            #session_state.mutation_list
+            
+            if (1): 
+                if (session_state.event_result_list==[]) :
+                    session_state.seq_list = session_state.seq_list +[population_remove_flank([sequences_flanked[0]])[0]]
+                    session_state.mutation_list = session_state.mutation_list +['Input']
+                    s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(sequences_flanked)
+                else :
+                    s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(population_add_flank([session_state.seq_list[-1]]))
+
+                        
+
+
+                source.selected.js_on_change(
+                    "indices",
+                    CustomJS(
+                        args=dict(source=source),
+                        code="""
+                        document.dispatchEvent(
+                            new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
+                        )
+                    """,
+                    ),
+                )
+                
+                st.subheader(session_state.mutation_list[-1])
+
+                event_result = streamlit_bokeh_events(
+                    events="TestSelectEvent",
+                    bokeh_plot=p,
+                    key="foo",
+                    debounce_time=100,
+                    refresh_on_update=True
+                )
+                st.write(event_result)
+  
+
+                extrema_cols = st.beta_columns([1, 1])
+                with extrema_cols[0]:
+                    maxima
+                with extrema_cols[1]:
+                    minima
+                st.markdown(tmp_download_link, unsafe_allow_html=True)
+                
+                session_state.event_result_list =  session_state.event_result_list + [event_result]
+
+            #if session_state.seq_list!=[] : 
+            #    sequences_flanked = population_add_flank([ session_state.seq_list[-1] ])
+            #    s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(sequences_flanked)
+
+                if ((session_state.counter%2) ==0) and (event_result is not None) : 
+                    event_result = session_state.event_result_list[-1]
+                    # TestSelectEvent was thrown
+                    if "TestSelectEvent" in event_result:
+                        #st.subheader("Selected Points' Pandas Stat summary")
+                        #if session_state.seq_list == [] : 
+
+                        indices = event_result["TestSelectEvent"].get("indices", [])
+                        #st.table(df.iloc[indices].describe())
+                        index_list = [int(re.split('(\d+)',str(i))[1])-1 for i in df.iloc[indices]['position'].values]
+                        index_list.reverse() ### Because clicking order is stored as stack
+                        mutation_list = [ df.loc[i,'position'] + df.loc[i,'base'] for i in df.iloc[indices].index]
+                        mutation_list.reverse()
+                        newbase_list = [ df.loc[i,'base'] for i in df.iloc[indices].index]
+                        newbase_list.reverse()
+                         
+                        
+                        mutation = 'Input'
+                        for index,m,newbase in zip(index_list,mutation_list,newbase_list) : 
+                            mutation = mutation + '->' + m
+                            new_sequences_unflanked = copy.deepcopy([i for i in s])
+                            new_sequences_unflanked[index] = newbase
+                            #st.write(new_sequences_unflanked[index] )
+                            new_sequences_unflanked = ''.join(new_sequences_unflanked)
+                            new_sequences_flanked = population_add_flank([new_sequences_unflanked])
+                        
+                        session_state.seq_list = session_state.seq_list +[new_sequences_unflanked]
+                        session_state.mutation_list = session_state.mutation_list+[session_state.mutation_list[-1]+'->'+m]
+
+                        ###Reload Page to get correct plot
+                        #from streamlit.script_runner import StopException, RerunException
+                        #RerunException()  
+                        st.experimental_rerun()
+                        ###Reload Page to get correct plot
+
+
+            st.subheader('Sequences in trajectory')
+            session_state.seq_list
+            st.subheader('Mutations in trajectory')
+            session_state.mutation_list
+                #####ENDBLOCK
+
+                #session_state.user_name
+
+            if 0 : 
+                s,tmp_download_link, maxima,minima,source,output,df,p = plot_el_visualization(new_sequences_flanked)
+                p_tuple = (mutation,s,tmp_download_link, maxima,minima,source,output,df,p )
+                p_list = p_list + [p_tuple]
+                
+                st.header("Results")
+                #st.write(event_result)
+                for p_tuple in p_list:
+
+                    st.subheader(p_tuple[0])
+                    st.write(p_tuple[-1])
+                    extrema_cols = st.beta_columns([1, 1])
+                    with extrema_cols[0]:
+                        p_tuple[3]
+                    with extrema_cols[1]:
+                        p_tuple[4]
+                    st.markdown(p_tuple[2], unsafe_allow_html=True)
+
+                if 0 : 
+                    st.header("Aggregated export of SVGs")
+                    q = []
                     for p_tuple in p_list:
-
-                        st.subheader(p_tuple[0])
-                        st.write(p_tuple[-1])
-                        extrema_cols = st.beta_columns([1, 1])
-                        with extrema_cols[0]:
-                            p_tuple[3]
-                        with extrema_cols[1]:
-                            p_tuple[4]
-                        st.markdown(p_tuple[2], unsafe_allow_html=True)
-
-                    if 0 : 
-                        st.header("Aggregated export of SVGs")
-                        q = []
-                        for p_tuple in p_list:
-                            q = q+[[p_tuple[-1]]]
-                        from bokeh.layouts import gridplot
-                        st.bokeh_chart(gridplot(q))
-                    
+                        q = q+[[p_tuple[-1]]]
+                    from bokeh.layouts import gridplot
+                    st.bokeh_chart(gridplot(q))
+                
 
 
         if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
@@ -604,3 +655,7 @@ with st.beta_container() :
         image_cols = st.beta_columns([0.05 , 0.05 , 0.05  , 0.7 , 0.05, 0.05 ,0.05 ])
         with image_cols[3] :
             st.image(path_prefix+'overview.png' , caption = '')
+
+
+
+
