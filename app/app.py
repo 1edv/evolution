@@ -440,7 +440,7 @@ if valid_input :
                 # this is the colormap from the original NYTimes plot
                 colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
                 #bokeh.palettes.__palettes__
-                palette = sns.color_palette("Spectral" , n_colors = 256 ).as_hex()#'Blues256'
+                palette = sns.color_palette("Spectral_r" , n_colors = 256 ).as_hex()#'Blues256'
                 if cmap_range =="Absolute" : 
                     mapper = LinearColorMapper(palette= palette, low=3, high=16)
                 if cmap_range == 'Relative' : 
