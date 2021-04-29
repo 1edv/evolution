@@ -385,7 +385,7 @@ if valid_input :
             st.write('')
             vis_reqs = st.beta_expander('Guidelines 👉', expanded=True)
             with vis_reqs : 
-                st.write('Please click on a single mutation that you wish to introduce to the starting sequence or any subsequent sequence in the trajectory you create. The first sequence is used if multiple sequences are entered above.')
+                st.write('Please click on a single mutation that you wish to introduce to the starting sequence or any subsequent sequence in the trajectory you create. The solid line denotes the mutation with the maximum expression and the dotted line denotes the mutation with the minumum expression. The first sequence is used if multiple sequences are entered above.')
             
             st.write('')
             cmap_range = st.selectbox( "Select the color range scheme for the heatmap", ('Absolute', 'Relative'))
@@ -457,9 +457,23 @@ if valid_input :
                     
 
 
-                    #from bokeh.models import BoxAnnotation
-                    #box = BoxAnnotation(left=20+5, right=30, bottom =2 , top =3 ,fill_alpha=0.5, fill_color='grey')
-                    #p.add_layout(box)
+
+                    ### Shade max and min
+                    base_y_dict = {'A':0 , 'C' : 1 , 'G' : 2,  'T' : 3}
+                    max_x = int(re.split('(\d+)',str(maxima['position']))[1])-1 
+                    max_y = base_y_dict[maxima['base']]
+
+                    min_x = int(re.split('(\d+)',str(minima['position']))[1])-1 
+                    min_y = base_y_dict[minima['base']]
+
+                    from bokeh.models import BoxAnnotation
+                    box_max = BoxAnnotation(left=max_x, right=max_x+1, bottom = max_y, top = max_y+1 , line_dash = "solid" , line_width = 2 , line_color = 'black',line_alpha =1 , fill_alpha=0)
+                    p.add_layout(box_max)
+
+                    box_min = BoxAnnotation(left=min_x, right=min_x+1, bottom = min_y, top = min_y+1 , line_dash = "dotted" , line_width = 2 , line_color = 'black', line_alpha = 1, fill_alpha=0)
+                    p.add_layout(box_min)
+
+
 
 
                     source = ColumnDataSource(df)
@@ -532,12 +546,12 @@ if valid_input :
                     refresh_on_update=True
                 )
   
-
-                extrema_cols = st.beta_columns([1, 1])
-                with extrema_cols[0]:
-                    maxima
-                with extrema_cols[1]:
-                    minima
+                if 0 : 
+                    extrema_cols = st.beta_columns([1, 1])
+                    with extrema_cols[0]:
+                        maxima
+                    with extrema_cols[1]:
+                        minima
                 st.markdown(tmp_download_link, unsafe_allow_html=True)
                 
                 session_state.event_result_list =  session_state.event_result_list + [event_result]
