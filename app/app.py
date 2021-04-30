@@ -532,7 +532,7 @@ if valid_input :
             
             if session_state.print_trajectory == 1 :  
                 st.subheader('Trajectory')
-                for i in range(len(session_state.mutation_list)-1):
+                for i in range(len(session_state.mutation_list)):
                     st.subheader(session_state.mutation_list[i])
                     s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(population_add_flank([session_state.seq_list[i]]))
                     st.bokeh_chart(p)
