@@ -151,7 +151,7 @@ st.set_page_config(
 #st.write('Path Prefix is ' + path_prefix)
 
 
-@st.cache
+#@st.cache
 def download_link(object_to_download, download_filename, download_link_text):
     """
     Generates a link to download the given object_to_download.
@@ -173,7 +173,7 @@ def download_link(object_to_download, download_filename, download_link_text):
 
     return f'<a href="data:file/txt;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
 
-@st.cache
+#@st.cache
 def parse_seqs(sequences) :
     sequences = population_add_flank(sequences) ### NOTE : This is different from all other functions ! (User input doesn't have flanks)
     for i in tqdm(range(0,len(sequences))) : 
@@ -203,7 +203,7 @@ def parse_seqs(sequences) :
 
 #############Functions and global constants
 epsilon = 0.1616
-@st.cache
+#@st.cache
 def population_mutator( population_current , args) :
     population_current = population_remove_flank(population_current)
     population_next = []  

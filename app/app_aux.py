@@ -162,7 +162,7 @@ class OHCSeq:
     transformed = None
     data = None
 
-@st.cache 
+#@st.cache 
 def seq2feature(data):
     num_cores = multiprocessing.cpu_count()-2
     nproc = np.min([16,num_cores])
