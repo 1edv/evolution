@@ -17,7 +17,7 @@ import bokeh
 
 ####Session state
 session_state = SessionState.get(input = None, seq_list = [] ,mutation_list = [], event_result_list = [] , 
-                                counter = 0, cmap_range='Absolute' , print_trajectory = 0)
+                                counter = 0, cmap_range='Absolute' , print_trajectory = 0 ,  random_sequence = None)
 
 def reset_state() : 
     session_state.seq_list = [] 
@@ -28,7 +28,6 @@ def reset_state() :
 
     session_state.counter = 0
 
-random_population_generated = 0
 ###events
 
 def plot_el_visualization(sequences_flanked):
@@ -350,21 +349,18 @@ with st.beta_container() :
         ### END : This block of code should be ignored by users to avoid confusion 
         
         
-    reqs_seqgen = st.beta_expander('Generate a random sequence population 🧬', expanded=False)
+    reqs_seqgen = st.beta_expander('Generate a random sequence 🧬', expanded=False)
     with reqs_seqgen : 
         #seqgen_button = st.button('Click here to run the a random sequence generator applet in your browser')
-        population_size = st.number_input('How many sequences do you wish to generate ?' , value = 0, format = '%d' )
-        if population_size : 
-            random_population_generated = 1
-            args  = {'population_size' : int(population_size), 'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
-            
-            population  = population_generator_unflanked(args)
-            population_series = pd.Series(population)
-            population_series.name = 'Sequence'
-            population_series
-            tmp_download_link = download_link("\n".join(population), 'population.txt', 'Click here to download the random sequence population you generated.')
-            st.markdown(tmp_download_link, unsafe_allow_html=True)
-
+        #session_state.random_sequence_generated 
+        #generate_button = st.button('Generate')
+        args  = {'population_size' : int(1), 'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
+        population  = population_generator_unflanked(args)
+        session_state.random_sequence = population[0]
+        session_state.random_sequence
+        #if (generate_button) and ((session_state.random_sequence_generated == 0) or (random_sequence != session_state.input)): 
+        #    
+        #    session_state.random_sequence_generated = 1
 
     if 0 :
         st.subheader('Upload the sequence file here👇')
@@ -427,10 +423,6 @@ elif text_area :
     X = text_area
     X_list= X.split('\n')
     input_df = pd.DataFrame(X_list)
-    valid_input = 1
-
-if random_population_generated:
-    input_df = pd.DataFrame(population_series)
     valid_input = 1
 
 
