@@ -28,7 +28,7 @@ def reset_state() :
 
     session_state.counter = 0
 
-start_session = 1
+random_population_generated = 0
 ###events
 
 def plot_el_visualization(sequences_flanked):
@@ -355,7 +355,7 @@ with st.beta_container() :
         #seqgen_button = st.button('Click here to run the a random sequence generator applet in your browser')
         population_size = st.number_input('How many sequences do you wish to generate ?' , value = 0, format = '%d' )
         if population_size : 
-            start_session = 0
+            random_population_generated = 1
             args  = {'population_size' : int(population_size), 'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
             
             population  = population_generator_unflanked(args)
@@ -364,7 +364,6 @@ with st.beta_container() :
             population_series
             tmp_download_link = download_link("\n".join(population), 'population.txt', 'Click here to download the random sequence population you generated.')
             st.markdown(tmp_download_link, unsafe_allow_html=True)
-            reset_state()
 
 
     if 0 :
@@ -430,7 +429,9 @@ elif text_area :
     input_df = pd.DataFrame(X_list)
     valid_input = 1
 
-
+if random_population_generated:
+    input_df = pd.DataFrame(population_series)
+    valid_input = 1
 
 
 #st.sidebar.header('')
@@ -532,7 +533,7 @@ if valid_input :
                 sequences = sequences+sequences
         X , sequences_flanked = parse_seqs(sequences)
         
-        if mode=="Sequence Visualization" and start_session: 
+        if mode=="Sequence Visualization": 
 
             
 
