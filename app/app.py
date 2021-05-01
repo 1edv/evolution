@@ -2,8 +2,8 @@
 ####
 import sys, re ,SessionState
 sys.path.insert(0, './')
-import app_aux
-from app_aux import *  
+import aux_app
+from aux_app import *  
 tf.reset_default_graph() 
 tf.keras.backend.clear_session()
 gc.collect() 
@@ -15,6 +15,10 @@ from bokeh.plotting import figure
 from streamlit_bokeh_events import streamlit_bokeh_events
 import bokeh
 
+####Session state
+session_state = SessionState.get(input = None, seq_list = [] ,mutation_list = [], event_result_list = [] , 
+                                counter = 0, cmap_range='Absolute' , print_trajectory = 0)
+
 def reset_state() : 
     session_state.seq_list = [] 
     session_state.mutation_list = [] 
@@ -23,6 +27,8 @@ def reset_state() :
     session_state.download_list = [] 
 
     session_state.counter = 0
+
+start_session = 1
 ###events
 
 def plot_el_visualization(sequences_flanked):
@@ -342,14 +348,32 @@ with st.beta_container() :
         tmp_download_link = download_link("\n".join(sample_list), 'example_input_file.txt', 'Click here to download an example sequence input file')
         st.markdown(tmp_download_link, unsafe_allow_html=True)
         ### END : This block of code should be ignored by users to avoid confusion 
+        
+        
+    reqs_seqgen = st.beta_expander('Generate a random sequence population 🧬', expanded=False)
+    with reqs_seqgen : 
+        #seqgen_button = st.button('Click here to run the a random sequence generator applet in your browser')
+        population_size = st.number_input('How many sequences do you wish to generate ?' , value = 0, format = '%d' )
+        if population_size : 
+            start_session = 0
+            args  = {'population_size' : int(population_size), 'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
+            
+            population  = population_generator_unflanked(args)
+            population_series = pd.Series(population)
+            population_series.name = 'Sequence'
+            population_series
+            tmp_download_link = download_link("\n".join(population), 'population.txt', 'Click here to download the random sequence population you generated.')
+            st.markdown(tmp_download_link, unsafe_allow_html=True)
+            reset_state()
+
 
     if 0 :
-        st.subheader('Upload the sequence file here 👇')
+        st.subheader('Upload the sequence file here👇')
         uploaded_file = st.file_uploader("")
 
         st.write('**OR**')
 
-        st.subheader('Paste one sequence per line here 👇')
+        st.subheader('Paste one sequence per line here👇')
         text_area = st.text_area(label='' , value = 'GAGGCATCGTTTTATCAGATGATAGTTTAATTAGTACGTGCAGCACCTTAAAGGATATAAGGGCCGGTAGAACATAACGC\nGAGGCCACTGTAAATAATGGTCAGAAGTGTTGTTATGACACTTTGCAAGGGTGTCTCCCAGTGTAGCGCCTCTCGCCCTA\nGAGGCCACTGTAAATAATGGTCAGAAGTGTTGTTATGGTTGTTTGCAAGGGTGTCTCCCAGTGTAGCGCCTCTCGCCCTA')
 
         submit = st.button('Submit Sequences')
@@ -360,7 +384,7 @@ with st.beta_container() :
 
     with cols[0] : 
         with st.beta_container() : 
-            st.subheader('Upload the sequence file here 👇')
+            st.subheader('Upload the sequence file here👇')
             uploaded_file = st.file_uploader("")
 
     with cols[1] : 
@@ -377,7 +401,7 @@ with st.beta_container() :
 
     with cols[-1] : 
         with st.beta_container() : 
-            st.subheader('Paste one sequence per line here 👇')
+            st.subheader('Paste one sequence per line here👇')
             text_area = st.text_area(label='' , value = 'GAGGCATCGTTTTATCAGATGATAGTTTAATTAGTACGTGCAGCACCTTAAAGGATATAAGGGCCGGTAGAACATAACGC\nGAGGCCACTGTAAATAATGGTCAGAAGTGTTGTTATGACACTTTGCAAGGGTGTCTCCCAGTGTAGCGCCTCTCGCCCTA\nGAGGCCACTGTAAATAATGGTCAGAAGTGTTGTTATGGTTGTTTGCAAGGGTGTCTCCCAGTGTAGCGCCTCTCGCCCTA')
         
 
@@ -432,6 +456,8 @@ st.sidebar.image(path_prefix+'HHMI_logo.jpeg')
  
 
 if valid_input : 
+    start_session = 1
+
     #with st.spinner('Loading deep transformer neural network model ...'):
     if condition == "Defined Media" :
         model_conditions='SC_Ura' #SC_Ura 
@@ -506,10 +532,8 @@ if valid_input :
                 sequences = sequences+sequences
         X , sequences_flanked = parse_seqs(sequences)
         
-        if mode=="Sequence Visualization" : 
-            ####Session state
-            session_state = SessionState.get(input = None, seq_list = [] ,mutation_list = [], event_result_list = [] , 
-                                            counter = 0, cmap_range='Absolute' , print_trajectory = 0)
+        if mode=="Sequence Visualization" and start_session: 
+
             
 
             st.header('Visualizing expression effects of mutation')
@@ -727,7 +751,5 @@ with st.beta_container() :
         image_cols = st.beta_columns([0.05 , 0.05 , 0.05  , 0.7 , 0.05, 0.05 ,0.05 ])
         with image_cols[3] :
             st.image(path_prefix+'overview.png' , caption = '')
-
-
 
 

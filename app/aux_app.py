@@ -318,14 +318,16 @@ def load_model(model_conditions ) :
                     'rc_Conv1D' : rc_Conv1D})
     return model , scaler, batch_size
 
-def population_generator( args ) :
+def population_generator_unflanked( args ) :
     population_generated = []
     for i in tqdm(range(args['population_size'])) :
         individual_generated = [] 
         for j in range(args['sequence_length']) : 
             individual_generated.append(args['randomizer'].choice(list('ACGT') , p=args['nucleotide_frequency'] ) )
         
-        individual_generated = ''.join(['T','G','C','A','T','T','T','T','T','T','T','C','A','C','A','T','C'] + individual_generated + ['G','G','T','T','A','C','G','G','C','T','G','T','T'] )
+        #individual_generated = ''.join(['T','G','C','A','T','T','T','T','T','T','T','C','A','C','A','T','C'] + individual_generated + ['G','G','T','T','A','C','G','G','C','T','G','T','T'] )
+        individual_generated = ''.join(individual_generated )
+
         population_generated.append(individual_generated)
         
     return population_generated
