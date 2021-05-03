@@ -8,6 +8,94 @@ tf.reset_default_graph()
 tf.keras.backend.clear_session()
 gc.collect() 
 
+###Functions moved here from aux_app.py
+
+def evaluate_model(X,model, scaler, batch_size,session, *graph) :
+    #K.set_session(session)
+    if(graph) : 
+        default_graph = graph[0]
+
+    else : 
+        default_graph = tf.get_default_graph()
+ 
+    with default_graph.as_default(): ### attempted to use a closed session is the error i get here.
+        with session.as_default() : 
+            #K.set_session(session)
+            NUM_GPU = len(get_available_gpus())
+            if(len(X[0])==80):
+                X = population_add_flank(X)
+            if( type(X[0])==str or type(X[0])==np.str_) : 
+                X = seq2feature(X)
+            if NUM_GPU == 0 :    ### Pad for TPU evaluation 
+                if(X.shape[0]%batch_size == 0) :
+                    Y_pred = model.predict(X , batch_size = batch_size , verbose=1)
+                if(X.shape[0]%batch_size != 0) :
+                    n_padding = (batch_size*(X.shape[0]//batch_size + 1) - X.shape[0])
+                    X_padded = np.concatenate((X,np.repeat(X[0:1,:,:],n_padding,axis=0)))
+                    Y_pred_padded = model.predict(X_padded , batch_size = batch_size , verbose=1)
+                    Y_pred = Y_pred_padded[:X.shape[0]]
+            if NUM_GPU > 0 :    ### Pad for GPU evaluation 
+                Y_pred = model.predict(X , batch_size = batch_size , verbose=1)
+            Y_pred = [float(x) for x in Y_pred]
+            Y_pred = scaler.inverse_transform(Y_pred)
+    
+    return Y_pred
+    
+@st.cache(allow_output_mutation=True)
+def load_model(model_conditions ) : 
+    NUM_GPU = len(get_available_gpus())
+    dir_path=os.path.join(path_prefix+'models',model_conditions)
+    model_path=os.path.join(dir_path,"fitness_function.h5")
+
+    ### Load the parameters used for training the model
+    f = open(os.path.join(dir_path,'model_params.pkl'),"rb")
+    model_params = pickle.load(f)
+    batch_size = model_params['batch_size']
+    f.close()
+
+
+    
+    ### Load the model on multiple CPU/GPU(s) with the largest possible batch size
+    scaler= sklearn.externals.joblib.load(os.path.join(dir_path,'scaler.save'))
+    model_params['batch_size'] = np.power(2,10 + NUM_GPU)
+    batch_size = model_params['batch_size']
+    model_params['device_type'] = 'gpu'
+    model = fitness_function_model(model_params)
+    model.load_weights(model_path)
+    if NUM_GPU > 1 :
+        model = tf.keras.utils.multi_gpu_model(model,NUM_GPU,cpu_merge=True,cpu_relocation=False)
+
+    if 0 : #Change to 1 if using TPU ## Changing the batch size on using the tf.keras.models.load_model is not permitted,but TPU needs this
+        scaler= sklearn.externals.joblib.load(os.path.join(dir_path,'scaler.save'))
+        batch_size = model_params['batch_size']
+        model_params['device_type'] = 'tpu'
+        model = fitness_function_model(model_params)
+        model.load_weights(model_path)
+        
+        if(model_params['device_type']=='tpu'):
+            tpu_name = os.environ['TPU_NAME']
+            tpu_grpc_url = TPUClusterResolver(tpu=[tpu_name] , zone='us-central1-a').get_master()
+            if(tpu_grpc_url) : 
+                model = tf.contrib.tpu.keras_to_tpu_model(model,
+                        strategy=tf.contrib.tpu.TPUDistributionStrategy(
+                            tf.contrib.cluster_resolver.TPUClusterResolver(tpu_grpc_url)))
+
+            if 0 : 
+                model = tensorflow.keras.models.load_model(model_path , custom_objects={
+                    'MultiHeadAttention' : MultiHeadAttention , 
+                    'FeedForward' : FeedForward,
+                    'correlation_coefficient' : correlation_coefficient,
+                    'LayerNormalization' : LayerNormalization,
+                    'rc_Conv1D' : rc_Conv1D})
+                    
+    model._make_predict_function()
+    #model.summary()
+    session = K.get_session()
+    return model , scaler, batch_size,session
+
+
+
+###
 
 ###events
 from bokeh.models import ColumnDataSource, CustomJS
@@ -181,7 +269,7 @@ def download_link(object_to_download, download_filename, download_link_text):
 #@st.cache
 def parse_seqs(sequences) :
     sequences = population_add_flank(sequences) ### NOTE : This is different from all other functions ! (User input doesn't have flanks)
-    for i in tqdm(range(0,len(sequences))) : 
+    for i in (range(0,len(sequences))) : 
         if (len(sequences[i]) > 110) :
             sequences[i] = sequences[i][-110:]
         if (len(sequences[i]) < 110) : 
@@ -190,11 +278,11 @@ def parse_seqs(sequences) :
 
 
 
-    A_onehot = np.array([1,0,0,0] ,  dtype=np.bool)
-    C_onehot = np.array([0,1,0,0] ,  dtype=np.bool)
-    G_onehot = np.array([0,0,1,0] ,  dtype=np.bool) 
-    T_onehot = np.array([0,0,0,1] ,  dtype=np.bool)
-    N_onehot = np.array([0,0,0,0] ,  dtype=np.bool)
+    A_onehot = np.array([1,0,0,0] ,  dtype=bool)
+    C_onehot = np.array([0,1,0,0] ,  dtype=bool)
+    G_onehot = np.array([0,0,1,0] ,  dtype=bool) 
+    T_onehot = np.array([0,0,0,1] ,  dtype=bool)
+    N_onehot = np.array([0,0,0,0] ,  dtype=bool)
 
     mapper = {'A':A_onehot,'C':C_onehot,'G':G_onehot,'T':T_onehot,'N':N_onehot}
     worddim = len(mapper['A'])
@@ -246,10 +334,14 @@ def population_mutator( population_current , args) :
 
 
 def get_snpdev_dist(population) : 
-    population_fitness = np.array(evaluate_model(list(population),model,scaler,batch_size,fitness_function_graph))
-    args  = {'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
-    population_1bp_all_sequences = population_mutator(list(population) , args)
-    population_1bp_all_fitness = np.array(evaluate_model(list(population_1bp_all_sequences),model,scaler,batch_size,fitness_function_graph))
+    with fitness_function_graph.as_default() : 
+        with session.as_default(): 
+            #population_fitness = np.array(evaluate_model(list(population),model,scaler,batch_size,session,fitness_function_graph))
+            population_fitness= scaler.inverse_transform(model.predict(seq2feature(list(population)), verbose = 0)).flatten()
+            args  = {'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
+            population_1bp_all_sequences = population_mutator(list(population) , args)
+            #population_1bp_all_fitness = np.array(evaluate_model(list(population_1bp_all_sequences),model,scaler,batch_size,session,fitness_function_graph))
+            population_1bp_all_fitness= np.array(scaler.inverse_transform(model.predict(seq2feature(list(population_1bp_all_sequences)),batch_size = 1024 , verbose = 0))).flatten()
 
 
     snpdev_dist = []
@@ -266,12 +358,16 @@ def get_snpdev_dist(population) :
 #### Functions for Visualization
 def snpdev_str_to_list(snpdev_str) : 
     return [float(i) for i in snpdev_str.replace("\n" , "").replace("[","").replace("]","").split()]
-def get_ordered_snpdev(population) : 
-    population_fitness = np.array(evaluate_model(list(population),model,scaler,batch_size,fitness_function_graph))
-    args  = {'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
-    population_1bp_all_sequences = population_mutator(list(population) , args)
-    population_1bp_all_fitness = np.array(evaluate_model(list(population_1bp_all_sequences),model,scaler,batch_size,fitness_function_graph))
 
+def get_ordered_snpdev(population) : 
+    with fitness_function_graph.as_default() : 
+        with session.as_default(): 
+            #population_fitness = np.array(evaluate_model(list(population),model,scaler,batch_size,session,fitness_function_graph))
+            population_fitness= scaler.inverse_transform(model.predict(seq2feature(list(population)), verbose = 0)).flatten()
+            args  = {'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
+            population_1bp_all_sequences = population_mutator(list(population) , args)
+            #population_1bp_all_fitness = np.array(evaluate_model(list(population_1bp_all_sequences),model,scaler,batch_size,session,fitness_function_graph))
+            population_1bp_all_fitness= np.array(scaler.inverse_transform(model.predict(seq2feature(list(population_1bp_all_sequences)),batch_size = 1024, verbose = 0))).flatten()
 
     snpdev_dist = []
     for i in (range(len(population))) :   
@@ -352,15 +448,11 @@ with st.beta_container() :
     reqs_seqgen = st.beta_expander('Generate a random sequence 🧬', expanded=False)
     with reqs_seqgen : 
         #seqgen_button = st.button('Click here to run the a random sequence generator applet in your browser')
-        #session_state.random_sequence_generated 
         #generate_button = st.button('Generate')
         args  = {'population_size' : int(1), 'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
         population  = population_generator_unflanked(args)
         session_state.random_sequence = population[0]
-        session_state.random_sequence
-        #if (generate_button) and ((session_state.random_sequence_generated == 0) or (random_sequence != session_state.input)): 
-        #    
-        #    session_state.random_sequence_generated = 1
+        st.write(session_state.random_sequence)
 
     if 0 :
         st.subheader('Upload the sequence file here👇')
@@ -463,8 +555,8 @@ if valid_input :
     fitness_function_graph = tf.Graph()
     with fitness_function_graph.as_default():
         ## Next line should be a box where you can pick models (on the left side) 
-        model, scaler,batch_size = load_model(model_conditions)
-
+        model, scaler,batch_size,session = load_model(model_conditions)
+        K.set_session(session)
     
     if mode=="Expression" :
         sequences = list(input_df.iloc[:,0].values)
@@ -475,7 +567,12 @@ if valid_input :
         X,_ = parse_seqs(sequences)
 
         with st.spinner('Predicting expression from sequence using model...'):
-            Y_pred = evaluate_model(X, model, scaler, batch_size , fitness_function_graph)
+            K.set_session(session)
+            with fitness_function_graph.as_default() : 
+                with session.as_default(): 
+                    Y_pred= scaler.inverse_transform(model.predict(X,batch_size = 1024,verbose = 0)).flatten()
+        
+                #Y_pred = evaluate_model(X, model, scaler, batch_size ,session, fitness_function_graph)
         st.success('Expression prediction complete !')
 
         expression_output_df = pd.DataFrame([ sequences , Y_pred ]  ).transpose()
@@ -526,7 +623,8 @@ if valid_input :
         X , sequences_flanked = parse_seqs(sequences)
         
         if mode=="Sequence Visualization": 
-
+            #with fitness_function_graph.as_default() : 
+            #    st.write(np.array(scaler.inverse_transform(model.predict(seq2feature(sequences_flanked)))))
             
 
             st.header('Visualizing expression effects of mutation')
@@ -704,10 +802,13 @@ if valid_input :
 
         if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
             with st.spinner('Computing expression from sequence using the model...'):
-                Y_pred = evaluate_model(X, model, scaler, batch_size , fitness_function_graph)
+                with fitness_function_graph.as_default() : 
+                    with session.as_default(): 
+                        Y_pred  = np.array(scaler.inverse_transform(model.predict(X)))
+                #Y_pred = evaluate_model(X, model, scaler, batch_size ,session, fitness_function_graph)
 
             evolvability_output_df = pd.DataFrame([ sequences , Y_pred ]  ).transpose()
-            evolvability_output_df.columns = ['Sequence' , 'Expression']
+            evolvability_output_df.columns = ['Sequence' , 'Expression']##
             
             if mode=="Evolvability vector" : 
                 with st.spinner('Computing evolvability vectors for sequences...'):
