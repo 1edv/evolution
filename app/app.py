@@ -9,6 +9,36 @@ tf.keras.backend.clear_session()
 gc.collect() 
 
 ###Functions moved here from aux_app.py
+#st.write('Path Prefix is ' + path_prefix)
+
+if "platform" in os.environ:
+    if  os.environ['platform'] == 'streamlit_sharing' :
+        with st.beta_container() : 
+            st.write("""
+            [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
+            &nbsp[![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets)
+            """)
+
+            st.title('The evolution, evolvability and engineering of gene regulatory DNA \n')
+            st.title('')
+            st.header('Click on the image below to use the live app now 👇')
+            st.header('')
+            st.write(""" 
+            | [![App URL](https://raw.githubusercontent.com/1edv/evolution/master/app/overview.png)](https://evolution-app-vbxxkl6a7a-ue.a.run.app/) |
+            | ------ |
+            """)
+            if 0 : 
+                st.markdown('''
+                    <p align = 'center'>
+                    <a href='https://evolution-app-vbxxkl6a7a-ue.a.run.app/'><img width = "100%" style="border:5px solid black" src="https://raw.githubusercontent.com/1edv/evolution/master/app/overview.png"/></a>  
+
+                    </p>''',
+                    unsafe_allow_html=True
+                )
+
+        st.stop() 
+else :
+    pass 
 
 
 
@@ -243,36 +273,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="auto",)
  
-#st.write('Path Prefix is ' + path_prefix)
-
-if "platform" in os.environ:
-    if  os.environ['platform'] == 'streamlit_sharing' :
-        with st.beta_container() : 
-            st.write("""
-            [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
-            &nbsp[![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets)
-            """)
-
-            st.title('The evolution, evolvability and engineering of gene regulatory DNA \n')
-            st.title('')
-            st.header('Click on the image below to use the live app now 👇')
-            st.header('')
-            st.write(""" 
-            | [![App URL](https://raw.githubusercontent.com/1edv/evolution/master/app/overview.png)](https://evolution-app-vbxxkl6a7a-ue.a.run.app/) |
-            | ------ |
-            """)
-            if 0 : 
-                st.markdown('''
-                    <p align = 'center'>
-                    <a href='https://evolution-app-vbxxkl6a7a-ue.a.run.app/'><img width = "100%" style="border:5px solid black" src="https://raw.githubusercontent.com/1edv/evolution/master/app/overview.png"/></a>  
-
-                    </p>''',
-                    unsafe_allow_html=True
-                )
-
-        st.stop() 
-else :
-    pass 
 
 
 #@st.cache
