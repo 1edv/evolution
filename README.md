@@ -48,7 +48,7 @@ python
 
 2. In the python shell, run :
 ```python
-from app_aux import *
+from aux_app import *
 
 model_condition = 'Glu' #or, 'SC_Ura'
 
