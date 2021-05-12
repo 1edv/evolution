@@ -2,7 +2,7 @@
 ####
 import sys, re ,SessionState
 sys.path.insert(0, './')
-import aux_app
+import aux_app,app_aux
 from aux_app import *  
 tf.reset_default_graph() 
 tf.keras.backend.clear_session()
