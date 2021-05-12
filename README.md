@@ -3,7 +3,7 @@
 # The evolution, evolvability and engineering of gene regulatory DNA
 
 
-[![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503) &nbsp; [![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution) &nbsp; [![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets) &nbsp; [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/1edv/evolution/app/app.py)
+[![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503) &nbsp; [![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution) &nbsp; [![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets) &nbsp; [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://evolution-app-vbxxkl6a7a-ue.a.run.app/)
 
 
 
@@ -14,9 +14,9 @@ Use the live app now. __No downloads__. __No installation.__ 👇
 
 </p>
 
-[comment]: <> (<a href=https://evolution-app-vbxxkl6a7a-uc.a.run.app/><img src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>) 
+[comment]: <> (<a href=https://evolution-app-vbxxkl6a7a-ue.a.run.app/><img src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>) 
 
-[![Example of live coding an app in Streamlit|635x380](demo.gif)](https://share.streamlit.io/1edv/evolution/app/app.py)
+[![Example of live coding an app in Streamlit|635x380](demo.gif)](https://evolution-app-vbxxkl6a7a-ue.a.run.app/)
 
 
 ## Repository overview
