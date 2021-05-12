@@ -261,7 +261,7 @@ if "platform" in os.environ:
                 | ------ |
                 """)
             if 1 : 
-                st.write('''
+                st.markdown('''
                     <p align = 'center'>
                     <a href='https://evolution-app-vbxxkl6a7a-ue.a.run.app/'><img width = "75%" style="border:4px solid black" src="https://raw.githubusercontent.com/1edv/evolution/master/app/overview.png"/></a>  
 
