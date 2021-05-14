@@ -236,6 +236,7 @@ def plot_el_visualization(sequences_flanked):
     return s,tmp_download_link,maxima,minima,df,source,p
 
 
+
 st.set_page_config(
     page_title=" Evolution, Evolvability and Expression",
     layout="wide",
@@ -457,7 +458,8 @@ with st.beta_container() :
     st.header('What would you like to compute?')
     mode = st.selectbox(
         '',
-        ["Sequence Visualization",'Mutational Robustness','Evolvability vector' , "Expression" ] ,
+        ["Visualize Sequences and Generate Trajectories",'Mutational Robustness','Evolvability Vector' , 
+        "Expression","Interpretability : Integrated Gradients" ,"Interpretability : In Silico Mutagenesis (ISM)"] ,
     )
 
 with st.beta_container() : 
@@ -644,7 +646,8 @@ if valid_input :
 
 
 
-    if mode=="Evolvability vector"  or mode=="Mutational Robustness" or mode=="Sequence Visualization":
+    if mode=="Evolvability Vector"  or mode=="Mutational Robustness" or mode=="Visualize Sequences and Generate Trajectories"\
+    or mode=="Interpretability : Integrated Gradients" or mode=="Interpretability : In Silico Mutagenesis (ISM)":
 
         sequences = list(input_df.iloc[:,0].values)
         single_sequence_input = 0 
@@ -653,7 +656,7 @@ if valid_input :
                 sequences = sequences+sequences
         X , sequences_flanked = parse_seqs(sequences)
         
-        if mode=="Sequence Visualization": 
+        if mode=="Visualize Sequences and Generate Trajectories": 
             #with fitness_function_graph.as_default() : 
             #    st.write(np.array(scaler.inverse_transform(model.predict(seq2feature(sequences_flanked)))))
             
@@ -831,7 +834,7 @@ if valid_input :
                 
 
 
-        if mode=="Evolvability vector"  or mode=="Mutational Robustness" :
+        if mode=="Evolvability Vector"  or mode=="Mutational Robustness" :
             with st.spinner('Computing expression from sequence using the model...'):
                 with fitness_function_graph.as_default() : 
                     with session.as_default(): 
@@ -841,7 +844,7 @@ if valid_input :
             evolvability_output_df = pd.DataFrame([ sequences , Y_pred ]  ).transpose()
             evolvability_output_df.columns = ['Sequence' , 'Expression']##
             
-            if mode=="Evolvability vector" : 
+            if mode=="Evolvability Vector" : 
                 with st.spinner('Computing evolvability vectors for sequences...'):
                     evolvability_vector = get_snpdev_dist(sequences_flanked)
                 st.success('Evolvability vectors and expression computed !')
@@ -866,6 +869,50 @@ if valid_input :
                     st.markdown(tmp_download_link, unsafe_allow_html=True)
 
 
+        if mode=="Interpretability : In Silico Mutagenesis (ISM)" :
+
+            def get_ISM_score(population) : 
+                with fitness_function_graph.as_default() : 
+                    with session.as_default(): 
+                        population_fitness= scaler.inverse_transform(model.predict(seq2feature(list(population)), verbose = 0)).flatten()
+                        args  = {'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
+                        population_1bp_all_sequences = population_mutator(list(population) , args)
+                        population_1bp_all_fitness= np.array(scaler.inverse_transform(model.predict(seq2feature(list(population_1bp_all_sequences)),batch_size = 1024, verbose = 0))).flatten()
+
+                snpdev_dist = []
+                for i in (range(len(population))) :   
+                    original_fitness = population_fitness[i]
+                    sequence = population[i]
+
+                    exp_dist =population_1bp_all_fitness[3*args['sequence_length']*i:3*args['sequence_length']*(i+1)] -  original_fitness 
+                    
+                    snpdev_dist = snpdev_dist + [np.add.reduceat(exp_dist, np.arange(0, len(exp_dist), 3))]
+
+                sequences = population
+                ISM_scores = snpdev_dist
+                return ISM_scores
+
+            ism_reqs = st.beta_expander('More information on ISM scores 👉', expanded=False)
+            with ism_reqs : 
+                st.write('* The ISM scores are computed using a definition equivalent to this [gist](https://gist.github.com/AvantiShri/2d166f201716d8d019c979b32dc70767).')
+                st.write('* For more information (and a faster implementation) of ISM scores, please check out this [paper](https://doi.org/10.1101/2020.10.13.337147).')
+        
+            ISM_output_df = pd.DataFrame()
+            ISM_output_df[ 'Sequence' ] = sequences
+  
+            with st.spinner('Computing ISM scores for sequences...'):
+                ISM_scores = get_ISM_score(sequences_flanked)
+            st.success('ISM scores computed !')
+            ISM_output_df['ISM scores (Position-wise)'] = ISM_scores
+            
+            if single_sequence_input==1 :
+                ISM_output_df = pd.DataFrame(ISM_output_df.loc[0,:]).T
+            if 1 : 
+                with st.beta_container() : 
+                    st.header('Results')
+                    ISM_output_df
+                    tmp_download_link = download_link(ISM_output_df, 'ISM_output_df.csv', 'Click here to download the results as a CSV')
+                    st.markdown(tmp_download_link, unsafe_allow_html=True)
 
 with st.beta_container() : 
     if mode=="Mutational Robustness" : 

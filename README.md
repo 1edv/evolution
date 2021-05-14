@@ -57,7 +57,7 @@ model, _ , __ = load_model(model_condition)
 model.summary()
 ```
 
-You have now loaded our ```tensorflow.keras``` model loaded. You may use this as is for downstream computations as described in the manuscript or adapt it for your application by transfer learning. 
+You have now loaded our ```tensorflow.keras``` model. You may use this as is for downstream computations as described in the manuscript or adapt it for your application (e.g. transfer learning). 
 
 To exit the python shell and the docker container, simply press ```Ctrl+D``` twice.
 
