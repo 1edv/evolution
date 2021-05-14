@@ -456,7 +456,7 @@ with st.beta_container() :
 
 with st.beta_container() : 
     st.header('What would you like to compute?')
-    mode = st.radio(
+    mode = st.selectbox(
         '',
         ["Visualize Sequences and Generate Trajectories",'Mutational Robustness','Evolvability Vector' , 
         "Expression","Interpretability : In Silico Mutagenesis (ISM) score"] ,
