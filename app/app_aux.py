@@ -8,16 +8,6 @@ import tensorflow.keras as keras  ## important to make sure non tf.keras is hidd
 #from keras_position_wise_feed_forward import FeedForward
 #from keras_layer_normalization import LayerNormalization 
 
-############IG start
-
-from __future__ import division, print_function
-import numpy as np
-from time import sleep
-import sys
-import tensorflow.keras.backend as K
-
-
-#############IG End
 
 import argparse,pwd,os,numpy as np,h5py
 from os import makedirs
