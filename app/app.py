@@ -456,10 +456,10 @@ with st.beta_container() :
 
 with st.beta_container() : 
     st.header('What would you like to compute?')
-    mode = st.selectbox(
+    mode = st.radio(
         '',
         ["Visualize Sequences and Generate Trajectories",'Mutational Robustness','Evolvability Vector' , 
-        "Expression","Interpretability : Integrated Gradients" ,"Interpretability : In Silico Mutagenesis (ISM)"] ,
+        "Expression","Interpretability : In Silico Mutagenesis (ISM) score"] ,
     )
 
 with st.beta_container() : 
@@ -647,7 +647,7 @@ if valid_input :
 
 
     if mode=="Evolvability Vector"  or mode=="Mutational Robustness" or mode=="Visualize Sequences and Generate Trajectories"\
-    or mode=="Interpretability : Integrated Gradients" or mode=="Interpretability : In Silico Mutagenesis (ISM)":
+    or mode=="Interpretability : In Silico Mutagenesis (ISM) score":
 
         sequences = list(input_df.iloc[:,0].values)
         single_sequence_input = 0 
@@ -869,7 +869,7 @@ if valid_input :
                     st.markdown(tmp_download_link, unsafe_allow_html=True)
 
 
-        if mode=="Interpretability : In Silico Mutagenesis (ISM)" :
+        if mode=="Interpretability : In Silico Mutagenesis (ISM) score" :
 
             def get_ISM_score(population) : 
                 with fitness_function_graph.as_default() : 
@@ -913,15 +913,4 @@ if valid_input :
                     ISM_output_df
                     tmp_download_link = download_link(ISM_output_df, 'ISM_output_df.csv', 'Click here to download the results as a CSV')
                     st.markdown(tmp_download_link, unsafe_allow_html=True)
-
-with st.beta_container() : 
-    if mode=="Mutational Robustness" : 
-
-        st.header('')
-        st.header('')
-        st.header('Project Overview')
-        image_cols = st.beta_columns([0.05 , 0.05 , 0.05  , 0.7 , 0.05, 0.05 ,0.05 ])
-        with image_cols[3] :
-            st.image(path_prefix+'overview.png' , caption = '')
-
 
