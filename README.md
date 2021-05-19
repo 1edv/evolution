@@ -14,9 +14,9 @@ Use the live app now. __No downloads__. __No installation.__ 👇
 
 </p>
 
-[comment]: <> (<a href=https://evolution-app-vbxxkl6a7a-ue.a.run.app/><img src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>) 
+[comment]: <> (<a href=https://1edv.github.io/evolution/><img src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>) 
 
-[![Example of live coding an app in Streamlit|635x380](demo.gif)](https://evolution-app-vbxxkl6a7a-ue.a.run.app/)
+[![App demonstration|635x380](demo.gif)](https://evolution-app-vbxxkl6a7a-ue.a.run.app/)
 
 
 ## Repository overview
