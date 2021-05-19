@@ -10,7 +10,7 @@
 ## Quickstart
 Use the live app now. __No downloads__. __No installation.__ 👇 
 <p align = 'center'>
-<a href='https://evolution-app-vbxxkl6a7a-ue.a.run.app/'><img align="center" src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>  
+<a href='https://1edv.github.io/evolution/'><img align="center" src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>  
 
 </p>
 
