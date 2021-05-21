@@ -244,8 +244,8 @@ st.set_page_config(
  
 #st.write('Path Prefix is ' + path_prefix)
 
-if 0 : #"platform" in os.environ:
-    if 0 : # os.environ['platform'] == 'streamlit_sharing' :
+if "platform" in os.environ:
+    if os.environ['platform'] == 'streamlit_sharing' :
         with st.beta_container() : 
             st.write("""
             [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
@@ -258,13 +258,13 @@ if 0 : #"platform" in os.environ:
             st.header('')
             if 0 : 
                 st.write(""" 
-                | [![App URL](https://raw.githubusercontent.com/1edv/evolution/master/app/overview.png)](https://evolution-app-vbxxkl6a7a-ue.a.run.app/) |
+                | [![App URL](https://raw.githubusercontent.com/1edv/evolution/master/app/overview.png)](https://1edv.github.io/evolution/) |
                 | ------ |
                 """)
             if 1 : 
                 st.markdown('''
                     <p align = 'center'>
-                    <a href='https://evolution-app-vbxxkl6a7a-ue.a.run.app/'><img width = "75%" style="border:4px solid black" src="https://raw.githubusercontent.com/1edv/evolution/master/app/overview.png"/></a>  
+                    <a href='https://1edv.github.io/evolution/'><img width = "75%" style="border:4px solid black" src="https://raw.githubusercontent.com/1edv/evolution/master/app/overview.png"/></a>  
 
                     </p>''',
                     unsafe_allow_html=True
