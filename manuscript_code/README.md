@@ -30,6 +30,8 @@ This directory is organized into the following subdirectories :
 
 <li> <code>trajectories</code> : contains the notebooks for computing the sequence trajectories under different evolutionary regimes.
 
+<li> <code>regulatory_complexity</code> : points to the repository containing the code for computing the regulatory complexity.
+
 </ul>
 <br>
 
