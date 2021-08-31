@@ -1,0 +1,10 @@
+This section includes the analysis where we benchmarked the different neural network architectures in terms of predictive power and ECC calculation. We recommend starting with the following iPython notebook files, which contain additional details about the analyses.
+
+Benchmarking the models' predictive power:
+1_reviewer_inspection_benchmarking_prediction_performance.ipynb
+
+Benchmarking the ECC calculated from each model:
+2_train_benchmarking_models_and_generate_predictions_and_compute_ecc.ipynb
+
+Reproducing Supplementary Fig. 4 (model performance for the different neural network models)
+3_reproducing_Supplementary_Fig4_figures_from_saved_files.ipynb

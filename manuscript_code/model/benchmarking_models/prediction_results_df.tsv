@@ -1,0 +1,5 @@
+	Model	Pearson correlation coefficient	Percentage of variance explained	Difference in percentage of variance explained
+0	DeepAtt	0.959	0.919	-4.245
+1	DeepSEA	0.958	0.918	-4.298
+2	DanQ	0.968	0.937	-2.493
+3	Our model	0.981	0.961	0.0

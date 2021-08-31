@@ -1,0 +1,10 @@
+n_val_epoch,1000
+epochs,3
+batch_size,1024
+l1_weight,0
+l2_weight,0
+lr,0.001
+device_type,gpu
+input_shape,"(30722048, 110, 4)"
+loss,mean_squared_error
+model_name,DanQ
