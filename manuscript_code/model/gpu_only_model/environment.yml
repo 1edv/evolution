@@ -1,4 +1,4 @@
-name: seq
+name: gpu
 channels:
   - anaconda
   - conda-forge
@@ -331,5 +331,5 @@ dependencies:
     - wrapt==1.11.2
     - xdis==3.7.0
     - zope-interface==4.4.3
-prefix: /ahg/regevdata/users/edv/software/anaconda3/envs/seq
+prefix: /home/edv/anaconda3/envs/gpu
 
