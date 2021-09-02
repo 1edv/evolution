@@ -1,6 +1,6 @@
 This directory contains the various test data used to generate the scatterplots for evaluating the model performances throughout the manuscript.
 
-### This notebook takes the reader through all the test data for model prediction performance validation (shown as scatterplots) used throughout the manuscript and creates clean and usable files for each panel
+### The notebook in this directory takes the reader through all the test data for model prediction performance validation (shown as scatterplots) used throughout the manuscript and creates clean and usable files for each panel
 
 For each saved file, the fields correspond to :
 <pre>
