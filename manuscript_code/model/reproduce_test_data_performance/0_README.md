@@ -8,4 +8,6 @@ For each saved file, the fields correspond to :
 `Measured Expression` : the measured expression (or expression change in the case of ED Fig. 2f-i) in the corresponding media 
 `Predicted Expression` : the predicted expression (or expression change in the case of ED Fig. 2f-i) in the corresponding media using the TPU model.
 </pre>
-We have shown that using other models with equivalent predictive power leads to equivalent results and biological conclusions
+
+Note that the saved files corresponding to the change in expression (ED Fig. 2f-i) don't have sequence fields (since they correspond to two sequences). The corresponding sequences can be found in the corresponding expression predicted vs measured files (ED Fig. 2j-m).
+We have shown that using other models with equivalent predictive power leads to equivalent results and biological conclusions.
