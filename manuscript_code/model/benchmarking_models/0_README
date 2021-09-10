@@ -8,3 +8,6 @@ Benchmarking the ECC calculated from each model:
 
 Reproducing Supplementary Fig. 4 (model performance for the different neural network models)
 3_reproducing_Supplementary_Fig4_figures_from_saved_files.ipynb
+
+Training, saving and generating predictions for the benchmarking models using the original parameters :
+4_original_parameters_train_save_evaluate_benchmarking_models.ipynb`
