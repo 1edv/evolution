@@ -1,7 +1,0 @@
-This directory contains the files needed to train and evaluate the GPU model.
-
-Testing the GPU model:
-1_use_gpu_model_to_generate_results.ipynb
-
-Training a GPU model:
-2_train_gpu_only_model.ipynb
