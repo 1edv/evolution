@@ -6,7 +6,9 @@ For each saved file, the fields correspond to :
 <pre>
 `sequence` : the sequence
 `Measured Expression` : the measured expression (or expression change in the case of ED Fig. 2f-i) in the corresponding media 
-`Predicted Expression` : the predicted expression (or expression change in the case of ED Fig. 2f-i) in the corresponding media using the TPU model.
+`Predicted Expression` : the predicted expression (or expression change in the case of ED Fig. 2f-i) in the corresponding media using the TPU model. 
 </pre>
 
 Note that the saved files corresponding to the change in expression (ED Fig. 2f-i) don't have sequence fields (since they correspond to two sequences). The corresponding sequences can be found in the corresponding expression predicted vs measured files (ED Fig. 2j-m).
+
+The GPU model version of these figures can be reproduced using the sequence here and the GPU model code shared.
