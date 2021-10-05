@@ -1,4 +1,4 @@
-This directory contains the files needed to train and evaluate the convolutional(GPU) model.
+This directory contains the code used for train and evaluate the convolutional(GPU) model. It also contains the code for reproducing the prediction performance scatterplots using the saved convolutional(GPU) model. The notebooks describe the corresponding code in detail.
 
 <ul>
 
