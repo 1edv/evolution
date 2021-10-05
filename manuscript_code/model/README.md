@@ -1,3 +1,6 @@
+The markdown that follows describes the directory structure of our code and linked data shared on CodeOcean. This directory on GitHub contains all of the code for (training and using) the various models used in our paper.
+
+---
 Dear Reader,
 
 This directory contains all the code and data for reproducing our results in a single location. All code is available as live jupyter notebooks and all data is linked to the code making this directory fully functional. We will describe the structure of this repository here and explain the contents of each folder in detail.
