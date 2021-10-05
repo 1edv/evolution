@@ -18,9 +18,9 @@ This directory contains all the code and data for reproducing our results in a s
 
   <li> <h3>code</h3> 
         Subdirectories : 
-    <ul>
       <li> <h4>referee_response</h4>
             This folder contains all the code referenced in the response to Referee 3 in the second round in fully functional form. It is organized into the following subfolders with self-explanatory titles. Each subfolder contains numbered notebooks that can be read and run in order to reproduced the results  :
+      <ul>
       <li> <h4>benchmarking_models</h4>
       <li> <h4>biochemical_model</h4>
       <li> <h4>gpu_only_model</h4>
