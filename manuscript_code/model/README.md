@@ -1,5 +1,8 @@
 The markdown that follows describes the directory structure of our code and linked data shared on CodeOcean. This directory on GitHub contains all of the code for (training and using) the various models used in our paper.
 
+Please note that the phrases 'convolutional model' and the 'GPU model' refer to the same model and are used interchangeably. Similarly, 'transformer model' and 'TPU model' refer to the same model and the two are also used interchangeably. 
+
+
 ---
 Dear Reader,
 
