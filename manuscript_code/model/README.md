@@ -44,8 +44,4 @@ There is another subdirectory called CodeOcean_run here, it is simply there beca
     </ul>
 
 
-
-  <li> <h3>github_repo </h3>
-           A copy of the github repository at https://github.com/1edv/evolution. Please access this from the GitHub repo directly since we updates there regularly. 
-  
  </ul>
