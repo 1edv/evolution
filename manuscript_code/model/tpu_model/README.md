@@ -1,4 +1,4 @@
-This directory contains the files needed to train and evaluate the transformer(TPU) model.
+This directory contains the files needed to train and evaluate the transformer(TPU) model. The notebooks explain the corresponding code in detail.
 
 <ul>
 
