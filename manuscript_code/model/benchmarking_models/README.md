@@ -4,15 +4,15 @@ We recommend starting with the following Jupyter notebook files, which contain a
 <ul>
 
   <li><h4>Benchmarking the models' prediction performance:</h4>
-1_reviewer_inspection_benchmarking_prediction_performance.ipynb
+    <code>1_reviewer_inspection_benchmarking_prediction_performance.ipynb</code>
 
   <li><h4>Recomputing the ECC using each benchmarking model:</h4>
-2_train_benchmarking_models_and_generate_predictions_and_compute_ecc.ipynb
+    <code>2_train_benchmarking_models_and_generate_predictions_and_compute_ecc.ipynb</code>
 
   <li><h4>Reproducing Supplementary Fig. 4 (model performance for the different neural network models):</h4>
-3_reproducing_Supplementary_Fig4_figures_from_saved_files.ipynb
+    <code>3_reproducing_Supplementary_Fig4_figures_from_saved_files.ipynb</code>
 
   <li><h4>Training, saving models and generating predictions for the benchmarking models using the original parameters :</h4>
-4_original_parameters_train_save_evaluate_benchmarking_models.ipynb`
+    <code>4_original_parameters_train_save_evaluate_benchmarking_models.ipynb</code>
 
 </ul>
