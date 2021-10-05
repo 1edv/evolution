@@ -17,6 +17,7 @@ conda activate me
 This directory is organized into the following subdirectories :
 <ul>
 
+<li> <code>model</code> : This directory contains all of the code for (training and using) the various models (transformer(tpu), convolutional(gpu), benchmarking models) used in our paper.
     
 <li> <code>ecc_mr_fr</code>: contains the notebooks for computing the Expression Conservation Coefficient (ECC), Mutational Robustness and Fitness Responsivity.
     
@@ -24,8 +25,6 @@ This directory is organized into the following subdirectories :
     
 <li> <code>ga</code> : contains the notebooks for sequence design using a genetic algorithm.
 
-<li> <code>model</code> : contains the notebooks for pre-processing the data, training the model and using the model. This model can run on TPUs and GPUs. A subfolder called 'gpu_only_model' contains the same for the version of the model that runs on GPUs only (and not TPUs) as described in the manuscript.
-    
 <li> <code>rna_seq</code> : contains all the code used for processing the in-house cross-species RNA-seq data.
 
 <li> <code>trajectories</code> : contains the notebooks for computing the sequence trajectories under different evolutionary regimes.
