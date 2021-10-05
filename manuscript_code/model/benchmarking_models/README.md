@@ -1,5 +1,5 @@
 This section includes the analysis where we benchmarked the different neural network architectures in terms of predictive power and ECC calculation. 
-We recommend starting with the following Jupyter notebook files, which contain additional details about the analyses.
+We recommend starting with the following Jupyter notebook files, which contain additional details about the analyses. The notebooks describe the corresponding code in detail.
 
 <ul>
 
