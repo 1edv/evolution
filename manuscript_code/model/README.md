@@ -21,6 +21,7 @@ This directory contains all the code and data for reproducing our results in a s
 
   <li> <h3>code</h3> 
         Subdirectories : 
+        <ul>
       <li> <h4>referee_response</h4>
             This folder contains all the code referenced in the response to Referee 3 in the second round in fully functional form. It is organized into the following subfolders with self-explanatory titles. Each subfolder contains numbered notebooks that can be read and run in order to reproduced the results  :
       <ul>
@@ -29,6 +30,7 @@ This directory contains all the code and data for reproducing our results in a s
       <li> <h4>gpu_only_model</h4>
       <li> <h4>reproduce_test_data_performance</h4>
       <li> <h4>tpu_model</h4>
+    </ul>
     </ul>
 There is another subdirectory called CodeOcean_run here, it is simply there because of CodeOcean's directory structure requirements and the contents can be better accessed in the results_summary directory mentioned above.
 
