@@ -32,7 +32,7 @@ This directory contains all the code and data for reproducing our results in a s
       <li> <h4>tpu_model</h4>
     </ul>
     </ul>
-There is another subdirectory called CodeOcean_run here, it is simply there because of CodeOcean's directory structure requirements and the contents can be better accessed in the results_summary directory mentioned above.
+There is another subdirectory called CodeOcean_run here on CodeOcean, it is simply there because of CodeOcean's directory structure requirements and the contents can be better accessed in the results_summary directory mentioned above.
 
 
   <li> <h3>data </h3>
