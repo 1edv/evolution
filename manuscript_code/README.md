@@ -7,7 +7,7 @@ This directory contains the code for our <a href = "https://doi.org/10.1101/2021
 
 All data and trained models used in the manuscript can be downloaded : <a href='https://zenodo.org/record/4436477#.X_8V-hNKgUF'>🗄️</a>.
 
-The conda environment required for running this notebook can be installed and activated by running the following on the command line from within this folder: \
+The conda environment required for running this notebook can be installed and activated by running the following on the command line from within this folder: 
 
 ```bash
 conda env create -f evolution_env.yml 
@@ -17,7 +17,7 @@ conda activate me
 This directory is organized into the following subdirectories :
 <ul>
 
-<li> <code>model</code> : This directory contains all of the code for (training and using) the various models (transformer(tpu), convolutional(gpu), benchmarking models) used in our paper.
+<li> <code>model</code> : This directory contains all of the code for (training and using) the various models (transformer(tpu), convolutional(gpu), benchmarking models) used in our paper. The README files and Jupyter notebooks in each informatively named subdirectory contain more details.
     
 <li> <code>ecc_mr_fr</code>: contains the notebooks for computing the Expression Conservation Coefficient (ECC), Mutational Robustness and Fitness Responsivity.
     
