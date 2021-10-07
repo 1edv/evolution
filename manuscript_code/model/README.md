@@ -14,7 +14,7 @@ This directory contains all the code and data for reproducing our results in a s
   <li> <h3>results_summary</h3>
     <ul>
       <li> This notebook reproduces the prediction performance scatterplots and contains the prediction tables for each model including the benchmarking models.
-      <li> The notebook here reproduces every plot in the directory.
+      <li> The notebook in there reproduces every plot in the directory.
       <li> A copy of the code in this notebook is run when the 'Reproducible Run' button is pressed on CodeOcean. This is because CodeOcean is slow to run - all the other notebooks are fully functional and can be run on the Google Cloud VM shared with the project ( or on any other machine that hosts all the code here). 
     </ul>
 
@@ -32,7 +32,7 @@ This directory contains all the code and data for reproducing our results in a s
       <li> <h4>tpu_model</h4>
     </ul>
     </ul>
-There is another subdirectory called CodeOcean_run here on CodeOcean, it is simply there because of CodeOcean's directory structure requirements and the contents can be better accessed in the results_summary directory mentioned above.
+There is another subdirectory called CodeOcean_run here on CodeOcean, it is simply there because of CodeOcean's directory structure requirements and the contents can be better accessed in the results_summary directory mentioned above. On GitHub, we have ommitted the `CodeOcean_run` and as a result the `referee_response` directories.
 
 
   <li> <h3>data </h3>
