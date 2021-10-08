@@ -13,9 +13,9 @@ This directory contains all the code and data for reproducing our results in a s
 <ul>
   <li> <h3>results_summary</h3>
     <ul>
-      <li> This notebook reproduces the prediction performance scatterplots and contains the prediction tables for each model including the benchmarking models.
-      <li> The notebook in there reproduces every plot in the directory.
-      <li> A copy of the code in this notebook is run when the 'Reproducible Run' button is pressed on CodeOcean. This is because CodeOcean is slow to run - all the other notebooks are fully functional and can be run on the Google Cloud VM shared with the project ( or on any other machine that hosts all the code here). 
+      <li> The notebook in this directory reproduces a summary of the prediction performance scatterplots and contains the prediction tables for each model including the benchmarking models.
+      <li> The notebook in the directory reproduces every plot in the directory.
+      <li> A copy of the code in this notebook is all that is run when the 'Reproducible Run' button is pressed on CodeOcean. This is because CodeOcean is slow to run - all the other notebooks are fully functional and can be run on the Google Cloud VM shared with the project (or on any other machine that hosts all the code here). 
     </ul>
 
 
