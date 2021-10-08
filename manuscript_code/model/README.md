@@ -32,7 +32,7 @@ This directory contains all the code and data for reproducing our results in a s
       <li> <h4>tpu_model</h4>
     </ul>
     </ul>
-There is another subdirectory called CodeOcean_run here on CodeOcean, it is simply there because of CodeOcean's directory structure requirements and the contents can be better accessed in the results_summary directory mentioned above. On GitHub, we have ommitted the `CodeOcean_run` and as a result the `referee_response` directories.
+There is another subdirectory called CodeOcean_run here, it is simply there because of CodeOcean's directory structure requirements and CodeOcean_run's contents can be better accessed in the results_summary directory mentioned above. Pressing the 'Reproducible Run' button on CodeOcean runs the code here and reproduces Fig. R1 and Fig. R2 in the Reviewer response.
 
 
   <li> <h3>data </h3>
@@ -45,7 +45,7 @@ There is another subdirectory called CodeOcean_run here on CodeOcean, it is simp
       <li> <h4>native_sequenes_only</h4>
               Simply a list of native chunks of DNA. The data appears in more usable forms elsewhere
       <li> <h4>test_data</h4>
-              Some of the prominent test data used in the project. This is not an exhaustive list and the notebooks explain exactly how to extract information from the files. Please be careful if deviating from the instructions listed in the notebooks.
+              Some of the prominent test data used in the project. This is not an exhaustive list and the notebooks explain exactly how to extract information from the files. Please be careful if deviating from the instructions listed in the notebooks. The full list of test data is linked in the answers to each specific question in the point-by-point response.
     </ul>
 
 
