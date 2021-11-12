@@ -4,7 +4,7 @@ We recommend starting with the following Jupyter notebook files, which contain a
 <ul>
 
   <li><h4>Benchmarking the models' prediction performance:</h4>
-    <code>1_reviewer_inspection_benchmarking_prediction_performance.ipynb</code>
+    <code>1_benchmarking_prediction_performance.ipynb</code>
 
   <li><h4>Recomputing the ECC using each benchmarking model:</h4>
     <code>2_train_benchmarking_models_and_generate_predictions_and_compute_ecc.ipynb</code>
