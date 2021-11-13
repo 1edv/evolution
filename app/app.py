@@ -276,7 +276,7 @@ if "platform" in os.environ and 0:
             &nbsp[![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets)
             """)
 
-            st.title('The evolution, evolvability and engineering of gene regulatory DNA \n')
+            st.title('The evolution, evolvability, and engineering of gene regulatory DNA \n')
             st.title('')
             st.header('Click on the image below to use the live app now 👇')
             st.header('')
@@ -470,7 +470,7 @@ with st.container() :
     &nbsp[![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets)
     """)
 
-    st.title('The evolution, evolvability and engineering of gene regulatory DNA \n')
+    st.title('The evolution, evolvability, and engineering of gene regulatory DNA \n')
     st.title('')
 
 
@@ -694,9 +694,11 @@ if valid_input :
             vis_reqs = st.expander('How to use this interface 👉', expanded=False)
             with vis_reqs : 
                 st.write('Please click on a single mutation that you wish to introduce to the starting sequence or any subsequent sequence in the trajectory you create. The solid line denotes the mutation with the maximum expression and the dotted line denotes the mutation with the minumum expression. The first sequence is used if multiple sequences are entered above.')
-            print_reqs = st.expander('How to print the complete trajectory👉', expanded=False)
-            with print_reqs : 
-                st.session_state.print_trajectory = st.button('Just click here at the end of your experiment')
+            
+            if 0:
+                print_reqs = st.expander('How to print the complete trajectory👉', expanded=False)
+                with print_reqs : 
+                    st.session_state.print_trajectory = st.button('Just click here at the end of your experiment')
             st.write('')
             cmap_range = st.selectbox( "Select the color range scheme for the heatmap", ('Absolute', 'Relative'))
             if (cmap_range != st.session_state.cmap_range) :
