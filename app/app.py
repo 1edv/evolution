@@ -103,7 +103,7 @@ from bokeh.plotting import figure
 from streamlit_bokeh_events import streamlit_bokeh_events
 import bokeh
 
-####Session state
+####Session state using the Streamlit session
 if 'input' not in st.session_state:
     st.session_state['input'] = None
 
@@ -159,9 +159,9 @@ def plot_el_visualization(sequences_flanked):
     cmap_list = plt.colormaps()
 
         
-    #with st.beta_container() : 
+    #with st.container() : 
         
-    #select_cmap = st.beta_expander('Expression', expanded=True)
+    #select_cmap = st.expander('Expression', expanded=True)
     #with select_cmap : 
     #    cmap = st.selectbox('Please select your preferred colormap', cmap_list , index = 18)
 
@@ -270,7 +270,7 @@ st.set_page_config(
 
 if "platform" in os.environ and 0:
     if os.environ['platform'] == 'streamlit_sharing' :
-        with st.beta_container() : 
+        with st.container() : 
             st.write("""
             [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
             &nbsp[![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets)
@@ -464,7 +464,7 @@ valid_input = 0
 
 ############
 
-with st.beta_container() : 
+with st.container() : 
     st.write("""
     [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
     &nbsp[![Follow](https://img.shields.io/twitter/follow/edv_tweets?style=social)](https://www.twitter.com/edv_tweets)
@@ -478,7 +478,7 @@ with st.beta_container() :
 
 
 
-with st.beta_container() : 
+with st.container() : 
     st.header('What would you like to compute?')
     mode = st.selectbox(
         '',
@@ -486,9 +486,9 @@ with st.beta_container() :
         "Expression","Interpretability : In Silico Mutagenesis (ISM) score"] ,
     )
 
-with st.beta_container() : 
+with st.container() : 
     st.header('Please upload your sequences :')  
-    reqs = st.beta_expander('Example input file and sequence file format requirements 👉', expanded=False)
+    reqs = st.expander('Example input file and sequence file format requirements 👉', expanded=False)
     with reqs : 
         st.write('* Every line in the file must contain just a single DNA sequence with no additional special characters, spaces, tabs or linebreaks.')
         st.write('* If there are more than 80 bases in a given sequence, the last 80 bases will be used for the downstream computations. If there are less than 80 bases in a given sequence, it will be padded with N bases after adding the constant flanking sequence in the beginning (as described in the paper) until each input sequence has the same length.')
@@ -502,7 +502,7 @@ with st.beta_container() :
         ### END : This block of code should be ignored by users to avoid confusion 
         
         
-    reqs_seqgen = st.beta_expander('Generate a random sequence 🧬', expanded=False)
+    reqs_seqgen = st.expander('Generate a random sequence 🧬', expanded=False)
     with reqs_seqgen : 
         #seqgen_button = st.button('Click here to run the a random sequence generator applet in your browser')
         #generate_button = st.button('Generate')
@@ -524,10 +524,10 @@ with st.beta_container() :
 
 
 
-    cols = st.beta_columns([0.95, 0.1 , 0.95])
+    cols = st.columns([0.95, 0.1 , 0.95])
 
     with cols[0] : 
-        with st.beta_container() : 
+        with st.container() : 
             st.subheader('Upload the sequence file here👇')
             uploaded_file = st.file_uploader("")
 
@@ -544,14 +544,14 @@ with st.beta_container() :
 &nbsp;**OR**""" 
 
     with cols[-1] : 
-        with st.beta_container() : 
+        with st.container() : 
             st.subheader('Paste one sequence per line here👇')
             text_area = st.text_area(label='' , value = 'GAGGCATCGTTTTATCAGATGATAGTTTAATTAGTACGTGCAGCACCTTAAAGGATATAAGGGCCGGTAGAACATAACGC\nGAGGCCACTGTAAATAATGGTCAGAAGTGTTGTTATGACACTTTGCAAGGGTGTCTCCCAGTGTAGCGCCTCTCGCCCTA\nGAGGCCACTGTAAATAATGGTCAGAAGTGTTGTTATGGTTGTTTGCAAGGGTGTCTCCCAGTGTAGCGCCTCTCGCCCTA')
         
 
-    button_cols = st.beta_columns([0.95, 0.1, 0.95])
+    button_cols = st.columns([0.95, 0.1, 0.95])
     with button_cols[-1] :
-        with st.beta_container() : 
+        with st.container() : 
             submit = st.button('Submit Sequences')
 
 
@@ -639,7 +639,7 @@ if valid_input :
         if single_sequence_input==1 :
             expression_output_df = pd.DataFrame(expression_output_df.loc[0,:]).T
         
-        with st.beta_container() : 
+        with st.container() : 
             st.header('Results')
             expression_output_df
             tmp_download_link = download_link(expression_output_df, 'expression_output_df.csv', 'Click here to download the expression results as a CSV')
@@ -691,10 +691,10 @@ if valid_input :
 
 
 
-            vis_reqs = st.beta_expander('How to use this interface 👉', expanded=False)
+            vis_reqs = st.expander('How to use this interface 👉', expanded=False)
             with vis_reqs : 
                 st.write('Please click on a single mutation that you wish to introduce to the starting sequence or any subsequent sequence in the trajectory you create. The solid line denotes the mutation with the maximum expression and the dotted line denotes the mutation with the minumum expression. The first sequence is used if multiple sequences are entered above.')
-            print_reqs = st.beta_expander('How to print the complete trajectory👉', expanded=False)
+            print_reqs = st.expander('How to print the complete trajectory👉', expanded=False)
             with print_reqs : 
                 st.session_state.print_trajectory = st.button('Just click here at the end of your experiment')
             st.write('')
@@ -766,7 +766,7 @@ if valid_input :
             st.markdown(tmp_download_link, unsafe_allow_html=True)
 
             if 0 : 
-                extrema_cols = st.beta_columns([1, 1])
+                extrema_cols = st.columns([1, 1])
                 with extrema_cols[0]:
                     maxima
                 with extrema_cols[1]:
@@ -841,7 +841,7 @@ if valid_input :
 
                     st.subheader(p_tuple[0])
                     st.write(p_tuple[-1])
-                    extrema_cols = st.beta_columns([1, 1])
+                    extrema_cols = st.columns([1, 1])
                     with extrema_cols[0]:
                         p_tuple[3]
                     with extrema_cols[1]:
@@ -886,7 +886,7 @@ if valid_input :
             if single_sequence_input==1 :
                 evolvability_output_df = pd.DataFrame(evolvability_output_df.loc[0,:]).T
             if 1 : 
-                with st.beta_container() : 
+                with st.container() : 
                     st.header('Results')
                     evolvability_output_df
                     tmp_download_link = download_link(evolvability_output_df, 'evolvability_output_df.csv', 'Click here to download the results as a CSV')
@@ -916,7 +916,7 @@ if valid_input :
                 ISM_scores = snpdev_dist
                 return ISM_scores
 
-            ism_reqs = st.beta_expander('More information on ISM scores 👉', expanded=False)
+            ism_reqs = st.expander('More information on ISM scores 👉', expanded=False)
             with ism_reqs : 
                 st.write('* The ISM scores are computed using a definition equivalent to this [gist](https://gist.github.com/AvantiShri/2d166f201716d8d019c979b32dc70767).')
                 st.write('* For more information (and a faster implementation) of ISM scores, please check out this [paper](https://doi.org/10.1101/2020.10.13.337147).')
@@ -932,7 +932,7 @@ if valid_input :
             if single_sequence_input==1 :
                 ISM_output_df = pd.DataFrame(ISM_output_df.loc[0,:]).T
             if 1 : 
-                with st.beta_container() : 
+                with st.container() : 
                     st.header('Results')
                     ISM_output_df
                     tmp_download_link = download_link(ISM_output_df, 'ISM_output_df.csv', 'Click here to download the results as a CSV')
