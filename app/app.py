@@ -1,5 +1,5 @@
 
-import sys, re ,SessionState
+import sys, re 
 sys.path.insert(0, './')
 import aux_app,app_aux
 from aux_app import *  
@@ -104,17 +104,41 @@ from streamlit_bokeh_events import streamlit_bokeh_events
 import bokeh
 
 ####Session state
-session_state = SessionState.get(input = None, seq_list = [] ,mutation_list = [], event_result_list = [] , 
-                                counter = 0, cmap_range='Absolute' , print_trajectory = 0 ,  random_sequence = None)
+if 'input' not in st.session_state:
+    st.session_state['input'] = None
+
+if 'seq_list' not in st.session_state:
+    st.session_state['seq_list'] = []
+
+if 'mutation_list' not in st.session_state:
+    st.session_state['mutation_list'] = []
+
+if 'event_result_list' not in st.session_state:
+    st.session_state['event_result_list'] = []
+
+if 'counter' not in st.session_state:
+    st.session_state['counter'] = 0
+
+if 'cmap_range' not in st.session_state:
+    st.session_state['cmap_range'] = 'Absolute'
+
+if 'print_trajectory' not in st.session_state:
+    st.session_state['print_trajectory'] = 0
+
+if 'random_sequence' not in st.session_state:
+    st.session_state['random_sequence'] = None
+
+#st.session_state = SessionState.get(input = None, seq_list = [] ,mutation_list = [], event_result_list = [] , 
+#                                counter = 0, cmap_range='Absolute' , print_trajectory = 0 ,  random_sequence = None)
 
 def reset_state() : 
-    session_state.seq_list = [] 
-    session_state.mutation_list = [] 
-    session_state.event_result_list = []  
-    session_state.p_list = [] 
-    session_state.download_list = [] 
+    st.session_state.seq_list = [] 
+    st.session_state.mutation_list = [] 
+    st.session_state.event_result_list = []  
+    st.session_state.p_list = [] 
+    st.session_state.download_list = [] 
 
-    session_state.counter = 0
+    st.session_state.counter = 0
 
 ###events
 
@@ -244,7 +268,7 @@ st.set_page_config(
  
 #st.write('Path Prefix is ' + path_prefix)
 
-if "platform" in os.environ:
+if "platform" in os.environ and 0:
     if os.environ['platform'] == 'streamlit_sharing' :
         with st.beta_container() : 
             st.write("""
@@ -484,8 +508,8 @@ with st.beta_container() :
         #generate_button = st.button('Generate')
         args  = {'population_size' : int(1), 'sequence_length' : 80 , 'nucleotide_frequency' :[0.25,0.25,0.25,0.25] , 'randomizer' : np.random } 
         population  = population_generator_unflanked(args)
-        session_state.random_sequence = population[0]
-        st.write(session_state.random_sequence)
+        st.session_state.random_sequence = population[0]
+        st.write(st.session_state.random_sequence)
 
     if 0 :
         st.subheader('Upload the sequence file here👇')
@@ -672,20 +696,20 @@ if valid_input :
                 st.write('Please click on a single mutation that you wish to introduce to the starting sequence or any subsequent sequence in the trajectory you create. The solid line denotes the mutation with the maximum expression and the dotted line denotes the mutation with the minumum expression. The first sequence is used if multiple sequences are entered above.')
             print_reqs = st.beta_expander('How to print the complete trajectory👉', expanded=False)
             with print_reqs : 
-                session_state.print_trajectory = st.button('Just click here at the end of your experiment')
+                st.session_state.print_trajectory = st.button('Just click here at the end of your experiment')
             st.write('')
             cmap_range = st.selectbox( "Select the color range scheme for the heatmap", ('Absolute', 'Relative'))
-            if (cmap_range != session_state.cmap_range) :
+            if (cmap_range != st.session_state.cmap_range) :
                 reset_state()
-                session_state.cmap_range = 'Relative'
+                st.session_state.cmap_range = 'Relative'
             
-            if session_state.print_trajectory == 1 :  
+            if st.session_state.print_trajectory == 1 :  
                 st.subheader('Trajectory')
-                for i in range(len(session_state.mutation_list)):
-                    st.subheader(session_state.mutation_list[i])
-                    s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(population_add_flank([session_state.seq_list[i]]))
+                for i in range(len(st.session_state.mutation_list)):
+                    st.subheader(st.session_state.mutation_list[i])
+                    s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(population_add_flank([st.session_state.seq_list[i]]))
                     st.bokeh_chart(p)
-                session_state.print_trajectory = 0
+                st.session_state.print_trajectory = 0
                 st.header('Start a new trajectory')
 
                 reset_state()
@@ -693,28 +717,28 @@ if valid_input :
             ### Reset if new input is entered
 
 
-            if (session_state.input !=sequences_flanked ): 
+            if (st.session_state.input !=sequences_flanked ): 
                 reset_state()
 
                 
             ####BLOCK : Better not to put inside function
-            session_state.counter=session_state.counter+1
+            st.session_state.counter=st.session_state.counter+1
 
-            #session_state.counter
-            #session_state.event_result_list
-            #session_state.seq_list
-            #session_state.mutation_list
+            #st.session_state.counter
+            #st.session_state.event_result_list
+            #st.session_state.seq_list
+            #st.session_state.mutation_list
             
-            if (session_state.event_result_list==[]) :
-                session_state.seq_list = session_state.seq_list +[population_remove_flank([sequences_flanked[0]])[0]]
-                session_state.input = sequences_flanked
-                session_state.mutation_list = session_state.mutation_list +['Input']
+            if (st.session_state.event_result_list==[]) :
+                st.session_state.seq_list = st.session_state.seq_list +[population_remove_flank([sequences_flanked[0]])[0]]
+                st.session_state.input = sequences_flanked
+                st.session_state.mutation_list = st.session_state.mutation_list +['Input']
                 s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(sequences_flanked)
-                #session_state.p_list = session_state.p_list + [p]
-                session_state.download_list = session_state.download_list + [tmp_download_link]
+                #st.session_state.p_list = st.session_state.p_list + [p]
+                st.session_state.download_list = st.session_state.download_list + [tmp_download_link]
 
             else :
-                s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(population_add_flank([session_state.seq_list[-1]]))
+                s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(population_add_flank([st.session_state.seq_list[-1]]))
                     
 
 
@@ -730,7 +754,7 @@ if valid_input :
                 ),
             )
             
-            st.subheader(session_state.mutation_list[-1])
+            st.subheader(st.session_state.mutation_list[-1])
 
             event_result = streamlit_bokeh_events(
                 events="TestSelectEvent",
@@ -748,18 +772,18 @@ if valid_input :
                 with extrema_cols[1]:
                     minima
             
-            session_state.event_result_list =  session_state.event_result_list + [event_result]
+            st.session_state.event_result_list =  st.session_state.event_result_list + [event_result]
 
-        #if session_state.seq_list!=[] : 
-        #    sequences_flanked = population_add_flank([ session_state.seq_list[-1] ])
+        #if st.session_state.seq_list!=[] : 
+        #    sequences_flanked = population_add_flank([ st.session_state.seq_list[-1] ])
         #    s,tmp_download_link,maxima,minima,df,source,p = plot_el_visualization(sequences_flanked)
 
-            if ((session_state.counter%2) ==0) and (event_result is not None) : 
-                event_result = session_state.event_result_list[-1]
+            if ((st.session_state.counter%2) ==0) and (event_result is not None) : 
+                event_result = st.session_state.event_result_list[-1]
                 # TestSelectEvent was thrown
                 if "TestSelectEvent" in event_result:
                     #st.subheader("Selected Points' Pandas Stat summary")
-                    #if session_state.seq_list == [] : 
+                    #if st.session_state.seq_list == [] : 
 
                     indices = event_result["TestSelectEvent"].get("indices", [])
                     #st.table(df.iloc[indices].describe())
@@ -780,10 +804,10 @@ if valid_input :
                         new_sequences_unflanked = ''.join(new_sequences_unflanked)
                         new_sequences_flanked = population_add_flank([new_sequences_unflanked])
                     
-                    session_state.seq_list = session_state.seq_list +[new_sequences_unflanked]
-                    session_state.mutation_list = session_state.mutation_list+[session_state.mutation_list[-1]+'->'+m]
-                    #session_state.p_list = session_state.p_list + [p]
-                    session_state.download_list = session_state.download_list + [tmp_download_link]
+                    st.session_state.seq_list = st.session_state.seq_list +[new_sequences_unflanked]
+                    st.session_state.mutation_list = st.session_state.mutation_list+[st.session_state.mutation_list[-1]+'->'+m]
+                    #st.session_state.p_list = st.session_state.p_list + [p]
+                    st.session_state.download_list = st.session_state.download_list + [tmp_download_link]
                     ###Reload Page to get correct plot
                     #from streamlit.script_runner import StopException, RerunException
                     #RerunException()  
@@ -792,10 +816,10 @@ if valid_input :
 
 
             st.subheader('Sequences in trajectory')
-            session_state.seq_list
+            st.session_state.seq_list
             st.subheader('Mutations in trajectory')
-            session_state.mutation_list
-            #session_state.p_list
+            st.session_state.mutation_list
+            #st.session_state.p_list
 
             
 
