@@ -8,9 +8,6 @@ tf.keras.backend.clear_session()
 gc.collect() 
 ###Functions moved here from aux_app.py
 #st.write(os.environ)
-if "HOSTNAME" in os.environ:
-    path_prefix = './app/'
-    st.write('Path Prefix is ' + path_prefix)
 
 def evaluate_model(X,model, scaler, batch_size,session, *graph) :
     #K.set_session(session)
@@ -269,6 +266,9 @@ st.set_page_config(
     initial_sidebar_state="auto",)
  
 #st.write('Path Prefix is ' + path_prefix)
+if "HOSTNAME" in os.environ:
+    path_prefix = './app/'
+    st.write('Path Prefix is ' + path_prefix)
 
 if 0:
     path_prefix = './app/'
