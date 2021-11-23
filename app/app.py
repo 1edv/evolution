@@ -7,7 +7,9 @@ tf.reset_default_graph()
 tf.keras.backend.clear_session()
 gc.collect() 
 ###Functions moved here from aux_app.py
-
+if "platform" in os.environ:
+    path_prefix = './app/'
+    st.write('Path Prefix is ' + path_prefix)
 
 def evaluate_model(X,model, scaler, batch_size,session, *graph) :
     #K.set_session(session)
@@ -267,7 +269,7 @@ st.set_page_config(
  
 #st.write('Path Prefix is ' + path_prefix)
 
-if "platform" in os.environ:
+if 0:
     path_prefix = './app/'
     st.write('Path Prefix is ' + path_prefix)
     if os.environ['platform'] == 'streamlit_sharing' and 0:
