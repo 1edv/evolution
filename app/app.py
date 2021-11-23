@@ -6,7 +6,6 @@ from aux_app import *
 tf.reset_default_graph() 
 tf.keras.backend.clear_session()
 gc.collect() 
-path_prefix = './'
 ###Functions moved here from aux_app.py
 
 
@@ -268,8 +267,10 @@ st.set_page_config(
  
 #st.write('Path Prefix is ' + path_prefix)
 
-if "platform" in os.environ and 0:
-    if os.environ['platform'] == 'streamlit_sharing' :
+if "platform" in os.environ:
+    path_prefix = './app/'
+
+    if os.environ['platform'] == 'streamlit_sharing' and 0:
         with st.container() : 
             st.write("""
             [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
