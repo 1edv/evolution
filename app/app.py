@@ -269,7 +269,7 @@ st.set_page_config(
 
 if "platform" in os.environ:
     path_prefix = './app/'
-
+    st.write('Path Prefix is ' + path_prefix)
     if os.environ['platform'] == 'streamlit_sharing' and 0:
         with st.container() : 
             st.write("""
