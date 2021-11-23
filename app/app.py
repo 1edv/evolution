@@ -7,8 +7,8 @@ tf.reset_default_graph()
 tf.keras.backend.clear_session()
 gc.collect() 
 ###Functions moved here from aux_app.py
-st.write(os.environ)
-if "platform" in os.environ:
+#st.write(os.environ)
+if "HOSTNAME" in os.environ:
     path_prefix = './app/'
     st.write('Path Prefix is ' + path_prefix)
 
