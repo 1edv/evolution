@@ -6,7 +6,7 @@ from aux_app import *
 tf.reset_default_graph() 
 tf.keras.backend.clear_session()
 gc.collect() 
-
+path_prefix = './'
 ###Functions moved here from aux_app.py
 
 
