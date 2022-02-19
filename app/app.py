@@ -277,7 +277,7 @@ if 0:
         with st.container() : 
             st.write("""
             [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503)&nbsp[![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution)
-            &nbsp[![Follow](https://img.shields.io/twitter/follow/_e_d_v_?style=social)](https://www.twitter.com/_e_d_v_)
+            &nbsp[![Follow](https://badgen.net/badge/twitter/Eeshit%20Dhaval%20Vaishnav)](https://twitter.com/i/user/1349259546)
             """)
 
             st.title('The evolution, evolvability, and engineering of gene regulatory DNA \n')
