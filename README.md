@@ -68,6 +68,12 @@ Download all data and models used in the manuscript here 👇
 
 </p>
 
+## Interactive Code 
+The code is also available in an interactive, fully functional form as a CodeOcean capsule (along with all associated data) at :
+<p align = 'center'>
+<a href='https://codeocean.com/capsule/8020974/tree/v1'><img align="center" src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>  
+</p>
+
 ## Reference 
 
 DOI : 10.1038/s41586-022-04506-6
