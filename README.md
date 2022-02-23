@@ -1,6 +1,6 @@
 
 
-# The evolution, evolvability, and engineering of gene regulatory DNA
+# The evolution, evolvability and engineering of gene regulatory DNA
 
 
 [![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503) &nbsp; [![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution) &nbsp; [![Follow](https://badgen.net/badge/twitter/Eeshit%20Dhaval%20Vaishnav)](https://twitter.com/i/user/1349259546) &nbsp; [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://1edv.github.io/evolution/)
@@ -69,11 +69,12 @@ Download all data and models used in the manuscript here 👇
 </p>
 
 ## Reference 
-DOI : https://doi.org/10.1101/2021.02.17.430503
 
-_A comprehensive fitness landscape model reveals the evolutionary history and future evolvability of eukaryotic cis-regulatory DNA sequences, biorXiv 2021._
+DOI : 10.1038/s41586-022-04506-6
 
-Eeshit Dhaval Vaishnav<sup>\*§</sup>,  Carl G. de Boer<sup>\*§</sup>,  Moran Yassour,  Jennifer Molinet, Lin Fan,  Xian Adiconis, Dawn A. Thompson,  Francisco A. Cubillos,  Joshua Z. Levin,  Aviv Regev<sup>§</sup>. 
+_The evolution, evolvability and engineering of gene regulatory DNA, Nature 2022._
+
+Eeshit Dhaval Vaishnav<sup>\*§</sup>,  Carl G. de Boer<sup>\*§</sup>, Jennifer Molinet, Moran Yassour, Lin Fan, Xian Adiconis, Dawn A. Thompson, Joshua Z. Levin, Francisco A. Cubillos, Aviv Regev<sup>§</sup>. 
 
 
 
