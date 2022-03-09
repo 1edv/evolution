@@ -3,7 +3,7 @@
 # The evolution, evolvability and engineering of gene regulatory DNA
 
 
-[![Paper DOI : https://doi.org/10.1101/2021.02.17.430503](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503) &nbsp; [![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution) &nbsp; [![Follow](https://badgen.net/badge/twitter/Eeshit%20Dhaval%20Vaishnav)](https://twitter.com/i/user/1349259546) &nbsp; [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://1edv.github.io/evolution/)
+[![Paper DOI : https://doi.org/10.1038/s41586-022-04506-6](https://img.shields.io/badge/DOI-10.1101%2F2021.02.17.430503-blue)](https://doi.org/10.1101/2021.02.17.430503) &nbsp; [![Star](https://img.shields.io/github/stars/1edv/evolution.svg?logo=github&style=social)](https://github.com/1edv/evolution) &nbsp; [![Follow](https://badgen.net/badge/twitter/Eeshit%20Dhaval%20Vaishnav)](https://twitter.com/i/user/1349259546) &nbsp; [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://1edv.github.io/evolution/)
 
 
 
@@ -76,7 +76,7 @@ The code is also available in an interactive, fully functional form as a CodeOce
 
 ## Reference 
 
-DOI : 10.1038/s41586-022-04506-6
+DOI : https://doi.org/10.1038/s41586-022-04506-6
 
 _The evolution, evolvability and engineering of gene regulatory DNA, Nature 2022._
 
