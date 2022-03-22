@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# Please use the transformer modelfor your future applications instead of the convolutional model in this directory. 
+# The transformer model is available at: https://github.com/1edv/evolution/tree/master/manuscript_code/model/tpu_model
+# For more details on why we recommend the transformer model instead of the model described here, please see: https://github.com/1edv/evolution/tree/master/manuscript_code/model/gpu_only_model#please-use-the-transformer-model-for-your-future-applications-instead-of-the-convolutional-model-in-this-directory
+
 # ## This notebook allows the user to train their own version of the GPU model from scratch
 # - This notebook can also be run using the `2_train_gpu_model.py` file in this folder. 
 # - If you are a Reviewer using this with the Google Cloud VM we shared with you, running this on the command line in a separate terminal should automatically attach a GPU for the training.
