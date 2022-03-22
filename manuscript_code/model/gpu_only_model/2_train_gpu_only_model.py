@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# Please use the transformer modelfor your future applications instead of the convolutional model in this directory. 
+# Please use the transformer model for your future applications instead of the convolutional model in this directory. 
 # The transformer model is available at: https://github.com/1edv/evolution/tree/master/manuscript_code/model/tpu_model
 # For more details on why we recommend the transformer model instead of the model described here, please see: https://github.com/1edv/evolution/tree/master/manuscript_code/model/gpu_only_model#please-use-the-transformer-model-for-your-future-applications-instead-of-the-convolutional-model-in-this-directory
 
