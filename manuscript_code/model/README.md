@@ -27,9 +27,9 @@ This directory contains all the code and data for reproducing our results in a s
       <ul>
       <li> <h4>benchmarking_models</h4>
       <li> <h4>biochemical_model</h4>
-      <li> <h4>gpu_only_model</h4>
+      <li> <h4>gpu_only_model</h4>: The convolutional model is referred to as the "gpu_only_model" in this repo. We recommended that future readers use the [transformer model](https://github.com/1edv/evolution/tree/master/manuscript_code/model/tpu_model) instead, for their applications going forward. The convolutional model will be deprecated and is unlikely to be supported by future versions of TensorFlow.
       <li> <h4>reproduce_test_data_performance</h4>
-      <li> <h4>tpu_model</h4>
+      <li> <h4>tpu_model</h4>: The transformer model is referred to as the "tpu_model" in this repo. This is our recommended model for future users.
     </ul>
     </ul>
 There is another subdirectory called CodeOcean_run here, it is simply there because of CodeOcean's directory structure requirements and CodeOcean_run's contents can be better accessed in the results_summary directory mentioned above. Pressing the 'Reproducible Run' button on CodeOcean runs the code here and reproduces Fig. R1 and Fig. R2 in the Reviewer response.
