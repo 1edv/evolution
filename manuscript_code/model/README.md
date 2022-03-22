@@ -32,6 +32,7 @@ This directory contains all the code and data for reproducing our results in a s
       <li> <h4>tpu_model</h4>The transformer model is referred to as the "tpu_model" in this repo. This is our recommended model for future users.
     </ul>
     </ul>
+    <br>
 There is another subdirectory called CodeOcean_run here, it is simply there because of CodeOcean's directory structure requirements and CodeOcean_run's contents can be better accessed in the results_summary directory mentioned above. Pressing the 'Reproducible Run' button on CodeOcean runs the code here and reproduces Fig. R1 and Fig. R2 in the Reviewer response.
 
 
