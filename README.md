@@ -74,6 +74,19 @@ The code is also available in an interactive, fully functional form as a CodeOce
 <a href='https://codeocean.com/capsule/8020974/tree/v1'><img align="center" src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>  
 </p>
 
+## Gene Expression Prediction DREAM Challenge 2022
+For more details, pleae see the <a href='https://synapse.org/#!Synapse:syn28469146/wiki/617075'>DREAM Challenge webpage</a> 
+
+#### Timeline
+  - Registration Open: April 2022
+  - Launch: May 2, 2022
+  - Webinar: May 2, 2022
+  - Leaderboard Submissions for challenge opens: May 16, 2022
+  - Final Submissions for the challenge: July 30 2022
+  - Winners Announced: August 15, 2022
+  - Results presented at TBD
+  - Access challenge data TBD
+
 ## Reference 
 
 _The evolution, evolvability and engineering of gene regulatory DNA, <b>Nature</b> 2022._
