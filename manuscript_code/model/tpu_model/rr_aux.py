@@ -373,7 +373,7 @@ class rc_Conv1D(Conv1D):
                            dilation_rate=self.dilation_rate[0])
 
         if self.use_bias:
-            outputs += K.bias_add(outputs,
+            outputs = K.bias_add(outputs,
                                   revcomp_bias,
                                   data_format=self.data_format)
 
