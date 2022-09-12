@@ -61,15 +61,8 @@ You have now loaded our ```tensorflow.keras``` model. You may use this as is for
 
 To exit the python shell and the docker container, simply press ```Ctrl+D``` twice.
 
-## Data
-Download all data and models used in the manuscript here 👇 
-<p align = 'center'>
-<a href='https://zenodo.org/record/4436477#.X_8V-hNKgUF'><img align="center" src="https://img.icons8.com/nolan/96/database.png"/></a>  
-
-</p>
-
-## Interactive Code 
-The code is also available in an interactive, fully functional form as a CodeOcean capsule (along with all associated data) at :
+## All data and code
+All data and code is also available in an interactive, fully functional form as a CodeOcean capsule (along with all associated data) at :
 <p align = 'center'>
 <a href='https://codeocean.com/capsule/8020974/tree/v1'><img align="center" src="https://img.icons8.com/nolan/96/artificial-intelligence.png"/></a>  
 </p>
