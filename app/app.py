@@ -474,7 +474,7 @@ with st.container() :
     &nbsp[![Follow](https://badgen.net/badge/twitter/Eeshit%20Dhaval%20Vaishnav)](https://twitter.com/i/user/1349259546)
     """)
 
-    st.title('The evolution, evolvability, and engineering of gene regulatory DNA \n')
+    st.title('Gene Genie\n')
     st.title('')
 
 
