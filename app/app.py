@@ -261,7 +261,7 @@ def plot_el_visualization(sequences_flanked):
 
 
 st.set_page_config(
-    page_title=" Evolution, Evolvability and Expression",
+    page_title="Gene Genie",
     layout="wide",
     initial_sidebar_state="auto",)
  
